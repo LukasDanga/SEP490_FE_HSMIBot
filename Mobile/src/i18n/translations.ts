@@ -8,6 +8,17 @@ export const translations = {
     systemOnline: 'Hệ thống Sẵn sàng',
     systemConnecting: 'Đang kết nối DDS...',
 
+    // 5 Bottom Navigation Tabs
+    bottomNavHome: 'Trang chủ',
+    bottomNavCamera: 'Camera',
+    bottomNavMap: 'Bản đồ',
+    bottomNavLogs: 'Nhật ký',
+    bottomNavSettings: 'Cài đặt',
+
+    // Role Badges
+    roleHomeowner: 'Chủ nhà (Homeowner)',
+    roleMember: 'Thành viên (Member)',
+
     // Screen Titles
     welcomeBack: 'Chào mừng trở lại! 👋',
     loginSubtext: 'Đăng nhập để điều khiển robot và giám sát an ninh.',
@@ -47,9 +58,9 @@ export const translations = {
     alreadyHaveAccount: 'Đã có tài khoản?',
     loginNow: 'Đăng nhập ngay',
 
-    // 4 Quick Demo Logins (1 Admin + 3 Members)
-    demoQuickLogin: 'Đăng nhập nhanh mẫu (1 Admin & 3 Member):',
-    demoAdmin: '1. Admin (Chủ nhà)',
+    // 4 Quick Demo Logins (1 Admin = Chủ nhà & 3 Members = Thành viên)
+    demoQuickLogin: 'Đăng nhập nhanh mẫu (1 Chủ nhà & 3 Thành viên):',
+    demoAdmin: '1. Chủ nhà (Admin)',
     demoResident: '2. Member (Gia đình)',
     demoEngineer: '3. Member (Kỹ thuật)',
     demoGuest: '4. Member (Giúp việc)',
@@ -109,23 +120,74 @@ export const translations = {
     termsModalTitle: 'Điều khoản & Bảo mật Dữ liệu',
     termsAccept: 'Tôi đã hiểu & Đồng ý',
 
-    // Dashboard Preview (after login)
+    // Dashboard Screen (Streamlined Web-matching)
     dashGreeting: 'Xin chào,',
     dashRobotTitle: 'Robot Quản Gia HSMIBot',
     dashStatusOnDuty: 'Đang tuần tra tự hành',
-    dashBattery: 'Pin',
-    dashSignal: 'Wi-Fi 5GHz',
-    dashTemp: 'Nhiệt độ',
-    dashRos2: 'ROS2 Galactic',
-    dashOnline: 'Đã kết nối',
-    dashMode: 'Chế độ hiện tại',
-    dashModePatrol: 'Tuần tra Khu A - Phòng Khách',
+    patrolStateTitle: 'Trạng thái Tuần tra',
+    patrolStateAutonomous: 'Đang tự hành',
+    patrolStateRecharging: 'Đang nạp năng lượng',
+    patrolStateStandby: 'Sẵn sàng lệnh',
+    smartDockTitle: 'Trạm Sạc Thông Minh',
+    dockedStatus: 'Ở trạm sạc',
+    undockedStatus: 'Đang hoạt động',
+    chargingFastLabel: '54.6V • 4.2A Sạc nhanh',
+    batteryEstimatedRuntime: 'Thời lượng ~4.8h',
+    ros2EdgeTitle: 'ROS2 Galactic Edge',
+    activeNodesLabel: '16 Nodes Hoạt động',
+    ros2Metrics: 'CPU: 34% • RAM: 48%',
+    ros2SlaBadge: '99.98% SLA',
+    hardwareSafetyTitle: 'An Toàn Cơ Khí',
+    emergencyStopBtn: 'DỪNG KHẨN CẤP',
+    emergencyBrakeSubtitle: 'Khóa động cơ tức thì',
+
+    liveFeedHeading: 'Luồng Camera Tuần tra Trực tiếp 4K',
+    liveFeedBadge: '30 FPS • H.265',
+    aiBoxToggle: 'AI Bounding Box',
+    quickRouteDispatchHeading: 'Điều hướng nhanh tuyến:',
+    routeLivingRoom: 'Phòng khách (Khu A)',
+    routeKitchen: 'Bếp ăn & Ban công',
+    routePerimeter: 'Tuần tra chu vi toàn nhà',
+
+    lidarRadarHeading: 'Bán kính Quét LiDAR 360°',
+    radarScanRate: '25 Hz',
+    envSensorsHeading: 'Cảm biến Môi trường',
+    envTemp: 'Nhiệt độ',
+    envSmoke: 'Khói MQ-2',
+    envFlame: 'Quang phổ Lửa',
+    envHumidity: 'Độ ẩm',
+    statusSafe: 'An toàn',
+    statusNormal: 'Bình thường',
+    statusNoFlame: 'Không phát hiện',
+
+    recentIncidentsHeading: 'Nhật ký An ninh Gần đây',
+    viewAllIncidents: 'Xem tất cả',
+    incident1Title: 'Đã nhận diện: Sarah Nguyễn (VIP)',
+    incident1Desc: 'Phòng khách Khu A • Khớp 98.6% AI FaceNet',
+    incident2Title: 'Hoàn thành chu kỳ tuần tra Khu B',
+    incident2Desc: '0 nguy cơ nhiệt • Lưới LiDAR an toàn 100%',
+
     quickActions: 'Lối tắt điều khiển nhanh',
     actLiveCam: 'Camera trực tiếp',
     actPatrol: 'Bắt đầu tuần tra',
+    actPausePatrol: 'Tạm dừng tuần tra',
     actReturnDock: 'Về trạm sạc',
     actEmergency: 'Dừng khẩn cấp',
     btnLogout: 'Đăng xuất tài khoản',
+
+    // Placeholder Screens for Camera, Map, Logs, Settings
+    underDevTitle: 'Tính năng đang phát triển 🚧',
+    underDevDesc: 'Màn hình này đang trong lộ trình phát triển. Bạn có thể quay lại sau khi chi tiết chức năng được cập nhật.',
+    underDevReadyTag: 'SẮP RA MẮT',
+    backToHome: 'Quay lại Trang chủ',
+    camScreenTitle: 'Hệ thống Camera 4K & Điều khiển PTZ',
+    camScreenSub: 'Xem trực tiếp đa góc, xoay góc Pan/Tilt, đàm thoại 2 chiều và chụp ảnh AI.',
+    mapScreenTitle: 'Bản đồ SLAM & Điều phối Tự hành Nav2',
+    mapScreenSub: 'Bản đồ 2D Occupancy Grid, vẽ tường ảo, vùng cấm và định vị trạm sạc Dock.',
+    logsScreenTitle: 'Nhật ký Sự cố & Báo cáo Kiểm toán',
+    logsScreenSub: 'Lịch sử phát hiện người lạ, cảnh báo nhiệt/khói và video xem lại 1080p.',
+    settingsScreenTitle: 'Cài đặt Hệ thống & Hồ sơ Chủ nhà',
+    settingsScreenSub: 'Quản lý thành viên, cấu hình thông báo khẩn cấp 2FA và bảo mật ROS2.',
   },
   en: {
     // Brand & App Bar
@@ -133,6 +195,17 @@ export const translations = {
     brandTagline: 'Autonomous Butler Robot & Home Security Hub',
     systemOnline: 'System Ready',
     systemConnecting: 'Connecting DDS...',
+
+    // 5 Bottom Navigation Tabs
+    bottomNavHome: 'Home',
+    bottomNavCamera: 'Camera',
+    bottomNavMap: 'Map',
+    bottomNavLogs: 'Logs',
+    bottomNavSettings: 'Settings',
+
+    // Role Badges
+    roleHomeowner: 'Homeowner (Admin)',
+    roleMember: 'Member',
 
     // Screen Titles
     welcomeBack: 'Welcome back! 👋',
@@ -173,9 +246,9 @@ export const translations = {
     alreadyHaveAccount: 'Already have an account?',
     loginNow: 'Sign in now',
 
-    // 4 Quick Demo Logins (1 Admin + 3 Members)
-    demoQuickLogin: 'Quick Demo Accounts (1 Admin & 3 Members):',
-    demoAdmin: '1. Admin (Owner)',
+    // 4 Quick Demo Logins (1 Admin = Homeowner & 3 Members)
+    demoQuickLogin: 'Quick Demo Accounts (1 Homeowner & 3 Members):',
+    demoAdmin: '1. Homeowner (Admin)',
     demoResident: '2. Member (Family)',
     demoEngineer: '3. Member (Engineer)',
     demoGuest: '4. Member (Housekeeper)',
@@ -235,22 +308,73 @@ export const translations = {
     termsModalTitle: 'Terms & Data Privacy',
     termsAccept: 'I Understand & Agree',
 
-    // Dashboard Preview (after login)
+    // Dashboard Screen (Streamlined Web-matching)
     dashGreeting: 'Hello,',
     dashRobotTitle: 'HSMIBot Alpha Sentry',
     dashStatusOnDuty: 'Autonomous Patrol Active',
-    dashBattery: 'Battery',
-    dashSignal: 'Wi-Fi 5GHz',
-    dashTemp: 'Temperature',
-    dashRos2: 'ROS2 Galactic',
-    dashOnline: 'Connected',
-    dashMode: 'Current Mode',
-    dashModePatrol: 'Patrol: Living Room Zone A',
+    patrolStateTitle: 'Patrol State',
+    patrolStateAutonomous: 'Autonomous Patrol',
+    patrolStateRecharging: 'Recharging on Dock',
+    patrolStateStandby: 'Standby / Ready',
+    smartDockTitle: 'Autonomous Smart Dock',
+    dockedStatus: 'Docked',
+    undockedStatus: 'On Duty',
+    chargingFastLabel: '54.6V • 4.2A Fast Charge',
+    batteryEstimatedRuntime: 'Est. 4.8h runtime',
+    ros2EdgeTitle: 'ROS2 Galactic Edge',
+    activeNodesLabel: '16 Active Nodes',
+    ros2Metrics: 'CPU: 34% • RAM: 48%',
+    ros2SlaBadge: '99.98% SLA',
+    hardwareSafetyTitle: 'Hardware Safety',
+    emergencyStopBtn: 'EMERGENCY STOP',
+    emergencyBrakeSubtitle: 'Instant Torque Cutoff',
+
+    liveFeedHeading: 'Live 4K Autonomous Patrol Feed',
+    liveFeedBadge: '30 FPS • H.265',
+    aiBoxToggle: 'AI Bounding Box',
+    quickRouteDispatchHeading: 'Quick Route Dispatch:',
+    routeLivingRoom: 'Living Room (Zone A)',
+    routeKitchen: 'Kitchen & Balcony',
+    routePerimeter: 'Full Perimeter Sweep',
+
+    lidarRadarHeading: 'LiDAR 360° Radar Field',
+    radarScanRate: '25 Hz',
+    envSensorsHeading: 'Environmental Telemetry',
+    envTemp: 'Temperature',
+    envSmoke: 'MQ-2 Smoke',
+    envFlame: 'Flame Sensor',
+    envHumidity: 'Humidity',
+    statusSafe: 'Safe',
+    statusNormal: 'Normal',
+    statusNoFlame: 'Not Detected',
+
+    recentIncidentsHeading: 'Recent Security Log',
+    viewAllIncidents: 'View All',
+    incident1Title: 'Recognized: Sarah Nguyễn (VIP)',
+    incident1Desc: 'Living Room Zone A • 98.6% AI FaceNet match',
+    incident2Title: 'Completed Patrol Zone B',
+    incident2Desc: '0 thermal anomaly • LiDAR field 100% clear',
+
     quickActions: 'Quick Controls',
     actLiveCam: 'Live Camera',
     actPatrol: 'Start Patrol',
+    actPausePatrol: 'Pause Patrol',
     actReturnDock: 'Return to Dock',
     actEmergency: 'Emergency Stop',
     btnLogout: 'Sign Out',
+
+    // Placeholder Screens for Camera, Map, Logs, Settings
+    underDevTitle: 'Feature Under Development 🚧',
+    underDevDesc: 'This screen is part of our upcoming roadmap. You can return once functional specifications are provided.',
+    underDevReadyTag: 'COMING SOON',
+    backToHome: 'Back to Home',
+    camScreenTitle: '4K Surveillance & PTZ Camera Hub',
+    camScreenSub: 'Live multi-angle feeds, Pan/Tilt joystick, 2-way audio intercom and AI snapshots.',
+    mapScreenTitle: 'SLAM 2D Mapping & Nav2 Dispatch',
+    mapScreenSub: 'Real-time Occupancy Grid, virtual walls, keep-out zones and docking home base calibration.',
+    logsScreenTitle: 'Security Incident Logs & Audit Trail',
+    logsScreenSub: 'Intruder detection history, thermal/smoke warning timeline and 1080p WebRTC video playback.',
+    settingsScreenTitle: 'System Settings & Homeowner Profile',
+    settingsScreenSub: 'Member delegation, 2FA security credentials, push notifications and ROS2 preferences.',
   },
 };

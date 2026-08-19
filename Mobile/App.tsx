@@ -5,8 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Language, UserProfile } from './src/types';
 import { Colors } from './src/theme/colors';
 import { AuthScreen } from './src/screens/AuthScreen';
-import { Header } from './src/components/common/Header';
-import { QuickDashboard } from './src/components/dashboard/QuickDashboard';
+import { MainAppScreen } from './src/screens/MainAppScreen';
 
 export default function App() {
   const [lang, setLang] = useState<Language>('vi');
@@ -26,10 +25,12 @@ export default function App() {
         <StatusBar style="dark" />
         <View style={styles.appContainer}>
           {currentUser ? (
-            <View style={styles.dashContainer}>
-              <Header lang={lang} onLanguageChange={setLang} />
-              <QuickDashboard user={currentUser} lang={lang} onLogout={handleLogout} />
-            </View>
+            <MainAppScreen
+              user={currentUser}
+              lang={lang}
+              onLanguageChange={setLang}
+              onLogout={handleLogout}
+            />
           ) : (
             <AuthScreen
               lang={lang}
@@ -51,8 +52,5 @@ const styles = StyleSheet.create({
   appContainer: {
     flex: 1,
     backgroundColor: Colors.background,
-  },
-  dashContainer: {
-    flex: 1,
   },
 });

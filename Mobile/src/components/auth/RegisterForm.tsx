@@ -178,6 +178,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
       name: fullName.trim(),
       email: email.trim(),
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+      role: 'admin',
+      category: 'owner',
       robotId: robotSerial.trim().toUpperCase(),
       robotName: `HSMIBot ${robotSerial.slice(-4)}`,
     });

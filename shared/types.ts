@@ -1,5 +1,6 @@
 export type Language = 'vi' | 'en';
 
+// Only 2 user roles: admin (Homeowner / Chủ nhà) and member (Thành viên)
 export type UserRole = 'admin' | 'member';
 export type UserCategory = 'owner' | 'resident' | 'engineer' | 'guest';
 
@@ -8,8 +9,8 @@ export interface UserProfile {
   name: string;
   email: string;
   avatar: string;
-  role?: UserRole;
-  category?: UserCategory;
+  role: UserRole; // 'admin' = Homeowner (Chủ nhà), 'member' = Thành viên
+  category: UserCategory;
   robotId: string;
   robotName: string;
 }
@@ -20,7 +21,7 @@ export interface UserAccount {
   email: string;
   password?: string;
   avatar: string;
-  role: UserRole;
+  role: UserRole; // 'admin' = Homeowner (Chủ nhà), 'member' = Thành viên
   category: UserCategory;
   categoryNameVI: string;
   categoryNameEN: string;
@@ -55,4 +56,5 @@ export interface RobotTelemetry {
   signalStrength: number;
   cpuUsage?: number;
   ramUsage?: number;
+  activeNodeCount?: number;
 }

@@ -1,13 +1,14 @@
 import { UserAccount, RobotTelemetry } from '../types';
 
 /**
- * 4 Predefined HSMIBot Mock Users (1 Admin & 3 Members)
- * Used across Web and Mobile for authentication simulation, role-based UI testing,
- * and permissions verification before backend API deployment.
+ * 4 Predefined HSMIBot Mock Users (1 Admin = Homeowner & 3 Members)
+ * Roles in system:
+ * - 'admin' : Homeowner (Chủ nhà) - Full master ownership & management.
+ * - 'member': Family, technical staff, or scheduled household members.
  */
 export const mockUsers: UserAccount[] = [
   // ==========================================
-  // USER 1: ADMIN (Chủ nhà / Quản trị viên)
+  // USER 1: ADMIN (Chủ nhà - Homeowner)
   // ==========================================
   {
     id: 'usr_admin_01',
@@ -15,10 +16,10 @@ export const mockUsers: UserAccount[] = [
     email: 'admin.khang@hsmibot.io',
     password: 'HSMIBot2026!#',
     avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&auto=format&fit=crop&q=80',
-    role: 'admin',
+    role: 'admin', // Homeowner / Chủ nhà
     category: 'owner',
-    categoryNameVI: 'Chủ nhà (Quản trị viên)',
-    categoryNameEN: 'Homeowner (System Admin)',
+    categoryNameVI: 'Chủ nhà (Homeowner)',
+    categoryNameEN: 'Homeowner (Admin)',
     robotId: 'HSMI-BOT-9042-X',
     robotName: 'HSMIBot Alpha Sentry',
     phone: '0912345678',
@@ -43,7 +44,7 @@ export const mockUsers: UserAccount[] = [
   },
 
   // ==========================================
-  // USER 2: MEMBER 1 (Thành viên Gia đình)
+  // USER 2: MEMBER 1 (Thành viên Gia đình - Family)
   // ==========================================
   {
     id: 'usr_member_01',
@@ -51,10 +52,10 @@ export const mockUsers: UserAccount[] = [
     email: 'sarah.nguyen@hsmibot.io',
     password: 'SarahHomeSafe88!',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
-    role: 'member',
+    role: 'member', // Member / Thành viên
     category: 'resident',
-    categoryNameVI: 'Người nhà (Thành viên Thường trú)',
-    categoryNameEN: 'Resident (Family Member)',
+    categoryNameVI: 'Thành viên (Gia đình)',
+    categoryNameEN: 'Member (Family Resident)',
     robotId: 'HSMI-BOT-9042-X',
     robotName: 'HSMIBot Alpha Sentry',
     phone: '0987654321',
@@ -75,7 +76,7 @@ export const mockUsers: UserAccount[] = [
   },
 
   // ==========================================
-  // USER 3: MEMBER 2 (Kỹ thuật viên Vận hành ROS2)
+  // USER 3: MEMBER 2 (Thành viên Kỹ thuật - Technical Support)
   // ==========================================
   {
     id: 'usr_member_02',
@@ -83,10 +84,10 @@ export const mockUsers: UserAccount[] = [
     email: 'ros2.dev@hsmibot.io',
     password: 'ROS2GalacticStack@1',
     avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=200&auto=format&fit=crop&q=80',
-    role: 'member',
+    role: 'member', // Member / Thành viên
     category: 'engineer',
-    categoryNameVI: 'Kỹ thuật viên Vận hành ROS2',
-    categoryNameEN: 'ROS2 Diagnostics Engineer',
+    categoryNameVI: 'Thành viên (Kỹ thuật viên)',
+    categoryNameEN: 'Member (Technical Diagnostics)',
     robotId: 'HSMI-BOT-9042-X',
     robotName: 'HSMIBot Alpha Sentry',
     phone: '0903112233',
@@ -107,7 +108,7 @@ export const mockUsers: UserAccount[] = [
   },
 
   // ==========================================
-  // USER 4: MEMBER 3 (Giúp việc / Khách theo giờ)
+  // USER 4: MEMBER 3 (Thành viên Giúp việc - Staff / Housekeeper)
   // ==========================================
   {
     id: 'usr_member_03',
@@ -115,10 +116,10 @@ export const mockUsers: UserAccount[] = [
     email: 'mai.helper@hsmibot.io',
     password: 'MaiHelperAccess2026!',
     avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&auto=format&fit=crop&q=80',
-    role: 'member',
+    role: 'member', // Member / Thành viên
     category: 'guest',
-    categoryNameVI: 'Giúp việc / Khách theo giờ',
-    categoryNameEN: 'Housekeeper / Scheduled Staff',
+    categoryNameVI: 'Thành viên (Giúp việc theo giờ)',
+    categoryNameEN: 'Member (Household Staff)',
     robotId: 'HSMI-BOT-9042-X',
     robotName: 'HSMIBot Alpha Sentry',
     phone: '0934556677',
@@ -148,14 +149,15 @@ export const mockRobotTelemetry: RobotTelemetry = {
   ros2Connected: true,
   cloudSync: true,
   mode: 'patrol',
-  currentZone: 'Living Room Zone A',
+  currentZone: 'Phòng khách (Khu A)',
   speed: 0.35,
   fps: 30,
-  lidarPoints: 12800,
+  lidarPoints: 18400,
   temperature: 28.4,
   signalStrength: 85,
   cpuUsage: 34,
   ramUsage: 48,
+  activeNodeCount: 16,
 };
 
 /**
@@ -170,7 +172,7 @@ export const authenticateMockUser = (
   // Exact email match
   let user = mockUsers.find((u) => u.email.toLowerCase() === cleanInput);
   
-  // Username prefix match (e.g. "admin", "sarah", "ros2", "mai")
+  // Username prefix match
   if (!user) {
     user = mockUsers.find((u) =>
       u.email.toLowerCase().startsWith(cleanInput) ||
@@ -211,16 +213,10 @@ export const authenticateMockUser = (
   return user || mockUsers[0];
 };
 
-/**
- * Lookup helper by User ID
- */
 export const getMockUserById = (userId: string): UserAccount | undefined => {
   return mockUsers.find((u) => u.id === userId);
 };
 
-/**
- * Lookup helper by Email
- */
 export const getMockUserByEmail = (email: string): UserAccount | undefined => {
   return mockUsers.find((u) => u.email.toLowerCase() === email.trim().toLowerCase());
 };
