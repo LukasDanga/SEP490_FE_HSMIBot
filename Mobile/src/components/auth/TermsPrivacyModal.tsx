@@ -25,7 +25,7 @@ export const TermsPrivacyModal: React.FC<TermsPrivacyModalProps> = ({
           {/* Header */}
           <View style={styles.headerRow}>
             <View style={styles.titleRow}>
-              <ShieldCheck size={20} color={Colors.primaryLight} />
+              <ShieldCheck size={20} color={Colors.primary} />
               <Text style={styles.title}>{t.termsModalTitle}</Text>
             </View>
             <TouchableOpacity onPress={onClose} style={styles.closeBtn} activeOpacity={0.7}>
@@ -77,7 +77,7 @@ export const TermsPrivacyModal: React.FC<TermsPrivacyModalProps> = ({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(5, 8, 15, 0.85)',
+    backgroundColor: 'rgba(15, 23, 42, 0.45)',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
@@ -85,11 +85,16 @@ const styles = StyleSheet.create({
   modalCard: {
     width: '100%',
     maxHeight: '80%',
-    backgroundColor: Colors.backgroundCard,
+    backgroundColor: '#FFFFFF',
     borderRadius: 20,
     padding: 20,
     borderWidth: 1,
-    borderColor: Colors.borderLight,
+    borderColor: Colors.border,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.15,
+    shadowRadius: 20,
+    elevation: 10,
   },
   headerRow: {
     flexDirection: 'row',
@@ -107,7 +112,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 15,
     fontWeight: '800',
-    color: Colors.textWhite,
+    color: Colors.textPrimary,
   },
   closeBtn: {
     width: 28,
@@ -123,7 +128,7 @@ const styles = StyleSheet.create({
   sectionHeader: {
     fontSize: 13,
     fontWeight: '700',
-    color: Colors.cyan,
+    color: Colors.primary,
     marginTop: 10,
     marginBottom: 4,
   },
@@ -144,7 +149,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   acceptBtnText: {
-    color: Colors.textWhite,
+    color: '#FFFFFF',
     fontSize: 13,
     fontWeight: '700',
   },

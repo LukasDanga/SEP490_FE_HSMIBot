@@ -146,10 +146,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         }
       }
     } catch {
-      // Fallback simulated biometric for emulator
+      // Fallback
     }
 
-    // Simulated Biometric scan fallback
+    // Simulated Biometric fallback for testing
     setTimeout(() => {
       setBiometricLoading(false);
       try {
@@ -276,10 +276,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           activeOpacity={0.7}
         >
           {biometricLoading ? (
-            <ActivityIndicator size="small" color={Colors.cyan} />
+            <ActivityIndicator size="small" color={Colors.primary} />
           ) : (
             <>
-              <ScanFace size={15} color={Colors.cyan} />
+              <ScanFace size={15} color={Colors.primary} />
               <Text style={styles.biometricText}>{t.useBiometrics}</Text>
             </>
           )}
@@ -322,7 +322,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             onPress={() => handleFillDemo('owner')}
             activeOpacity={0.7}
           >
-            <UserCheck size={13} color={Colors.success} />
+            <UserCheck size={14} color={Colors.success} />
             <Text style={styles.demoBtnText}>{t.demoOwner}</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -330,7 +330,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             onPress={() => handleFillDemo('engineer')}
             activeOpacity={0.7}
           >
-            <Radio size={13} color={Colors.cyan} />
+            <Radio size={14} color={Colors.primary} />
             <Text style={styles.demoBtnText}>{t.demoSecurity}</Text>
           </TouchableOpacity>
         </View>
@@ -346,21 +346,21 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       {/* Social SSO Sign-in */}
       <View style={styles.socialRow}>
         <TouchableOpacity
-          style={styles.socialBtn}
+          style={styles.socialBtnGoogle}
           onPress={() => handleSocialLogin('Google')}
           activeOpacity={0.8}
         >
           <Text style={styles.socialTextGoogle}>G</Text>
-          <Text style={styles.socialBtnLabel}>{t.googleSignIn}</Text>
+          <Text style={styles.socialBtnLabelGoogle}>{t.googleSignIn}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.socialBtn}
+          style={styles.socialBtnApple}
           onPress={() => handleSocialLogin('Apple')}
           activeOpacity={0.8}
         >
           <Text style={styles.socialTextApple}></Text>
-          <Text style={styles.socialBtnLabel}>{t.appleSignIn}</Text>
+          <Text style={styles.socialBtnLabelApple}>{t.appleSignIn}</Text>
         </TouchableOpacity>
       </View>
 
@@ -392,7 +392,7 @@ const styles = StyleSheet.create({
   greetingTitle: {
     fontSize: 22,
     fontWeight: '800',
-    color: Colors.textWhite,
+    color: Colors.textPrimary,
     letterSpacing: -0.4,
   },
   greetingSub: {
@@ -406,7 +406,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.dangerBg,
     borderWidth: 1,
-    borderColor: 'rgba(239, 68, 68, 0.3)',
+    borderColor: 'rgba(220, 38, 38, 0.25)',
     borderRadius: 12,
     paddingHorizontal: 12,
     paddingVertical: 10,
@@ -438,26 +438,32 @@ const styles = StyleSheet.create({
   },
   forgotLink: {
     fontSize: 11,
-    color: Colors.primaryLight,
-    fontWeight: '600',
+    color: Colors.primary,
+    fontWeight: '700',
   },
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.backgroundInput,
+    backgroundColor: '#FFFFFF',
     borderRadius: 12,
     borderWidth: 1,
     borderColor: Colors.border,
     paddingHorizontal: 12,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 2,
+    elevation: 1,
   },
   fieldIcon: {
     marginRight: 8,
   },
   textInput: {
     flex: 1,
-    color: Colors.textWhite,
+    color: Colors.textPrimary,
     fontSize: 13,
     paddingVertical: 12,
+    fontWeight: '500',
   },
   optionsRow: {
     flexDirection: 'row',
@@ -476,7 +482,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1.5,
     borderColor: Colors.borderLight,
-    backgroundColor: Colors.backgroundInput,
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -487,7 +493,7 @@ const styles = StyleSheet.create({
   checkboxLabel: {
     fontSize: 12,
     color: Colors.textSecondary,
-    fontWeight: '500',
+    fontWeight: '600',
   },
   biometricChip: {
     flexDirection: 'row',
@@ -496,23 +502,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 8,
-    backgroundColor: 'rgba(6, 182, 212, 0.12)',
+    backgroundColor: Colors.primarySubtle,
     borderWidth: 1,
-    borderColor: 'rgba(6, 182, 212, 0.3)',
+    borderColor: 'rgba(37, 99, 235, 0.2)',
   },
   biometricText: {
     fontSize: 11,
     fontWeight: '700',
-    color: Colors.cyan,
+    color: Colors.primary,
   },
   loginBtnWrapper: {
     borderRadius: 14,
     overflow: 'hidden',
     shadowColor: Colors.primary,
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.35,
-    shadowRadius: 10,
-    elevation: 6,
+    shadowOpacity: 0.25,
+    shadowRadius: 8,
+    elevation: 4,
   },
   loginGradient: {
     paddingVertical: 14,
@@ -530,7 +536,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   loginBtnText: {
-    color: Colors.textWhite,
+    color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '700',
   },
@@ -555,16 +561,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 6,
-    paddingVertical: 8,
+    paddingVertical: 9,
     borderRadius: 10,
-    backgroundColor: Colors.backgroundElevated,
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: Colors.borderLight,
+    borderColor: Colors.border,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 2,
+    elevation: 1,
   },
   demoBtnText: {
     fontSize: 11,
-    fontWeight: '600',
-    color: Colors.textPrimary,
+    fontWeight: '700',
+    color: Colors.textSecondary,
   },
   dividerRow: {
     flexDirection: 'row',
@@ -580,12 +591,13 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: Colors.textMuted,
     marginHorizontal: 10,
+    fontWeight: '500',
   },
   socialRow: {
     flexDirection: 'row',
     gap: 10,
   },
-  socialBtn: {
+  socialBtnGoogle: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
@@ -593,23 +605,43 @@ const styles = StyleSheet.create({
     gap: 8,
     paddingVertical: 11,
     borderRadius: 12,
-    backgroundColor: Colors.backgroundElevated,
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: Colors.borderLight,
+    borderColor: Colors.border,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 2,
+    elevation: 1,
   },
   socialTextGoogle: {
     fontSize: 15,
     fontWeight: '800',
     color: '#EA4335',
   },
+  socialBtnLabelGoogle: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: Colors.textPrimary,
+  },
+  socialBtnApple: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    paddingVertical: 11,
+    borderRadius: 12,
+    backgroundColor: '#0F172A',
+  },
   socialTextApple: {
     fontSize: 16,
-    color: Colors.textWhite,
+    color: '#FFFFFF',
   },
-  socialBtnLabel: {
+  socialBtnLabelApple: {
     fontSize: 12,
-    fontWeight: '600',
-    color: Colors.textPrimary,
+    fontWeight: '700',
+    color: '#FFFFFF',
   },
   footerPrompt: {
     marginTop: 20,
@@ -625,6 +657,6 @@ const styles = StyleSheet.create({
   registerLink: {
     fontSize: 12,
     fontWeight: '700',
-    color: Colors.primaryLight,
+    color: Colors.primary,
   },
 });

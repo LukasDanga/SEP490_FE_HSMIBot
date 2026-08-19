@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Modal, TouchableOpacity, Animated } from 'react-native';
-import { QrCode, X, Sparkles, CheckCircle2 } from 'lucide-react-native';
+import { QrCode, X, Sparkles } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { Colors } from '../../theme/colors';
@@ -62,7 +62,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
           </TouchableOpacity>
 
           <View style={styles.header}>
-            <QrCode size={22} color={Colors.cyan} />
+            <QrCode size={22} color={Colors.primary} />
             <Text style={styles.title}>{t.qrModalTitle}</Text>
           </View>
           <Text style={styles.desc}>{t.qrModalDesc}</Text>
@@ -85,7 +85,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
               ]}
             >
               <LinearGradient
-                colors={['rgba(6, 182, 212, 0)', '#06B6D4', 'rgba(6, 182, 212, 0)']}
+                colors={['rgba(37, 99, 235, 0)', '#2563EB', 'rgba(37, 99, 235, 0)']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 style={styles.laserGradient}
@@ -93,7 +93,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
             </Animated.View>
 
             {/* Inner QR target icon */}
-            <QrCode size={80} color="rgba(255, 255, 255, 0.15)" />
+            <QrCode size={80} color="rgba(15, 23, 42, 0.15)" />
           </View>
 
           <Text style={styles.hintText}>{t.scanQrHint}</Text>
@@ -105,7 +105,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
             activeOpacity={0.8}
           >
             <LinearGradient
-              colors={['#2563EB', '#06B6D4']}
+              colors={['#2563EB', '#1D4ED8']}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}
               style={styles.gradientBtn}
@@ -123,7 +123,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(5, 8, 15, 0.85)',
+    backgroundColor: 'rgba(15, 23, 42, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
@@ -131,12 +131,17 @@ const styles = StyleSheet.create({
   modalCard: {
     width: '100%',
     maxWidth: 380,
-    backgroundColor: Colors.backgroundCard,
+    backgroundColor: '#FFFFFF',
     borderRadius: 24,
     padding: 22,
     borderWidth: 1,
-    borderColor: Colors.borderLight,
+    borderColor: Colors.border,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.15,
+    shadowRadius: 20,
+    elevation: 10,
   },
   closeBtn: {
     position: 'absolute',
@@ -159,7 +164,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: '800',
-    color: Colors.textWhite,
+    color: Colors.textPrimary,
   },
   desc: {
     fontSize: 12,
@@ -171,10 +176,10 @@ const styles = StyleSheet.create({
   scannerBox: {
     width: 200,
     height: 200,
-    backgroundColor: 'rgba(19, 29, 49, 0.6)',
+    backgroundColor: Colors.backgroundElevated,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: 'rgba(6, 182, 212, 0.2)',
+    borderColor: Colors.border,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
@@ -185,7 +190,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 20,
     height: 20,
-    borderColor: Colors.cyan,
+    borderColor: Colors.primary,
   },
   cornerTL: {
     top: 8,
@@ -225,9 +230,9 @@ const styles = StyleSheet.create({
   laserGradient: {
     flex: 1,
     borderRadius: 2,
-    shadowColor: Colors.cyan,
+    shadowColor: Colors.primary,
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.9,
+    shadowOpacity: 0.8,
     shadowRadius: 6,
   },
   hintText: {
@@ -249,7 +254,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   btnText: {
-    color: Colors.textWhite,
+    color: '#FFFFFF',
     fontSize: 13,
     fontWeight: '700',
   },

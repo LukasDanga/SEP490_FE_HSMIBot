@@ -13,7 +13,6 @@ import {
   OctagonAlert,
   LogOut,
   Sparkles,
-  CheckCircle2,
 } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
@@ -69,7 +68,7 @@ export const QuickDashboard: React.FC<QuickDashboardProps> = ({ user, lang, onLo
       {/* Toast Alert */}
       {toastMsg && (
         <View style={styles.toastCard}>
-          <Sparkles size={14} color={Colors.cyan} />
+          <Sparkles size={14} color={Colors.primary} />
           <Text style={styles.toastText}>{toastMsg}</Text>
         </View>
       )}
@@ -77,15 +76,12 @@ export const QuickDashboard: React.FC<QuickDashboardProps> = ({ user, lang, onLo
       {/* Homeowner Profile Header Card */}
       <View style={styles.userCard}>
         <View style={styles.userRow}>
-          <Image
-            source={{ uri: user.avatar }}
-            style={styles.avatar}
-          />
+          <Image source={{ uri: user.avatar }} style={styles.avatar} />
           <View style={styles.userInfo}>
             <Text style={styles.greetingText}>{t.dashGreeting}</Text>
             <Text style={styles.userName}>{user.name}</Text>
             <View style={styles.robotPill}>
-              <Bot size={12} color={Colors.cyan} />
+              <Bot size={12} color={Colors.primary} />
               <Text style={styles.robotSerialText}>{user.robotId}</Text>
             </View>
           </View>
@@ -93,16 +89,11 @@ export const QuickDashboard: React.FC<QuickDashboardProps> = ({ user, lang, onLo
       </View>
 
       {/* Robot Status Hero Banner */}
-      <LinearGradient
-        colors={['#1E293B', '#0F172A']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.robotHeroBanner}
-      >
+      <View style={styles.robotHeroBanner}>
         <View style={styles.heroHeader}>
           <View style={styles.heroTitleRow}>
             <View style={styles.robotIconDome}>
-              <Bot size={22} color={Colors.cyan} />
+              <Bot size={22} color={Colors.primary} />
             </View>
             <View>
               <Text style={styles.robotHeroName}>{user.robotName || t.dashRobotTitle}</Text>
@@ -120,7 +111,7 @@ export const QuickDashboard: React.FC<QuickDashboardProps> = ({ user, lang, onLo
         <View style={styles.modeSection}>
           <Text style={styles.modeLabel}>{t.dashMode}</Text>
           <View style={styles.modeValueRow}>
-            <Radio size={14} color={Colors.primaryLight} />
+            <Radio size={14} color={Colors.primary} />
             <Text style={styles.modeValueText}>{t.dashModePatrol}</Text>
           </View>
         </View>
@@ -143,19 +134,19 @@ export const QuickDashboard: React.FC<QuickDashboardProps> = ({ user, lang, onLo
 
           {/* Signal */}
           <View style={styles.telemItem}>
-            <Wifi size={16} color={Colors.cyan} />
+            <Wifi size={16} color={Colors.primary} />
             <Text style={styles.telemVal}>-42 dBm</Text>
             <Text style={styles.telemLabel}>{t.dashSignal}</Text>
           </View>
 
           {/* ROS2 */}
           <View style={styles.telemItem}>
-            <ShieldCheck size={16} color={Colors.primaryLight} />
+            <ShieldCheck size={16} color={Colors.primary} />
             <Text style={styles.telemVal}>Active</Text>
             <Text style={styles.telemLabel}>{t.dashRos2}</Text>
           </View>
         </View>
-      </LinearGradient>
+      </View>
 
       {/* Quick Controls Section */}
       <Text style={styles.sectionHeading}>{t.quickActions}</Text>
@@ -171,8 +162,8 @@ export const QuickDashboard: React.FC<QuickDashboardProps> = ({ user, lang, onLo
           }
           activeOpacity={0.8}
         >
-          <View style={[styles.actionIconBadge, { backgroundColor: 'rgba(37, 99, 235, 0.15)' }]}>
-            <Video size={20} color={Colors.primaryLight} />
+          <View style={[styles.actionIconBadge, { backgroundColor: Colors.primarySubtle }]}>
+            <Video size={20} color={Colors.primary} />
           </View>
           <Text style={styles.actionTitle}>{t.actLiveCam}</Text>
           <Text style={styles.actionDesc}>WebRTC 30fps</Text>
@@ -184,7 +175,7 @@ export const QuickDashboard: React.FC<QuickDashboardProps> = ({ user, lang, onLo
           onPress={handleTogglePatrol}
           activeOpacity={0.8}
         >
-          <View style={[styles.actionIconBadge, { backgroundColor: 'rgba(16, 185, 129, 0.15)' }]}>
+          <View style={[styles.actionIconBadge, { backgroundColor: Colors.successBg }]}>
             <Play size={20} color={Colors.success} />
           </View>
           <Text style={styles.actionTitle}>{patrolling ? t.actPatrol : t.actPatrol}</Text>
@@ -201,7 +192,7 @@ export const QuickDashboard: React.FC<QuickDashboardProps> = ({ user, lang, onLo
           }
           activeOpacity={0.8}
         >
-          <View style={[styles.actionIconBadge, { backgroundColor: 'rgba(6, 182, 212, 0.15)' }]}>
+          <View style={[styles.actionIconBadge, { backgroundColor: Colors.cyanSubtle }]}>
             <Home size={20} color={Colors.cyan} />
           </View>
           <Text style={styles.actionTitle}>{t.actReturnDock}</Text>
@@ -218,7 +209,7 @@ export const QuickDashboard: React.FC<QuickDashboardProps> = ({ user, lang, onLo
           }
           activeOpacity={0.8}
         >
-          <View style={[styles.actionIconBadge, { backgroundColor: 'rgba(239, 68, 68, 0.15)' }]}>
+          <View style={[styles.actionIconBadge, { backgroundColor: Colors.dangerBg }]}>
             <OctagonAlert size={20} color={Colors.danger} />
           </View>
           <Text style={[styles.actionTitle, { color: Colors.danger }]}>{t.actEmergency}</Text>
@@ -247,27 +238,37 @@ const styles = StyleSheet.create({
   toastCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.backgroundElevated,
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: Colors.cyan,
+    borderColor: Colors.primary,
     borderRadius: 12,
     paddingHorizontal: 14,
     paddingVertical: 10,
     marginBottom: 16,
     gap: 8,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 3,
   },
   toastText: {
     fontSize: 12,
     fontWeight: '700',
-    color: Colors.cyan,
+    color: Colors.primary,
   },
   userCard: {
-    backgroundColor: Colors.backgroundCard,
+    backgroundColor: '#FFFFFF',
     borderRadius: 16,
     padding: 14,
     borderWidth: 1,
-    borderColor: Colors.borderLight,
+    borderColor: Colors.border,
     marginBottom: 16,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 2,
+    elevation: 1,
   },
   userRow: {
     flexDirection: 'row',
@@ -279,7 +280,7 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 24,
     borderWidth: 2,
-    borderColor: Colors.primaryLight,
+    borderColor: Colors.primary,
   },
   userInfo: {
     flex: 1,
@@ -292,7 +293,7 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 16,
     fontWeight: '800',
-    color: Colors.textWhite,
+    color: Colors.textPrimary,
   },
   robotPill: {
     flexDirection: 'row',
@@ -303,15 +304,21 @@ const styles = StyleSheet.create({
   robotSerialText: {
     fontSize: 11,
     fontFamily: 'monospace',
-    color: Colors.cyan,
+    color: Colors.primary,
     fontWeight: '700',
   },
   robotHeroBanner: {
+    backgroundColor: '#FFFFFF',
     borderRadius: 20,
     padding: 18,
     borderWidth: 1,
-    borderColor: Colors.borderLight,
+    borderColor: Colors.border,
     marginBottom: 24,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    elevation: 2,
   },
   heroHeader: {
     flexDirection: 'row',
@@ -328,14 +335,14 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 12,
-    backgroundColor: 'rgba(6, 182, 212, 0.15)',
+    backgroundColor: Colors.primarySubtle,
     alignItems: 'center',
     justifyContent: 'center',
   },
   robotHeroName: {
     fontSize: 15,
     fontWeight: '800',
-    color: Colors.textWhite,
+    color: Colors.textPrimary,
   },
   robotHeroStatus: {
     fontSize: 11,
@@ -351,7 +358,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: Colors.successBg,
     borderWidth: 1,
-    borderColor: 'rgba(16, 185, 129, 0.3)',
+    borderColor: 'rgba(22, 163, 74, 0.2)',
   },
   greenPulse: {
     width: 6,
@@ -365,7 +372,7 @@ const styles = StyleSheet.create({
     color: Colors.success,
   },
   modeSection: {
-    backgroundColor: Colors.backgroundInput,
+    backgroundColor: Colors.backgroundElevated,
     borderRadius: 12,
     padding: 10,
     marginBottom: 14,
@@ -385,7 +392,7 @@ const styles = StyleSheet.create({
   modeValueText: {
     fontSize: 12,
     fontWeight: '700',
-    color: Colors.textWhite,
+    color: Colors.textPrimary,
   },
   telemetryGrid: {
     flexDirection: 'row',
@@ -394,7 +401,7 @@ const styles = StyleSheet.create({
   },
   telemItem: {
     flex: 1,
-    backgroundColor: Colors.backgroundInput,
+    backgroundColor: Colors.backgroundElevated,
     borderRadius: 10,
     padding: 8,
     alignItems: 'center',
@@ -402,13 +409,14 @@ const styles = StyleSheet.create({
   telemVal: {
     fontSize: 13,
     fontWeight: '800',
-    color: Colors.textWhite,
+    color: Colors.textPrimary,
     marginTop: 4,
   },
   telemLabel: {
     fontSize: 9,
-    color: Colors.textMuted,
+    color: Colors.textSecondary,
     marginTop: 2,
+    fontWeight: '500',
   },
   sectionHeading: {
     fontSize: 13,
@@ -426,11 +434,16 @@ const styles = StyleSheet.create({
   },
   actionCard: {
     flexBasis: '48%',
-    backgroundColor: Colors.backgroundCard,
+    backgroundColor: '#FFFFFF',
     borderRadius: 16,
     padding: 14,
     borderWidth: 1,
-    borderColor: Colors.borderLight,
+    borderColor: Colors.border,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 2,
+    elevation: 1,
   },
   actionIconBadge: {
     width: 38,
@@ -443,7 +456,7 @@ const styles = StyleSheet.create({
   actionTitle: {
     fontSize: 13,
     fontWeight: '700',
-    color: Colors.textWhite,
+    color: Colors.textPrimary,
     marginBottom: 2,
   },
   actionDesc: {
@@ -459,7 +472,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     backgroundColor: Colors.dangerBg,
     borderWidth: 1,
-    borderColor: 'rgba(239, 68, 68, 0.3)',
+    borderColor: 'rgba(220, 38, 38, 0.2)',
   },
   logoutBtnText: {
     fontSize: 13,

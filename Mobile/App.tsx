@@ -23,7 +23,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
-        <StatusBar style="light" />
+        <StatusBar style="dark" />
         <View style={styles.appContainer}>
           {currentUser ? (
             <View style={styles.dashContainer}>
@@ -46,7 +46,7 @@ export default function App() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: '#FFFFFF',
   },
   appContainer: {
     flex: 1,

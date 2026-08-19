@@ -29,7 +29,7 @@ export const Header: React.FC<HeaderProps> = ({ lang, onLanguageChange }) => {
       {/* Brand Logo & Name */}
       <View style={styles.brandRow}>
         <LinearGradient
-          colors={['#2563EB', '#06B6D4']}
+          colors={['#2563EB', '#3B82F6']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={styles.logoBadge}
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
-    backgroundColor: 'rgba(9, 13, 22, 0.95)',
+    backgroundColor: '#FFFFFF',
   },
   brandRow: {
     flexDirection: 'row',
@@ -95,15 +95,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: Colors.primary,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.35,
-    shadowRadius: 8,
-    elevation: 5,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation: 4,
   },
   brandText: {
     fontSize: 16,
     fontWeight: '800',
-    color: Colors.textWhite,
+    color: Colors.textPrimary,
     letterSpacing: -0.3,
   },
   statusRow: {
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: 'rgba(16, 185, 129, 0.25)',
+    backgroundColor: 'rgba(22, 163, 74, 0.2)',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -128,36 +128,36 @@ const styles = StyleSheet.create({
   },
   statusText: {
     fontSize: 10,
-    fontWeight: '600',
+    fontWeight: '700',
     color: Colors.success,
   },
   langPillContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.backgroundElevated,
     borderRadius: 10,
-    padding: 3,
+    padding: 2,
     borderWidth: 1,
-    borderColor: Colors.borderLight,
+    borderColor: Colors.border,
   },
   langBtn: {
-    paddingHorizontal: 8,
+    paddingHorizontal: 9,
     paddingVertical: 4,
-    borderRadius: 7,
+    borderRadius: 8,
   },
   langBtnActive: {
-    backgroundColor: Colors.primary,
-    shadowColor: Colors.primary,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 3,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
   },
   langBtnText: {
     fontSize: 11,
     fontWeight: '700',
-    color: Colors.textMuted,
+    color: Colors.textSecondary,
   },
   langBtnTextActive: {
-    color: Colors.textWhite,
+    color: Colors.primary,
   },
 });

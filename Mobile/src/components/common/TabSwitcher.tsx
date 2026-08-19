@@ -63,11 +63,9 @@ export const TabSwitcher: React.FC<TabSwitcherProps> = ({
 const styles = StyleSheet.create({
   wrapper: {
     flexDirection: 'row',
-    backgroundColor: Colors.backgroundInput,
+    backgroundColor: '#E2E8F0',
     borderRadius: 14,
-    padding: 4,
-    borderWidth: 1,
-    borderColor: Colors.border,
+    padding: 3,
     marginBottom: 20,
   },
   tabBtn: {
@@ -75,24 +73,22 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 10,
+    borderRadius: 11,
   },
   tabBtnActive: {
-    backgroundColor: Colors.backgroundElevated,
-    borderWidth: 1,
-    borderColor: Colors.borderLight,
-    shadowColor: '#000',
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOpacity: 0.08,
+    shadowRadius: 3,
+    elevation: 2,
   },
   tabText: {
     fontSize: 13,
     fontWeight: '700',
   },
   tabTextActive: {
-    color: Colors.textWhite,
+    color: Colors.textPrimary,
   },
   tabTextInactive: {
     color: Colors.textSecondary,

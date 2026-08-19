@@ -70,7 +70,7 @@ export const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
           </TouchableOpacity>
 
           <View style={styles.iconBadge}>
-            <KeyRound size={22} color={Colors.cyan} />
+            <KeyRound size={22} color={Colors.primary} />
           </View>
 
           <Text style={styles.title}>{t.forgotModalTitle}</Text>
@@ -78,7 +78,7 @@ export const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
 
           {sentSuccess ? (
             <View style={styles.successBox}>
-              <CheckCircle2 size={24} color={Colors.success} />
+              <CheckCircle2 size={28} color={Colors.success} />
               <Text style={styles.successText}>{t.otpSentSuccess}</Text>
               <TouchableOpacity style={styles.doneBtn} onPress={handleClose} activeOpacity={0.8}>
                 <Text style={styles.doneBtnText}>{t.closeModal}</Text>
@@ -108,7 +108,7 @@ export const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
                 style={styles.submitBtnWrapper}
               >
                 <LinearGradient
-                  colors={['#2563EB', '#06B6D4']}
+                  colors={['#2563EB', '#1D4ED8']}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
                   style={styles.submitGradient}
@@ -131,7 +131,7 @@ export const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(5, 8, 15, 0.75)',
+    backgroundColor: 'rgba(15, 23, 42, 0.45)',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
@@ -139,15 +139,15 @@ const styles = StyleSheet.create({
   modalCard: {
     width: '100%',
     maxWidth: 380,
-    backgroundColor: Colors.backgroundCard,
+    backgroundColor: '#FFFFFF',
     borderRadius: 20,
     padding: 22,
     borderWidth: 1,
-    borderColor: Colors.borderLight,
+    borderColor: Colors.border,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.15,
     shadowRadius: 20,
     elevation: 10,
   },
@@ -166,9 +166,9 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: 'rgba(6, 182, 212, 0.12)',
+    backgroundColor: Colors.primarySubtle,
     borderWidth: 1,
-    borderColor: 'rgba(6, 182, 212, 0.3)',
+    borderColor: 'rgba(37, 99, 235, 0.2)',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 12,
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: '800',
-    color: Colors.textWhite,
+    color: Colors.textPrimary,
     marginBottom: 6,
     textAlign: 'center',
   },
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.backgroundInput,
+    backgroundColor: '#FFFFFF',
     borderRadius: 12,
     borderWidth: 1,
     borderColor: Colors.border,
@@ -212,9 +212,10 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    color: Colors.textWhite,
+    color: Colors.textPrimary,
     fontSize: 13,
     paddingVertical: 12,
+    fontWeight: '500',
   },
   submitBtnWrapper: {
     borderRadius: 12,
@@ -226,7 +227,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   submitBtnText: {
-    color: Colors.textWhite,
+    color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '700',
   },
@@ -242,18 +243,19 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginBottom: 16,
     lineHeight: 18,
+    fontWeight: '600',
   },
   doneBtn: {
-    backgroundColor: Colors.backgroundElevated,
+    backgroundColor: Colors.primarySubtle,
     paddingVertical: 10,
     paddingHorizontal: 24,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: Colors.borderLight,
+    borderColor: 'rgba(37, 99, 235, 0.2)',
   },
   doneBtnText: {
-    color: Colors.textWhite,
+    color: Colors.primary,
     fontSize: 13,
-    fontWeight: '600',
+    fontWeight: '700',
   },
 });

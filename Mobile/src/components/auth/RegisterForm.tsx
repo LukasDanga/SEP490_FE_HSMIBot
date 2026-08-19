@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native';
 import {
   User,
@@ -22,7 +21,6 @@ import {
   Bot,
   Check,
   Activity,
-  Cpu,
 } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
@@ -82,7 +80,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
       case 2:
         return { label: t.strengthFair, color: Colors.warning, bg: Colors.warning };
       case 3:
-        return { label: t.strengthGood, color: Colors.primaryLight, bg: Colors.primaryLight };
+        return { label: t.strengthGood, color: Colors.primary, bg: Colors.primary };
       case 4:
         return { label: t.strengthStrong, color: Colors.success, bg: Colors.success };
       default:
@@ -300,7 +298,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
                       styles.strengthSegment,
                       {
                         backgroundColor:
-                          strengthScore >= bar ? getStrengthMeta().bg : Colors.borderLight,
+                          strengthScore >= bar ? getStrengthMeta().bg : Colors.border,
                       },
                     ]}
                   />
@@ -410,13 +408,13 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
                 style={styles.qrBadgeBtn}
                 activeOpacity={0.7}
               >
-                <QrCode size={13} color={Colors.cyan} />
+                <QrCode size={13} color={Colors.primary} />
                 <Text style={styles.qrBadgeText}>{t.scanQrBtn}</Text>
               </TouchableOpacity>
             </View>
 
             <View style={styles.inputWrapper}>
-              <Bot size={16} color={Colors.primaryLight} style={styles.fieldIcon} />
+              <Bot size={16} color={Colors.primary} style={styles.fieldIcon} />
               <TextInput
                 value={robotSerial}
                 onChangeText={(val) => setRobotSerial(val.toUpperCase())}
@@ -480,7 +478,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               style={[styles.actionBtnWrapper, { flex: 1 }]}
             >
               <LinearGradient
-                colors={['#2563EB', '#06B6D4']}
+                colors={['#2563EB', '#1D4ED8']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 style={styles.actionGradient}
@@ -499,7 +497,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           {/* Glowing Animated Dome */}
           <View style={styles.animationDome}>
             <LinearGradient
-              colors={['#2563EB', '#06B6D4']}
+              colors={['#2563EB', '#3B82F6']}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 1 }}
               style={styles.domeCore}
@@ -547,7 +545,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               style={styles.enterPortalWrapper}
             >
               <LinearGradient
-                colors={['#10B981', '#059669']}
+                colors={['#16A34A', '#15803D']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
                 style={styles.actionGradient}
@@ -595,7 +593,7 @@ const styles = StyleSheet.create({
   mainTitle: {
     fontSize: 22,
     fontWeight: '800',
-    color: Colors.textWhite,
+    color: Colors.textPrimary,
     letterSpacing: -0.4,
   },
   subTitle: {
@@ -614,12 +612,12 @@ const styles = StyleSheet.create({
   },
   stepBar: {
     height: 4,
-    backgroundColor: Colors.borderLight,
+    backgroundColor: '#E2E8F0',
     borderRadius: 2,
     marginBottom: 4,
   },
   stepBarActive: {
-    backgroundColor: Colors.primaryLight,
+    backgroundColor: Colors.primary,
   },
   stepLabel: {
     fontSize: 10,
@@ -627,14 +625,14 @@ const styles = StyleSheet.create({
     color: Colors.textMuted,
   },
   stepLabelActive: {
-    color: Colors.textPrimary,
+    color: Colors.primary,
   },
   errorBox: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Colors.dangerBg,
     borderWidth: 1,
-    borderColor: 'rgba(239, 68, 68, 0.3)',
+    borderColor: 'rgba(220, 38, 38, 0.25)',
     borderRadius: 12,
     paddingHorizontal: 12,
     paddingVertical: 10,
@@ -671,20 +669,26 @@ const styles = StyleSheet.create({
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.backgroundInput,
+    backgroundColor: '#FFFFFF',
     borderRadius: 12,
     borderWidth: 1,
     borderColor: Colors.border,
     paddingHorizontal: 12,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 2,
+    elevation: 1,
   },
   fieldIcon: {
     marginRight: 8,
   },
   textInput: {
     flex: 1,
-    color: Colors.textWhite,
+    color: Colors.textPrimary,
     fontSize: 13,
     paddingVertical: 12,
+    fontWeight: '500',
   },
   fontMono: {
     fontFamily: 'monospace',
@@ -711,18 +715,18 @@ const styles = StyleSheet.create({
     gap: 4,
     paddingHorizontal: 8,
     paddingVertical: 3,
-    backgroundColor: 'rgba(6, 182, 212, 0.12)',
+    backgroundColor: Colors.primarySubtle,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: 'rgba(6, 182, 212, 0.3)',
+    borderColor: 'rgba(37, 99, 235, 0.2)',
   },
   qrBadgeText: {
     fontSize: 10,
     fontWeight: '700',
-    color: Colors.cyan,
+    color: Colors.primary,
   },
   verifiedTag: {
-    backgroundColor: Colors.backgroundElevated,
+    backgroundColor: Colors.successBg,
     paddingHorizontal: 6,
     paddingVertical: 3,
     borderRadius: 4,
@@ -747,7 +751,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1.5,
     borderColor: Colors.borderLight,
-    backgroundColor: Colors.backgroundInput,
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -764,17 +768,22 @@ const styles = StyleSheet.create({
     lineHeight: 16,
   },
   termsLink: {
-    color: Colors.primaryLight,
+    color: Colors.primary,
     fontWeight: '700',
     textDecorationLine: 'underline',
   },
   diagnosticCard: {
-    backgroundColor: Colors.backgroundElevated,
+    backgroundColor: '#FFFFFF',
     borderRadius: 14,
     padding: 14,
     borderWidth: 1,
-    borderColor: Colors.borderLight,
+    borderColor: Colors.border,
     marginBottom: 16,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 2,
+    elevation: 1,
   },
   diagHeader: {
     flexDirection: 'row',
@@ -785,7 +794,7 @@ const styles = StyleSheet.create({
   diagTitle: {
     fontSize: 11,
     fontWeight: '700',
-    color: Colors.textWhite,
+    color: Colors.textPrimary,
     textTransform: 'uppercase',
   },
   readyBadge: {
@@ -794,7 +803,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     borderRadius: 4,
     borderWidth: 1,
-    borderColor: 'rgba(16, 185, 129, 0.3)',
+    borderColor: 'rgba(22, 163, 74, 0.2)',
   },
   readyText: {
     fontSize: 9,
@@ -810,7 +819,7 @@ const styles = StyleSheet.create({
     flexBasis: '48%',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.backgroundCard,
+    backgroundColor: Colors.backgroundElevated,
     paddingHorizontal: 8,
     paddingVertical: 6,
     borderRadius: 8,
@@ -827,7 +836,7 @@ const styles = StyleSheet.create({
   sensorText: {
     fontSize: 10,
     fontWeight: '600',
-    color: Colors.textPrimary,
+    color: Colors.textSecondary,
   },
   step2ActionsRow: {
     flexDirection: 'row',
@@ -842,9 +851,9 @@ const styles = StyleSheet.create({
     paddingVertical: 13,
     paddingHorizontal: 14,
     borderRadius: 14,
-    backgroundColor: Colors.backgroundElevated,
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: Colors.borderLight,
+    borderColor: Colors.border,
   },
   backBtnText: {
     fontSize: 13,
@@ -856,9 +865,9 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     shadowColor: Colors.primary,
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.35,
-    shadowRadius: 10,
-    elevation: 6,
+    shadowOpacity: 0.25,
+    shadowRadius: 8,
+    elevation: 4,
   },
   actionGradient: {
     paddingVertical: 14,
@@ -868,7 +877,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   actionBtnText: {
-    color: Colors.textWhite,
+    color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '700',
   },
@@ -880,9 +889,9 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     borderRadius: 45,
-    backgroundColor: 'rgba(37, 99, 235, 0.15)',
+    backgroundColor: Colors.primarySubtle,
     borderWidth: 1,
-    borderColor: 'rgba(37, 99, 235, 0.3)',
+    borderColor: 'rgba(37, 99, 235, 0.2)',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 16,
@@ -895,14 +904,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     shadowColor: Colors.primary,
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
-    elevation: 8,
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 6,
   },
   stageTitle: {
     fontSize: 16,
     fontWeight: '800',
-    color: Colors.textWhite,
+    color: Colors.textPrimary,
     textAlign: 'center',
     marginBottom: 6,
   },
@@ -917,11 +926,11 @@ const styles = StyleSheet.create({
   },
   handshakeProgressWrapper: {
     width: '100%',
-    backgroundColor: Colors.backgroundElevated,
+    backgroundColor: '#FFFFFF',
     borderRadius: 12,
     padding: 12,
     borderWidth: 1,
-    borderColor: Colors.borderLight,
+    borderColor: Colors.border,
     marginBottom: 18,
   },
   handshakeHeader: {
@@ -938,18 +947,18 @@ const styles = StyleSheet.create({
   handshakePct: {
     fontSize: 11,
     fontWeight: '800',
-    color: Colors.cyan,
+    color: Colors.primary,
   },
   handshakeTrack: {
     width: '100%',
     height: 6,
-    backgroundColor: Colors.backgroundInput,
+    backgroundColor: '#E2E8F0',
     borderRadius: 3,
     overflow: 'hidden',
   },
   handshakeFill: {
     height: '100%',
-    backgroundColor: Colors.primaryLight,
+    backgroundColor: Colors.primary,
     borderRadius: 3,
   },
   enterPortalWrapper: {
@@ -970,6 +979,6 @@ const styles = StyleSheet.create({
   loginLink: {
     fontSize: 12,
     fontWeight: '700',
-    color: Colors.primaryLight,
+    color: Colors.primary,
   },
 });
