@@ -21,6 +21,7 @@ import {
 import confetti from 'canvas-confetti';
 import { Language, UserProfile } from '../../types';
 import { translations } from '../../i18n/translations';
+import { mockUsers, authenticateMockUser } from '../../mock/mockData';
 import { ForgotPasswordModal } from './ForgotPasswordModal';
 
 interface LoginFormProps {
@@ -60,15 +61,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   const [biometricSuccess, setBiometricSuccess] = useState(false);
   const [showForgotModal, setShowForgotModal] = useState(false);
 
-  // Quick Demo Filler
-  const handleFillDemo = (type: 'owner' | 'engineer') => {
-    if (type === 'owner') {
-      setEmail('owner.khang@hsmibot.io');
-      setPassword('OwnerVaultSecure99!');
-      setErrorMessage(null);
-    } else {
-      setEmail('ros2.dev@hsmibot.io');
-      setPassword('ROS2GalacticStack@1');
+  // Quick Demo Filler for 4 Predefined Users (1 Admin & 3 Members)
+  const handleFillDemoUser = (userIndex: number) => {
+    const target = mockUsers[userIndex];
+    if (target) {
+      setEmail(target.email);
+      setPassword(target.password || 'HSMIBot2026!#');
       setErrorMessage(null);
     }
   };
@@ -90,16 +88,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
     setLoading(true);
 
-    // Simulate backend auth check
+    // Simulate backend auth check using shared mock users
     setTimeout(() => {
       setLoading(false);
       
-      // Determine user name based on credentials
-      const username = cleanEmail.includes('khang') || cleanEmail.includes('owner') 
-        ? 'Luan H. Bao Khang' 
-        : cleanEmail.includes('ros2') 
-          ? 'Alex Chen (ROS2)' 
-          : cleanEmail.split('@')[0] || 'Administrator';
+      const authUser = authenticateMockUser(cleanEmail, password);
 
       confetti({
         particleCount: 80,
@@ -108,14 +101,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       });
 
       onLoginSuccess({
-        id: 'usr_01_hsmibot',
-        name: username,
-        email: cleanEmail,
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-        robotId: 'HSMI-BOT-9042-X',
-        robotName: 'HSMIBot Alpha Sentry'
+        id: authUser.id,
+        name: authUser.name,
+        email: authUser.email,
+        avatar: authUser.avatar,
+        role: authUser.role,
+        category: authUser.category,
+        robotId: authUser.robotId,
+        robotName: authUser.robotName
       });
-    }, 950);
+    }, 850);
   };
 
   // Quick Face ID / Biometric Login Mock
@@ -484,21 +479,60 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-2">
+                {/* 1. Admin (Chủ nhà) */}
                 <button
                   type="button"
-                  onClick={() => handleFillDemo('owner')}
-                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-[11px] font-semibold text-slate-700 flex items-center justify-center space-x-1.5 transition shadow-2xs"
+                  onClick={() => handleFillDemoUser(0)}
+                  className={`px-2.5 py-1.5 rounded-lg border text-[11px] font-semibold flex items-center justify-center space-x-1.5 transition shadow-2xs ${
+                    email === mockUsers[0].email
+                      ? 'border-blue-600 bg-blue-50/70 text-blue-700 font-bold'
+                      : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
+                  }`}
                 >
-                  <UserCheck className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>{t.demoOwner}</span>
+                  <UserCheck className="w-3.5 h-3.5 text-blue-600" />
+                  <span className="truncate">{t.demoAdmin}</span>
                 </button>
+
+                {/* 2. Member (Gia đình) */}
                 <button
                   type="button"
-                  onClick={() => handleFillDemo('engineer')}
-                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-[11px] font-semibold text-slate-700 flex items-center justify-center space-x-1.5 transition shadow-2xs"
+                  onClick={() => handleFillDemoUser(1)}
+                  className={`px-2.5 py-1.5 rounded-lg border text-[11px] font-semibold flex items-center justify-center space-x-1.5 transition shadow-2xs ${
+                    email === mockUsers[1].email
+                      ? 'border-emerald-600 bg-emerald-50/70 text-emerald-700 font-bold'
+                      : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
+                  }`}
                 >
-                  <Radio className="w-3.5 h-3.5 text-blue-600" />
-                  <span>{t.demoSecurity}</span>
+                  <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                  <span className="truncate">{t.demoResident}</span>
+                </button>
+
+                {/* 3. Member (Kỹ thuật) */}
+                <button
+                  type="button"
+                  onClick={() => handleFillDemoUser(2)}
+                  className={`px-2.5 py-1.5 rounded-lg border text-[11px] font-semibold flex items-center justify-center space-x-1.5 transition shadow-2xs ${
+                    email === mockUsers[2].email
+                      ? 'border-amber-600 bg-amber-50/70 text-amber-700 font-bold'
+                      : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
+                  }`}
+                >
+                  <Radio className="w-3.5 h-3.5 text-amber-600" />
+                  <span className="truncate">{t.demoEngineer}</span>
+                </button>
+
+                {/* 4. Member (Giúp việc) */}
+                <button
+                  type="button"
+                  onClick={() => handleFillDemoUser(3)}
+                  className={`px-2.5 py-1.5 rounded-lg border text-[11px] font-semibold flex items-center justify-center space-x-1.5 transition shadow-2xs ${
+                    email === mockUsers[3].email
+                      ? 'border-purple-600 bg-purple-50/70 text-purple-700 font-bold'
+                      : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
+                  }`}
+                >
+                  <UserCheck className="w-3.5 h-3.5 text-purple-600" />
+                  <span className="truncate">{t.demoGuest}</span>
                 </button>
               </div>
             </div>

@@ -21,7 +21,7 @@ export const translations = {
     // Fields
     emailOrUsername: 'Email hoặc Tài khoản',
     emailAddress: 'Địa chỉ Email',
-    emailPlaceholder: 'owner@hsmibot.io',
+    emailPlaceholder: 'admin.khang@hsmibot.io',
     registerEmailPlaceholder: 'owner@hsmibot.io',
     password: 'Mật khẩu',
     passwordPlaceholder: '••••••••••••',
@@ -47,10 +47,12 @@ export const translations = {
     alreadyHaveAccount: 'Đã có tài khoản?',
     loginNow: 'Đăng nhập ngay',
 
-    // Quick Demo Logins
-    demoQuickLogin: 'Đăng nhập nhanh (Tài khoản mẫu):',
-    demoOwner: 'Chủ nhà (VIP)',
-    demoSecurity: 'Kỹ thuật ROS2',
+    // 4 Quick Demo Logins (1 Admin + 3 Members)
+    demoQuickLogin: 'Đăng nhập nhanh mẫu (1 Admin & 3 Member):',
+    demoAdmin: '1. Admin (Chủ nhà)',
+    demoResident: '2. Member (Gia đình)',
+    demoEngineer: '3. Member (Kỹ thuật)',
+    demoGuest: '4. Member (Giúp việc)',
 
     // Step Progress
     stepProfile: '1. Hồ sơ',
@@ -145,7 +147,7 @@ export const translations = {
     // Fields
     emailOrUsername: 'Email or Username',
     emailAddress: 'Email Address',
-    emailPlaceholder: 'owner@hsmibot.io',
+    emailPlaceholder: 'admin.khang@hsmibot.io',
     registerEmailPlaceholder: 'owner@hsmibot.io',
     password: 'Password',
     passwordPlaceholder: '••••••••••••',
@@ -171,10 +173,12 @@ export const translations = {
     alreadyHaveAccount: 'Already have an account?',
     loginNow: 'Sign in now',
 
-    // Quick Demo Logins
-    demoQuickLogin: 'Quick Demo Credentials:',
-    demoOwner: 'Owner (VIP)',
-    demoSecurity: 'ROS2 Engineer',
+    // 4 Quick Demo Logins (1 Admin + 3 Members)
+    demoQuickLogin: 'Quick Demo Accounts (1 Admin & 3 Members):',
+    demoAdmin: '1. Admin (Owner)',
+    demoResident: '2. Member (Family)',
+    demoEngineer: '3. Member (Engineer)',
+    demoGuest: '4. Member (Housekeeper)',
 
     // Step Progress
     stepProfile: '1. Profile',

@@ -28,8 +28,12 @@ export const translations = {
     alreadyHaveAccount: 'Đã có tài khoản?',
     loginNow: 'Đăng nhập ngay',
     
-    // Demo quick fillers
-    demoQuickLogin: 'Đăng nhập nhanh mẫu:',
+    // Demo quick fillers (1 Admin & 3 Members)
+    demoQuickLogin: 'Đăng nhập nhanh mẫu (1 Admin & 3 Member):',
+    demoAdmin: '1. Admin (Chủ nhà)',
+    demoResident: '2. Member (Gia đình)',
+    demoEngineer: '3. Member (Kỹ thuật)',
+    demoGuest: '4. Member (Giúp việc)',
     demoOwner: 'Chủ nhà (VIP)',
     demoSecurity: 'Kỹ thuật viên ROS2',
     
@@ -649,8 +653,12 @@ export const translations = {
     alreadyHaveAccount: 'Already have an account?',
     loginNow: 'Log in now',
 
-    // Demo quick fillers
-    demoQuickLogin: 'Quick Demo Credentials:',
+    // Demo quick fillers (1 Admin & 3 Members)
+    demoQuickLogin: 'Quick Demo Accounts (1 Admin & 3 Members):',
+    demoAdmin: '1. Admin (Owner)',
+    demoResident: '2. Member (Family)',
+    demoEngineer: '3. Member (Engineer)',
+    demoGuest: '4. Member (Housekeeper)',
     demoOwner: 'Homeowner (VIP)',
     demoSecurity: 'ROS2 Engineer',
 

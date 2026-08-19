@@ -19,6 +19,10 @@ import {
   UserCheck,
   Radio,
   Check,
+  ShieldAlert,
+  HeartHandshake,
+  Wrench,
+  Sparkles,
 } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
@@ -26,6 +30,7 @@ import * as LocalAuthentication from 'expo-local-authentication';
 import { Colors } from '../../theme/colors';
 import { Language, UserProfile } from '../../types';
 import { translations } from '../../i18n/translations';
+import { mockUsers, authenticateMockUser } from '../../mock/mockData';
 import { ForgotPasswordModal } from './ForgotPasswordModal';
 
 interface LoginFormProps {
@@ -42,7 +47,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   const t = translations[lang];
 
   // Fields
-  const [email, setEmail] = useState('khang.luan@hsmibot.io');
+  const [email, setEmail] = useState('admin.khang@hsmibot.io');
   const [password, setPassword] = useState('HSMIBot2026!#');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
@@ -53,22 +58,20 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showForgotModal, setShowForgotModal] = useState(false);
 
-  // Quick Demo Filler
-  const handleFillDemo = (type: 'owner' | 'engineer') => {
-    try {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    } catch {}
-    setErrorMessage(null);
-    if (type === 'owner') {
-      setEmail('owner.khang@hsmibot.io');
-      setPassword('OwnerVaultSecure99!');
-    } else {
-      setEmail('ros2.dev@hsmibot.io');
-      setPassword('ROS2GalacticStack@1');
+  // Quick Demo Filler for 4 Users (1 Admin & 3 Members)
+  const handleFillDemoUser = (userIndex: number) => {
+    const target = mockUsers[userIndex];
+    if (target) {
+      try {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      } catch {}
+      setEmail(target.email);
+      setPassword(target.password || 'HSMIBot2026!#');
+      setErrorMessage(null);
     }
   };
 
-  // Submit Login
+  // Submit Login with mock authentication
   const handleLogin = () => {
     setErrorMessage(null);
     const cleanEmail = email.trim();
@@ -95,25 +98,23 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       } catch {}
 
-      const username =
-        cleanEmail.includes('khang') || cleanEmail.includes('owner')
-          ? 'Luan H. Bao Khang'
-          : cleanEmail.includes('ros2')
-          ? 'Alex Chen (ROS2)'
-          : cleanEmail.split('@')[0] || 'Administrator';
+      // Authenticate against 4 mock users
+      const authUser = authenticateMockUser(cleanEmail, password);
 
       onLoginSuccess({
-        id: 'usr_01_mobile',
-        name: username,
-        email: cleanEmail,
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-        robotId: 'HSMI-BOT-9042-X',
-        robotName: 'HSMIBot Alpha Sentry',
+        id: authUser.id,
+        name: authUser.name,
+        email: authUser.email,
+        avatar: authUser.avatar,
+        role: authUser.role,
+        category: authUser.category,
+        robotId: authUser.robotId,
+        robotName: authUser.robotName,
       });
-    }, 850);
+    }, 800);
   };
 
-  // Biometric Auth (FaceID / Fingerprint)
+  // Biometric Auth (FaceID / Fingerprint) -> Logs in as Admin
   const handleBiometricAuth = async () => {
     setErrorMessage(null);
     setBiometricLoading(true);
@@ -134,20 +135,21 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
           } catch {}
           setBiometricLoading(false);
+          const adminUser = mockUsers[0];
           onLoginSuccess({
-            id: 'usr_bio_mobile',
-            name: 'Luan H. Bao Khang (Face ID)',
-            email: 'owner.khang@hsmibot.io',
-            avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
-            robotId: 'HSMI-BOT-9042-X',
-            robotName: 'HSMIBot Alpha Sentry',
+            id: adminUser.id,
+            name: `${adminUser.name} (Face ID)`,
+            email: adminUser.email,
+            avatar: adminUser.avatar,
+            role: adminUser.role,
+            category: adminUser.category,
+            robotId: adminUser.robotId,
+            robotName: adminUser.robotName,
           });
           return;
         }
       }
-    } catch {
-      // Fallback
-    }
+    } catch {}
 
     // Simulated Biometric fallback for testing
     setTimeout(() => {
@@ -155,15 +157,18 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       try {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       } catch {}
+      const adminUser = mockUsers[0];
       onLoginSuccess({
-        id: 'usr_bio_mobile',
-        name: 'Luan H. Bao Khang (Biometric)',
-        email: 'owner.khang@hsmibot.io',
-        avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
-        robotId: 'HSMI-BOT-9042-X',
-        robotName: 'HSMIBot Alpha Sentry',
+        id: adminUser.id,
+        name: `${adminUser.name} (Biometric)`,
+        email: adminUser.email,
+        avatar: adminUser.avatar,
+        role: adminUser.role,
+        category: adminUser.category,
+        robotId: adminUser.robotId,
+        robotName: adminUser.robotName,
       });
-    }, 1000);
+    }, 900);
   };
 
   // Social Login Mock
@@ -174,13 +179,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       try {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       } catch {}
+      const memberUser = mockUsers[1];
       onLoginSuccess({
         id: `usr_${provider.toLowerCase()}_mobile`,
-        name: `${provider} Authenticated User`,
+        name: `${provider} (${memberUser.name})`,
         email: `user@${provider.toLowerCase()}.com`,
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-        robotId: 'HSMI-BOT-9042-X',
-        robotName: 'HSMIBot Alpha Sentry',
+        avatar: memberUser.avatar,
+        role: 'member',
+        category: 'resident',
+        robotId: memberUser.robotId,
+        robotName: memberUser.robotName,
       });
     }, 600);
   };
@@ -313,25 +321,60 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         </LinearGradient>
       </TouchableOpacity>
 
-      {/* Quick Demo Fillers */}
+      {/* 4 Quick Demo Fillers (1 Admin & 3 Members) */}
       <View style={styles.demoSection}>
-        <Text style={styles.demoTitle}>{t.demoQuickLogin}</Text>
-        <View style={styles.demoButtonsRow}>
+        <View style={styles.demoHeaderRow}>
+          <Text style={styles.demoTitle}>{t.demoQuickLogin}</Text>
+          <Sparkles size={12} color={Colors.primary} />
+        </View>
+
+        <View style={styles.demoGrid}>
+          {/* User 1: Admin */}
           <TouchableOpacity
-            style={styles.demoBtn}
-            onPress={() => handleFillDemo('owner')}
+            style={[styles.demoBtn, email === mockUsers[0].email && styles.demoBtnSelected]}
+            onPress={() => handleFillDemoUser(0)}
             activeOpacity={0.7}
           >
-            <UserCheck size={14} color={Colors.success} />
-            <Text style={styles.demoBtnText}>{t.demoOwner}</Text>
+            <ShieldAlert size={13} color={Colors.primary} />
+            <Text style={[styles.demoBtnText, email === mockUsers[0].email && styles.demoBtnTextSelected]}>
+              {t.demoAdmin}
+            </Text>
           </TouchableOpacity>
+
+          {/* User 2: Member 1 - Resident */}
           <TouchableOpacity
-            style={styles.demoBtn}
-            onPress={() => handleFillDemo('engineer')}
+            style={[styles.demoBtn, email === mockUsers[1].email && styles.demoBtnSelected]}
+            onPress={() => handleFillDemoUser(1)}
             activeOpacity={0.7}
           >
-            <Radio size={14} color={Colors.primary} />
-            <Text style={styles.demoBtnText}>{t.demoSecurity}</Text>
+            <HeartHandshake size={13} color={Colors.success} />
+            <Text style={[styles.demoBtnText, email === mockUsers[1].email && styles.demoBtnTextSelected]}>
+              {t.demoResident}
+            </Text>
+          </TouchableOpacity>
+
+          {/* User 3: Member 2 - Engineer */}
+          <TouchableOpacity
+            style={[styles.demoBtn, email === mockUsers[2].email && styles.demoBtnSelected]}
+            onPress={() => handleFillDemoUser(2)}
+            activeOpacity={0.7}
+          >
+            <Wrench size={13} color={Colors.warning} />
+            <Text style={[styles.demoBtnText, email === mockUsers[2].email && styles.demoBtnTextSelected]}>
+              {t.demoEngineer}
+            </Text>
+          </TouchableOpacity>
+
+          {/* User 4: Member 3 - Housekeeper */}
+          <TouchableOpacity
+            style={[styles.demoBtn, email === mockUsers[3].email && styles.demoBtnSelected]}
+            onPress={() => handleFillDemoUser(3)}
+            activeOpacity={0.7}
+          >
+            <UserCheck size={13} color={Colors.purple} />
+            <Text style={[styles.demoBtnText, email === mockUsers[3].email && styles.demoBtnTextSelected]}>
+              {t.demoGuest}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -420,7 +463,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   inputGroup: {
-    marginBottom: 16,
+    marginBottom: 14,
   },
   labelRow: {
     flexDirection: 'row',
@@ -469,7 +512,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 18,
+    marginBottom: 16,
   },
   checkboxRow: {
     flexDirection: 'row',
@@ -542,45 +585,64 @@ const styles = StyleSheet.create({
   },
   demoSection: {
     marginTop: 18,
-  },
-  demoTitle: {
-    fontSize: 10,
-    fontWeight: '700',
-    color: Colors.textMuted,
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-    marginBottom: 8,
-  },
-  demoButtonsRow: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-  demoBtn: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 6,
-    paddingVertical: 9,
-    borderRadius: 10,
     backgroundColor: '#FFFFFF',
+    borderRadius: 14,
+    padding: 12,
     borderWidth: 1,
     borderColor: Colors.border,
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
+    shadowOpacity: 0.03,
     shadowRadius: 2,
     elevation: 1,
   },
+  demoHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
+  demoTitle: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: Colors.textSecondary,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  demoGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+  },
+  demoBtn: {
+    flexBasis: '48%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    paddingVertical: 7,
+    paddingHorizontal: 8,
+    borderRadius: 8,
+    backgroundColor: Colors.backgroundElevated,
+    borderWidth: 1,
+    borderColor: Colors.border,
+  },
+  demoBtnSelected: {
+    backgroundColor: Colors.primarySubtle,
+    borderColor: Colors.primary,
+  },
   demoBtnText: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '700',
     color: Colors.textSecondary,
+    flexShrink: 1,
+  },
+  demoBtnTextSelected: {
+    color: Colors.primary,
   },
   dividerRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 18,
+    marginVertical: 16,
   },
   dividerLine: {
     flex: 1,
@@ -644,7 +706,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   footerPrompt: {
-    marginTop: 20,
+    marginTop: 18,
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',

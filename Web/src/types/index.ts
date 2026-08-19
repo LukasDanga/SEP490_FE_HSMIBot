@@ -1,12 +1,41 @@
 export type Language = 'vi' | 'en';
 
+export type UserRole = 'admin' | 'member';
+export type UserCategory = 'owner' | 'resident' | 'engineer' | 'guest';
+
 export interface UserProfile {
   id: string;
   name: string;
   email: string;
   avatar: string;
+  role?: UserRole;
+  category?: UserCategory;
   robotId: string;
   robotName: string;
+}
+
+export interface UserAccount {
+  id: string;
+  name: string;
+  email: string;
+  password?: string;
+  avatar: string;
+  role: UserRole;
+  category: UserCategory;
+  categoryNameVI: string;
+  categoryNameEN: string;
+  robotId: string;
+  robotName: string;
+  phone: string;
+  dialCode: string;
+  villaAddress: string;
+  permissions: string[];
+  scheduleRestrictionsVI?: string;
+  scheduleRestrictionsEN?: string;
+  memberSince: string;
+  verified: boolean;
+  twoFactorEnabled: boolean;
+  status: 'active' | 'inactive';
 }
 
 export interface UserSession {
@@ -58,7 +87,7 @@ export interface RobotTelemetry {
   cpuUsage: number; // %
   ramUsage: number; // %
   activeNodeCount: number;
-  odometryDistance: number; // km
+  odometryDistance?: number; // km
 }
 
 export type IncidentSeverity = 'danger' | 'warning' | 'info' | 'safe';
@@ -119,7 +148,7 @@ export interface PatrolSchedule {
   triggerType: 'time' | 'away_mode' | 'recurring';
   triggerDisplayVI: string;
   triggerDisplayEN: string;
-  time: string; // e.g. "01:00 AM" or "Every 2 hours"
+  time: string;
   frequencyVI: string;
   frequencyEN: string;
   days: string[];
@@ -138,8 +167,8 @@ export interface MapWaypoint {
   id: string;
   nameVI: string;
   nameEN: string;
-  x: number; // percentage 0-100
-  y: number; // percentage 0-100
+  x: number;
+  y: number;
   type: 'dock' | 'patrol_point' | 'checkpoint' | 'nogo_zone';
 }
 
@@ -153,15 +182,13 @@ export interface SlamZone {
   type: SlamZoneType;
   visible: boolean;
   color?: string;
-  maxSpeed?: number; // m/s e.g. 0.2
+  maxSpeed?: number;
   activeTimeRule?: 'all_day' | 'night_only' | 'custom';
-  timeRange?: string; // e.g. "22:00 - 06:00"
-  // For walls: line (x1, y1) -> (x2, y2)
+  timeRange?: string;
   x1?: number;
   y1?: number;
   x2?: number;
   y2?: number;
-  // For zones & rooms: box (x, y, width, height) in percentage (0-100)
   x?: number;
   y?: number;
   width?: number;
@@ -173,18 +200,18 @@ export interface SlamZone {
 export interface SlamDockCalibration {
   x: number;
   y: number;
-  angle: number; // 0 - 360 degrees
+  angle: number;
   nameVI: string;
   nameEN: string;
-  clearanceRadius: number; // in meters (e.g. 0.8)
-  dockingSpeed: number; // m/s
+  clearanceRadius: number;
+  dockingSpeed: number;
   autoAlign: boolean;
 }
 
 export interface SlamMapMetadata {
   name: string;
   version: string;
-  resolution: number; // 0.05 m/pixel
+  resolution: number;
   origin: [number, number, number];
   occupiedThresh: number;
   freeThresh: number;
@@ -211,7 +238,7 @@ export interface FaceProfile {
   };
   embeddingStatus: 'synced' | 'syncing' | 'pending';
   vectorDimension: number;
-  matchConfidence: number; // e.g. 99.8
+  matchConfidence: number;
   lastSeenVI: string;
   lastSeenEN: string;
   enrolledDate: string;
@@ -229,12 +256,12 @@ export interface IntruderAlert {
   locationEN: string;
   status: 'unverified' | 'verified_intruder' | 'marked_family' | 'dismissed';
   classification: 'stranger' | 'known_family' | 'false_alarm';
-  confidence: number; // e.g. 98.6
+  confidence: number;
   croppedFaceUrl: string;
   fullSnapshotUrl: string;
   coordinates: { x: number; y: number; zone: string };
   lidarHeightCm: number;
-  thermalSignature: number; // 36.8 °C
+  thermalSignature: number;
   sensorTriggered: string[];
   detailsVI: string;
   detailsEN: string;
@@ -254,15 +281,13 @@ export interface FireSeverityConfigItem {
   bgColor: string;
   borderColor: string;
   badgeClass: string;
-  // Trigger Conditions
   tempMin: number;
   tempMax: number;
   smokePpmMin: number;
   smokePpmMax?: number;
   flameSensorRequired: boolean;
-  rateOfRiseDegPerMin?: number; // e.g. > 5 deg/min
+  rateOfRiseDegPerMin?: number;
   pollingIntervalMs: number;
-  // Actions
   enableTts: boolean;
   ttsMessageVI: string;
   ttsMessageEN: string;
@@ -271,7 +296,7 @@ export interface FireSeverityConfigItem {
   enableLiveStreamRecord: boolean;
   recordDurationSeconds: number;
   enableBuzzer: boolean;
-  buzzerDecibel: number; // 85dB
+  buzzerDecibel: number;
   enablePushNotification: boolean;
   enableEmergencySmsCall: boolean;
   enableMapCoordBroadcast: boolean;
@@ -280,16 +305,16 @@ export interface FireSeverityConfigItem {
 }
 
 export interface EnvironmentSensorsLive {
-  ambientTemp: number; // e.g. 27.4 °C
+  ambientTemp: number;
   tempStatus: 'normal' | 'warm' | 'critical';
-  smokePpm: number; // e.g. 110 ppm
+  smokePpm: number;
   smokeStatus: 'safe' | 'elevated' | 'danger';
-  opticalFlameDetected: boolean; // false = Not Detected
+  opticalFlameDetected: boolean;
   flameStatus: 'safe' | 'flame_detected';
-  flameWavelengthNm: string; // 760nm - 1100nm
-  humidityRh: number; // 55%
+  flameWavelengthNm: string;
+  humidityRh: number;
   humidityStatus: 'optimal' | 'dry' | 'humid';
-  dewPoint: number; // °C
+  dewPoint: number;
   coPpm: number;
   lpgPpm: number;
   lastUpdated: string;
@@ -325,7 +350,7 @@ export interface CommandChatMessage {
     intent: string;
     target: string;
     actionType: 'NAVIGATE_AND_INSPECT' | 'PATROL_CYCLE' | 'STATUS_QUERY' | 'DOCK_CHARGING' | 'EMERGENCY_STOP' | 'FIRE_CHECK';
-    confidence: number; // e.g. 99.2%
+    confidence: number;
     status: 'executing' | 'completed' | 'queued' | 'failed';
   };
   robotResponse?: {
@@ -341,9 +366,9 @@ export interface CommandChatMessage {
 }
 
 export interface PTZCameraState {
-  panDeg: number; // -180 to +180
-  tiltDeg: number; // -30 to +90
-  zoomLevel: number; // 1.0x to 5.0x
+  panDeg: number;
+  tiltDeg: number;
+  zoomLevel: number;
   nightVisionIR: boolean;
   micActive: boolean;
   audioSpeakerActive: boolean;
@@ -356,6 +381,3 @@ export interface PTZCameraState {
   wifiSignalDbm: number;
   batteryPct: number;
 }
-
-
-
