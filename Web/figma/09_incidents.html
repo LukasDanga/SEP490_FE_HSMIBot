@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSMIBot Web OS - Nhật Ký Sự Cố An Ninh & Bằng Chứng Video (Incident Logs)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts Inter & JetBrains Mono -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: '#2563EB',
+            safety: '#16A34A',
+            warning: '#D97706',
+            critical: '#DC2626',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-w-[1440px] min-h-[900px] h-screen bg-slate-50 font-['Inter'] text-slate-800 antialiased flex overflow-hidden">
+
+  <!-- =========================================================================
+       1. LEFT SIDEBAR (Standard 260px Width, All 10 Items, Strict Light Theme)
+       ========================================================================= -->
+  <aside class="w-[260px] min-w-[260px] max-w-[260px] h-screen bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 z-30 select-none">
+    
+    <!-- Logo & Status Header -->
+    <div class="h-16 px-5 border-b border-slate-200 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+          <i class="fa-solid fa-robot text-base"></i>
+        </div>
+        <div>
+          <span class="text-sm font-black text-slate-900 tracking-tight block leading-tight">HSMIBot Web OS</span>
+          <div class="flex items-center space-x-1.5 mt-0.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-[10px] font-mono font-bold text-emerald-600 leading-tight">ONLINE • 24ms</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Links (All 10 Items - Incident Logs is ACTIVE) -->
+    <div class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+      
+      <!-- 1. Dashboard -->
+      <a href="01_dashboard.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-chart-pie w-4 text-center"></i>
+          <span>Dashboard</span>
+        </div>
+      </a>
+
+      <!-- 2. Camera -->
+      <a href="08_teleop_voice.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-video w-4 text-center"></i>
+          <span>Camera</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">4K AI</span>
+      </a>
+
+      <!-- 3. Map & Nav -->
+      <a href="03_navigation.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-map-location-dot w-4 text-center"></i>
+          <span>Map & Nav</span>
+        </div>
+      </a>
+
+      <!-- 4. Patrol Schedule -->
+      <a href="05_scheduler.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-calendar-days w-4 text-center"></i>
+          <span>Patrol Schedule</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded">6 Lượt</span>
+      </a>
+
+      <!-- 5. Face ID -->
+      <a href="06_face_id.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-user-shield w-4 text-center"></i>
+          <span>Face ID</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-red-500 text-white px-1.5 py-0.5 rounded">1 NEW</span>
+      </a>
+
+      <!-- 6. Fire Safety -->
+      <a href="07_fire_matrix.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-fire-flame-curved w-4 text-center"></i>
+          <span>Fire Safety</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-orange-100 text-orange-800 px-1.5 py-0.5 rounded">4 LVL</span>
+      </a>
+
+      <!-- 7. Incident Logs (ACTIVE) -->
+      <a href="09_incidents.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold bg-blue-50 text-blue-600 border border-blue-100 shadow-sm transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-shield-halved w-4 text-center"></i>
+          <span>Incident Logs</span>
+        </div>
+        <div class="flex items-center space-x-1.5">
+          <span class="text-[10px] font-mono font-bold bg-red-500 text-white px-1.5 py-0.5 rounded">3</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+        </div>
+      </a>
+
+      <!-- 8. SLAM Studio -->
+      <a href="04_slam_studio.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-draw-polygon w-4 text-center"></i>
+          <span>SLAM Studio</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-indigo-50 text-indigo-600 px-1.5 py-0.5 rounded">Studio</span>
+      </a>
+
+      <div class="pt-2 pb-1">
+        <div class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400">Hệ Thống</div>
+      </div>
+
+      <!-- 9. Telemetry -->
+      <a href="10_telemetry.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-microchip w-4 text-center"></i>
+          <span>Robot Health</span>
+        </div>
+        <span class="text-[10px] font-mono text-slate-400">24ms</span>
+      </a>
+
+      <!-- 10. Settings -->
+      <a href="11_settings_profile.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-gear w-4 text-center"></i>
+          <span>Settings</span>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Bottom User Section -->
+    <div class="p-3 border-t border-slate-200 bg-slate-50/50">
+      <div class="flex items-center justify-between p-2 rounded-xl bg-white border border-slate-200 shadow-2xs hover:border-slate-300 transition">
+        <a href="11_settings_profile.html" class="flex items-center space-x-2.5 min-w-0 pr-2 flex-1">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80" alt="Alexander Tran" class="w-9 h-9 rounded-full object-cover border border-slate-200 shrink-0" />
+          <span class="text-xs font-bold text-slate-900 truncate">Alexander Tran</span>
+        </a>
+        <a href="00_auth_portal.html" class="p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0">
+          <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       2. MAIN CONTENT WRAPPER
+       ========================================================================= -->
+  <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+    
+    <!-- Top Header Breadcrumb Bar -->
+    <header class="h-16 min-h-[64px] max-h-[64px] bg-white border-b border-slate-200 px-6 flex items-center justify-between sticky top-0 z-20 select-none">
+      <div class="flex items-center space-x-3 text-xs">
+        <div class="flex items-center space-x-2">
+          <span class="text-slate-600 font-semibold flex items-center space-x-1">
+            <i class="fa-solid fa-house text-blue-600 text-xs mr-1"></i>
+            <span>Home</span>
+          </span>
+          <i class="fa-solid fa-chevron-right text-[10px] text-slate-300"></i>
+          <span class="font-bold text-slate-900 bg-slate-100 px-2.5 py-1 rounded-md">
+            Nhật Ký Sự Cố An Ninh & Bằng Chứng Video Clip
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-100 text-emerald-800 flex items-center space-x-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>AUDIT VAULT: ENCRYPTED</span>
+        </span>
+      </div>
+    </header>
+
+    <!-- Main Viewport Scrollable Area -->
+    <main class="flex-1 overflow-y-auto bg-slate-50 p-6 space-y-6">
+      
+      <!-- =====================================================================
+           1. TOP KPI SUMMARY METRICS (4 CARDS)
+           ===================================================================== -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- Card 1: Total Patrols Completed -->
+        <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-2xs space-y-2 relative overflow-hidden group hover:border-blue-400 transition">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-slate-500 uppercase tracking-wider">Tổng Lượt Tuần Tra</span>
+            <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+              <i class="fa-solid fa-layer-group text-sm"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline space-x-2">
+            <span class="text-2xl font-black text-slate-900 tracking-tight">142</span>
+            <span class="text-xs font-bold text-emerald-600 font-mono">+12% tháng này</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-medium">Hoàn thành 100% các điểm tuần tra chỉ định</p>
+        </div>
+
+        <!-- Card 2: Stranger Detections -->
+        <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-2xs space-y-2 relative overflow-hidden group hover:border-amber-400 transition">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-slate-500 uppercase tracking-wider">Phát Hiện Người Lạ</span>
+            <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+              <i class="fa-solid fa-user-xmark text-sm"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline space-x-2">
+            <span class="text-2xl font-black text-slate-900 tracking-tight">3 Sự Cố</span>
+            <span class="text-xs font-bold text-blue-600 font-mono">100% Đã Xác Thực</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-medium">Nhận diện khuôn mặt Face ID không khớp danh bạ</p>
+        </div>
+
+        <!-- Card 3: Fire / Heat Warnings -->
+        <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-2xs space-y-2 relative overflow-hidden group hover:border-red-400 transition">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-slate-500 uppercase tracking-wider">Cảnh Báo Cháy / Nhiệt</span>
+            <div class="w-9 h-9 rounded-xl bg-red-50 text-red-600 flex items-center justify-center">
+              <i class="fa-solid fa-fire-flame-curved text-sm"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline space-x-2">
+            <span class="text-2xl font-black text-slate-900 tracking-tight">2 Lần Tăng Nhiệt</span>
+            <span class="text-xs font-bold text-emerald-600 font-mono">0 Cháy Thực</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-medium">Khu vực bếp nấu & cảm biến khói MQ-2</p>
+        </div>
+
+        <!-- Card 4: Robot Uptime & Battery Health -->
+        <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-2xs space-y-2 relative overflow-hidden group hover:border-emerald-400 transition">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-slate-500 uppercase tracking-wider">Độ Sẵn Sàng & Pin</span>
+            <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+              <i class="fa-solid fa-battery-three-quarters text-sm"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline space-x-2">
+            <span class="text-2xl font-black text-slate-900 tracking-tight">99.2%</span>
+            <span class="text-xs font-bold text-emerald-600 font-mono">96% Sức Khỏe Pin</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-medium">Tự động sạc qua Dock sạc không gián đoạn</p>
+        </div>
+
+      </div>
+
+      <!-- =====================================================================
+           2. SECURITY INCIDENT LOG TABLE & FILTER TOOLBAR
+           ===================================================================== -->
+      <div class="bg-white rounded-3xl border border-slate-200 shadow-2xs overflow-hidden space-y-4">
+        
+        <!-- Table Header & Export Button -->
+        <div class="p-5 border-b border-slate-100 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                <i class="fa-solid fa-shield-virus text-sm"></i>
+              </div>
+              <h2 class="text-base font-extrabold text-slate-900">Trung Tâm Lưu Trữ & Kiểm Toán Nhật Ký An Ninh</h2>
+            </div>
+            <p class="text-xs text-slate-500 mt-0.5 font-medium">
+              Lưu trữ mọi sự cố an ninh, hình ảnh snapshot nhiệt, và video clip trích xuất từ camera robot
+            </p>
+          </div>
+
+          <button
+            type="button"
+            class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl text-xs font-bold transition flex items-center space-x-2 shadow-md cursor-pointer"
+          >
+            <i class="fa-solid fa-file-csv text-emerald-400 text-sm"></i>
+            <span>Xuất Báo Cáo Kiểm Toán (.CSV)</span>
+          </button>
+        </div>
+
+        <!-- Filter Controls Row (4 Controls) -->
+        <div class="px-5 pb-2 grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+          
+          <!-- Keyword Search (4 Cols) -->
+          <div class="md:col-span-4 relative">
+            <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 text-xs"></i>
+            <input
+              type="text"
+              placeholder="Tìm theo phòng, sự cố, từ khóa..."
+              class="w-full pl-9 pr-3.5 py-2 bg-slate-100 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            />
+          </div>
+
+          <!-- Severity Filter (3 Cols) -->
+          <div class="md:col-span-3">
+            <select class="w-full px-3 py-2 bg-slate-100 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 focus:bg-white focus:outline-none cursor-pointer">
+              <option value="all">Tất cả mức độ</option>
+              <option value="danger">Khẩn cấp (Critical)</option>
+              <option value="warning">Cảnh báo (Warning)</option>
+              <option value="info">Thông tin (Info)</option>
+            </select>
+          </div>
+
+          <!-- Event Type Filter (3 Cols) -->
+          <div class="md:col-span-3">
+            <select class="w-full px-3 py-2 bg-slate-100 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 focus:bg-white focus:outline-none cursor-pointer">
+              <option value="all">Tất cả loại sự cố</option>
+              <option value="fire_heat">Cháy & Nhiệt độ</option>
+              <option value="intruder">Người lạ & Khuôn mặt</option>
+              <option value="patrol">Tuần tra định kỳ</option>
+              <option value="system_obstacle">Vật cản & Hệ thống</option>
+            </select>
+          </div>
+
+          <!-- Date Range Filter (2 Cols) -->
+          <div class="md:col-span-2">
+            <select class="w-full px-3 py-2 bg-slate-100 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 focus:bg-white focus:outline-none cursor-pointer">
+              <option value="all">Tất cả thời gian</option>
+              <option value="today">Hôm nay</option>
+              <option value="7days">7 ngày qua</option>
+              <option value="30days">30 ngày qua</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Data Table (9 Columns) -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-slate-600">
+            <thead class="bg-slate-50 border-y border-slate-200/80 font-mono text-[10px] text-slate-500 uppercase tracking-wider">
+              <tr>
+                <th class="py-3 px-4 font-bold">Thời Gian</th>
+                <th class="py-3 px-3 font-bold">Mức Độ</th>
+                <th class="py-3 px-3 font-bold">Loại Sự Cố</th>
+                <th class="py-3 px-3 font-bold">Vị Trí</th>
+                <th class="py-3 px-3 font-bold text-center">Ảnh Snapshot</th>
+                <th class="py-3 px-3 font-bold text-center">Video Clip</th>
+                <th class="py-3 px-4 font-bold">Hành Động Đã Thực Hiện</th>
+                <th class="py-3 px-3 font-bold text-center">Trạng Thái</th>
+                <th class="py-3 px-4 font-bold text-right">Thao Tác</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              
+              <!-- Row 1: Fire & Heat (Active Modal Sample) -->
+              <tr class="hover:bg-blue-50/40 transition cursor-pointer group bg-amber-50/30">
+                <td class="py-3.5 px-4 font-mono font-bold text-slate-900 whitespace-nowrap">
+                  <div>14:20:15</div>
+                  <div class="text-[10px] text-slate-400 font-normal">2026-08-16</div>
+                </td>
+                <td class="py-3.5 px-3 whitespace-nowrap">
+                  <span class="px-2.5 py-0.5 rounded-md text-[10px] font-mono font-black uppercase bg-red-600 text-white shadow-xs">
+                    CRITICAL
+                  </span>
+                </td>
+                <td class="py-3.5 px-3 whitespace-nowrap">
+                  <span class="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-red-50 text-red-700 border border-red-200">
+                    <i class="fa-solid fa-fire text-red-500 text-xs"></i>
+                    <span>Cháy & Nhiệt</span>
+                  </span>
+                </td>
+                <td class="py-3.5 px-3 font-bold text-slate-800 whitespace-nowrap">
+                  <div class="flex items-center space-x-1.5">
+                    <i class="fa-solid fa-location-dot text-slate-400 text-xs shrink-0"></i>
+                    <span>Khu vực Bếp (Zone B)</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3 text-center">
+                  <div class="inline-block relative rounded-lg overflow-hidden border border-slate-200 w-12 h-9 group/snap">
+                    <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=600&auto=format&fit=crop&q=80" alt="Kitchen" class="w-full h-full object-cover group-hover/snap:scale-110 transition" />
+                  </div>
+                </td>
+                <td class="py-3.5 px-3 text-center whitespace-nowrap">
+                  <span class="inline-flex items-center space-x-1 px-2 py-1 rounded-md bg-slate-900 text-white font-mono text-[10px] font-bold group-hover:bg-blue-600 transition">
+                    <i class="fa-solid fa-video text-emerald-400 text-xs"></i>
+                    <span>00:30</span>
+                  </span>
+                </td>
+                <td class="py-3.5 px-4 max-w-xs">
+                  <p class="line-clamp-2 text-[11px] text-slate-600 leading-relaxed font-medium">
+                    Robot tự động kích hoạt loa cảnh báo TTS, chụp ảnh nhiệt và gửi cảnh báo khẩn đến điện thoại gia chủ.
+                  </p>
+                </td>
+                <td class="py-3.5 px-3 text-center whitespace-nowrap">
+                  <span class="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-red-50 text-red-700 border border-red-200 animate-pulse">
+                    <i class="fa-solid fa-triangle-exclamation text-red-500 text-xs"></i>
+                    <span>Cần Theo Dõi</span>
+                  </span>
+                </td>
+                <td class="py-3.5 px-4 text-right whitespace-nowrap">
+                  <div class="flex items-center justify-end space-x-1.5">
+                    <button class="px-2.5 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl text-[11px] font-bold transition cursor-pointer flex items-center space-x-1">
+                      <i class="fa-solid fa-eye text-xs"></i>
+                      <span>Chi tiết</span>
+                    </button>
+                    <button class="px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl text-[11px] font-bold transition cursor-pointer flex items-center space-x-1">
+                      <i class="fa-solid fa-check text-xs"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 2: Unknown Stranger Face ID -->
+              <tr class="hover:bg-blue-50/40 transition cursor-pointer group">
+                <td class="py-3.5 px-4 font-mono font-bold text-slate-900 whitespace-nowrap">
+                  <div>11:05:42</div>
+                  <div class="text-[10px] text-slate-400 font-normal">2026-08-16</div>
+                </td>
+                <td class="py-3.5 px-3 whitespace-nowrap">
+                  <span class="px-2.5 py-0.5 rounded-md text-[10px] font-mono font-black uppercase bg-amber-500 text-white shadow-xs">
+                    WARNING
+                  </span>
+                </td>
+                <td class="py-3.5 px-3 whitespace-nowrap">
+                  <span class="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-amber-50 text-amber-800 border border-amber-200">
+                    <i class="fa-solid fa-user-xmark text-amber-600 text-xs"></i>
+                    <span>Người Lạ</span>
+                  </span>
+                </td>
+                <td class="py-3.5 px-3 font-bold text-slate-800 whitespace-nowrap">
+                  <div class="flex items-center space-x-1.5">
+                    <i class="fa-solid fa-location-dot text-slate-400 text-xs shrink-0"></i>
+                    <span>Cửa Chính (Zone A)</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3 text-center">
+                  <div class="inline-block relative rounded-lg overflow-hidden border border-slate-200 w-12 h-9 group/snap">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80" alt="Person" class="w-full h-full object-cover group-hover/snap:scale-110 transition" />
+                  </div>
+                </td>
+                <td class="py-3.5 px-3 text-center whitespace-nowrap">
+                  <span class="inline-flex items-center space-x-1 px-2 py-1 rounded-md bg-slate-900 text-white font-mono text-[10px] font-bold group-hover:bg-blue-600 transition">
+                    <i class="fa-solid fa-video text-emerald-400 text-xs"></i>
+                    <span>00:25</span>
+                  </span>
+                </td>
+                <td class="py-3.5 px-4 max-w-xs">
+                  <p class="line-clamp-2 text-[11px] text-slate-600 leading-relaxed font-medium">
+                    Robot chụp crop khuôn mặt 512D, bật đèn chiếu sáng và kích hoạt đối thoại 2 chiều.
+                  </p>
+                </td>
+                <td class="py-3.5 px-3 text-center whitespace-nowrap">
+                  <span class="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-red-50 text-red-700 border border-red-200 animate-pulse">
+                    <i class="fa-solid fa-triangle-exclamation text-red-500 text-xs"></i>
+                    <span>Cần Theo Dõi</span>
+                  </span>
+                </td>
+                <td class="py-3.5 px-4 text-right whitespace-nowrap">
+                  <div class="flex items-center justify-end space-x-1.5">
+                    <button class="px-2.5 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl text-[11px] font-bold transition cursor-pointer flex items-center space-x-1">
+                      <i class="fa-solid fa-eye text-xs"></i>
+                      <span>Chi tiết</span>
+                    </button>
+                    <button class="px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl text-[11px] font-bold transition cursor-pointer flex items-center space-x-1">
+                      <i class="fa-solid fa-check text-xs"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 3: Routine Patrol Completed -->
+              <tr class="hover:bg-blue-50/40 transition cursor-pointer group">
+                <td class="py-3.5 px-4 font-mono font-bold text-slate-900 whitespace-nowrap">
+                  <div>09:00:00</div>
+                  <div class="text-[10px] text-slate-400 font-normal">2026-08-16</div>
+                </td>
+                <td class="py-3.5 px-3 whitespace-nowrap">
+                  <span class="px-2.5 py-0.5 rounded-md text-[10px] font-mono font-black uppercase bg-blue-500 text-white shadow-xs">
+                    INFO
+                  </span>
+                </td>
+                <td class="py-3.5 px-3 whitespace-nowrap">
+                  <span class="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-blue-50 text-blue-700 border border-blue-200">
+                    <i class="fa-solid fa-layer-group text-blue-500 text-xs"></i>
+                    <span>Tuần Tra</span>
+                  </span>
+                </td>
+                <td class="py-3.5 px-3 font-bold text-slate-800 whitespace-nowrap">
+                  <div class="flex items-center space-x-1.5">
+                    <i class="fa-solid fa-location-dot text-slate-400 text-xs shrink-0"></i>
+                    <span>Toàn bộ ngôi nhà (Zones A, B, C)</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3 text-center">
+                  <div class="inline-block relative rounded-lg overflow-hidden border border-slate-200 w-12 h-9 group/snap">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&auto=format&fit=crop&q=80" alt="Home" class="w-full h-full object-cover group-hover/snap:scale-110 transition" />
+                  </div>
+                </td>
+                <td class="py-3.5 px-3 text-center whitespace-nowrap">
+                  <span class="inline-flex items-center space-x-1 px-2 py-1 rounded-md bg-slate-900 text-white font-mono text-[10px] font-bold group-hover:bg-blue-600 transition">
+                    <i class="fa-solid fa-video text-emerald-400 text-xs"></i>
+                    <span>00:45</span>
+                  </span>
+                </td>
+                <td class="py-3.5 px-4 max-w-xs">
+                  <p class="line-clamp-2 text-[11px] text-slate-600 leading-relaxed font-medium">
+                    Robot tự động quay về Trạm sạc pin sau khi hoàn tất chu trình 6/6 Waypoints.
+                  </p>
+                </td>
+                <td class="py-3.5 px-3 text-center whitespace-nowrap">
+                  <span class="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    <i class="fa-solid fa-circle-check text-emerald-500 text-xs"></i>
+                    <span>Đã Xử Lý</span>
+                  </span>
+                </td>
+                <td class="py-3.5 px-4 text-right whitespace-nowrap">
+                  <button class="px-2.5 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl text-[11px] font-bold transition cursor-pointer flex items-center space-x-1 ml-auto">
+                    <i class="fa-solid fa-eye text-xs"></i>
+                    <span>Chi tiết</span>
+                  </button>
+                </td>
+              </tr>
+
+              <!-- Row 4: Balcony Door Ajar -->
+              <tr class="hover:bg-blue-50/40 transition cursor-pointer group">
+                <td class="py-3.5 px-4 font-mono font-bold text-slate-900 whitespace-nowrap">
+                  <div>03:15:22</div>
+                  <div class="text-[10px] text-slate-400 font-normal">2026-08-16</div>
+                </td>
+                <td class="py-3.5 px-3 whitespace-nowrap">
+                  <span class="px-2.5 py-0.5 rounded-md text-[10px] font-mono font-black uppercase bg-amber-500 text-white shadow-xs">
+                    WARNING
+                  </span>
+                </td>
+                <td class="py-3.5 px-3 whitespace-nowrap">
+                  <span class="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-purple-50 text-purple-700 border border-purple-200">
+                    <i class="fa-solid fa-door-open text-purple-500 text-xs"></i>
+                    <span>Cửa & Cửa Sổ</span>
+                  </span>
+                </td>
+                <td class="py-3.5 px-3 font-bold text-slate-800 whitespace-nowrap">
+                  <div class="flex items-center space-x-1.5">
+                    <i class="fa-solid fa-location-dot text-slate-400 text-xs shrink-0"></i>
+                    <span>Ban Công BBQ (Zone C)</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3 text-center">
+                  <div class="inline-block relative rounded-lg overflow-hidden border border-slate-200 w-12 h-9 group/snap">
+                    <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&auto=format&fit=crop&q=80" alt="Door" class="w-full h-full object-cover group-hover/snap:scale-110 transition" />
+                  </div>
+                </td>
+                <td class="py-3.5 px-3 text-center whitespace-nowrap">
+                  <span class="inline-flex items-center space-x-1 px-2 py-1 rounded-md bg-slate-900 text-white font-mono text-[10px] font-bold group-hover:bg-blue-600 transition">
+                    <i class="fa-solid fa-video text-emerald-400 text-xs"></i>
+                    <span>00:20</span>
+                  </span>
+                </td>
+                <td class="py-3.5 px-4 max-w-xs">
+                  <p class="line-clamp-2 text-[11px] text-slate-600 leading-relaxed font-medium">
+                    LiDAR phát hiện khoảng hở 15cm tại cửa ban công BBQ lúc 03:15 sáng.
+                  </p>
+                </td>
+                <td class="py-3.5 px-3 text-center whitespace-nowrap">
+                  <span class="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    <i class="fa-solid fa-circle-check text-emerald-500 text-xs"></i>
+                    <span>Đã Xử Lý</span>
+                  </span>
+                </td>
+                <td class="py-3.5 px-4 text-right whitespace-nowrap">
+                  <button class="px-2.5 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl text-[11px] font-bold transition cursor-pointer flex items-center space-x-1 ml-auto">
+                    <i class="fa-solid fa-eye text-xs"></i>
+                    <span>Chi tiết</span>
+                  </button>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination Bar -->
+        <div class="p-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
+          <div>
+            Hiển thị <strong class="text-slate-900">1-4</strong> trên tổng số <strong class="text-slate-900">5</strong> sự cố
+          </div>
+
+          <div class="flex items-center space-x-1">
+            <button class="p-1.5 rounded-lg border border-slate-200 text-slate-400 disabled:opacity-30 cursor-not-allowed">
+              <i class="fa-solid fa-chevron-left text-xs"></i>
+            </button>
+            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-bold rounded-lg border border-blue-200">
+              1 / 2
+            </span>
+            <button class="p-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-100 cursor-pointer">
+              <i class="fa-solid fa-chevron-right text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- =====================================================================
+           3. ANALYTICS CHARTS (PATROL TREND BARS & ROOM DISTRIBUTION)
+           ===================================================================== -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Chart 1: 7-Day Patrol Completion & Incident Trend (7 Cols) -->
+        <div class="lg:col-span-7 bg-white p-5 rounded-3xl border border-slate-200 shadow-2xs space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div>
+              <h3 class="text-xs font-extrabold text-slate-900">Tần Suất Tuần Tra & Biến Cố An Ninh 7 Ngày</h3>
+              <p class="text-[10px] text-slate-500 font-medium">Theo dõi số lượt hoàn thành nhiệm vụ và số lượng cảnh báo ghi nhận</p>
+            </div>
+            <div class="flex items-center space-x-3 text-[11px] font-mono">
+              <span class="flex items-center space-x-1 text-blue-600 font-bold">
+                <span class="w-2.5 h-2.5 rounded bg-blue-600 inline-block"></span>
+                <span>Lượt tuần tra</span>
+              </span>
+              <span class="flex items-center space-x-1 text-red-500 font-bold">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-500 inline-block"></span>
+                <span>Sự cố ghi nhận</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Column Chart Representation (Mon - Sun) -->
+          <div class="h-52 flex items-end justify-between gap-3 pt-6 px-2">
+            
+            <!-- Mon -->
+            <div class="flex-1 flex flex-col items-center space-y-2 h-full justify-end group">
+              <div class="text-[10px] font-mono font-bold text-slate-400 opacity-0 group-hover:opacity-100 transition">20 runs</div>
+              <div class="w-full max-w-[36px] bg-slate-100 rounded-xl relative overflow-hidden flex flex-col justify-end" style="height: 140px;">
+                <div class="w-full bg-blue-600 rounded-xl" style="height: 80%;"></div>
+                <div class="absolute top-2 inset-x-0 flex justify-center">
+                  <span class="w-4 h-4 rounded-full bg-red-500 text-white font-mono text-[9px] font-black flex items-center justify-center shadow-md">1</span>
+                </div>
+              </div>
+              <span class="text-[10px] font-mono font-bold text-slate-600">T2</span>
+            </div>
+
+            <!-- Tue -->
+            <div class="flex-1 flex flex-col items-center space-y-2 h-full justify-end group">
+              <div class="text-[10px] font-mono font-bold text-slate-400 opacity-0 group-hover:opacity-100 transition">22 runs</div>
+              <div class="w-full max-w-[36px] bg-slate-100 rounded-xl relative overflow-hidden flex flex-col justify-end" style="height: 140px;">
+                <div class="w-full bg-blue-600 rounded-xl" style="height: 88%;"></div>
+              </div>
+              <span class="text-[10px] font-mono font-bold text-slate-600">T3</span>
+            </div>
+
+            <!-- Wed -->
+            <div class="flex-1 flex flex-col items-center space-y-2 h-full justify-end group">
+              <div class="text-[10px] font-mono font-bold text-slate-400 opacity-0 group-hover:opacity-100 transition">24 runs</div>
+              <div class="w-full max-w-[36px] bg-slate-100 rounded-xl relative overflow-hidden flex flex-col justify-end" style="height: 140px;">
+                <div class="w-full bg-blue-600 rounded-xl" style="height: 96%;"></div>
+                <div class="absolute top-2 inset-x-0 flex justify-center">
+                  <span class="w-4 h-4 rounded-full bg-red-500 text-white font-mono text-[9px] font-black flex items-center justify-center shadow-md">2</span>
+                </div>
+              </div>
+              <span class="text-[10px] font-mono font-bold text-slate-600">T4</span>
+            </div>
+
+            <!-- Thu -->
+            <div class="flex-1 flex flex-col items-center space-y-2 h-full justify-end group">
+              <div class="text-[10px] font-mono font-bold text-slate-400 opacity-0 group-hover:opacity-100 transition">19 runs</div>
+              <div class="w-full max-w-[36px] bg-slate-100 rounded-xl relative overflow-hidden flex flex-col justify-end" style="height: 140px;">
+                <div class="w-full bg-blue-600 rounded-xl" style="height: 76%;"></div>
+              </div>
+              <span class="text-[10px] font-mono font-bold text-slate-600">T5</span>
+            </div>
+
+            <!-- Fri -->
+            <div class="flex-1 flex flex-col items-center space-y-2 h-full justify-end group">
+              <div class="text-[10px] font-mono font-bold text-slate-400 opacity-0 group-hover:opacity-100 transition">21 runs</div>
+              <div class="w-full max-w-[36px] bg-slate-100 rounded-xl relative overflow-hidden flex flex-col justify-end" style="height: 140px;">
+                <div class="w-full bg-blue-600 rounded-xl" style="height: 84%;"></div>
+                <div class="absolute top-2 inset-x-0 flex justify-center">
+                  <span class="w-4 h-4 rounded-full bg-red-500 text-white font-mono text-[9px] font-black flex items-center justify-center shadow-md">1</span>
+                </div>
+              </div>
+              <span class="text-[10px] font-mono font-bold text-slate-600">T6</span>
+            </div>
+
+            <!-- Sat -->
+            <div class="flex-1 flex flex-col items-center space-y-2 h-full justify-end group">
+              <div class="text-[10px] font-mono font-bold text-slate-400 opacity-0 group-hover:opacity-100 transition">18 runs</div>
+              <div class="w-full max-w-[36px] bg-slate-100 rounded-xl relative overflow-hidden flex flex-col justify-end" style="height: 140px;">
+                <div class="w-full bg-blue-600 rounded-xl" style="height: 72%;"></div>
+              </div>
+              <span class="text-[10px] font-mono font-bold text-slate-600">T7</span>
+            </div>
+
+            <!-- Sun (Today) -->
+            <div class="flex-1 flex flex-col items-center space-y-2 h-full justify-end group">
+              <div class="text-[10px] font-mono font-bold text-slate-400 opacity-0 group-hover:opacity-100 transition">18 runs</div>
+              <div class="w-full max-w-[36px] bg-slate-100 rounded-xl relative overflow-hidden flex flex-col justify-end" style="height: 140px;">
+                <div class="w-full bg-blue-600 rounded-xl" style="height: 72%;"></div>
+              </div>
+              <span class="text-[10px] font-mono font-bold text-slate-600">CN (Nay)</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Chart 2: Incidents by Room Distribution (5 Cols) -->
+        <div class="lg:col-span-5 bg-white p-5 rounded-3xl border border-slate-200 shadow-2xs space-y-4">
+          <div class="border-b border-slate-100 pb-3">
+            <h3 class="text-xs font-extrabold text-slate-900">Phân Bổ Sự Cố Theo Khu Vực</h3>
+            <p class="text-[10px] text-slate-500 font-medium">Tỷ lệ các cảnh báo phát sinh tại từng phòng trong nhà</p>
+          </div>
+
+          <!-- Room Progress List -->
+          <div class="space-y-3.5 pt-1">
+            
+            <!-- Room 1 -->
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-xs font-bold text-slate-800">
+                <div class="flex items-center space-x-2">
+                  <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                  <span>Phòng Bếp (Khu Bếp Ga)</span>
+                </div>
+                <span class="font-mono text-[11px] text-slate-500">5 sự cố (42%)</span>
+              </div>
+              <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                <div class="h-full bg-red-500 rounded-full" style="width: 42%;"></div>
+              </div>
+            </div>
+
+            <!-- Room 2 -->
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-xs font-bold text-slate-800">
+                <div class="flex items-center space-x-2">
+                  <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                  <span>Cửa Chính Vào Nhà</span>
+                </div>
+                <span class="font-mono text-[11px] text-slate-500">3 sự cố (28%)</span>
+              </div>
+              <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                <div class="h-full bg-amber-500 rounded-full" style="width: 28%;"></div>
+              </div>
+            </div>
+
+            <!-- Room 3 -->
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-xs font-bold text-slate-800">
+                <div class="flex items-center space-x-2">
+                  <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                  <span>Phòng Khách Trung Tâm</span>
+                </div>
+                <span class="font-mono text-[11px] text-slate-500">2 sự cố (18%)</span>
+              </div>
+              <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                <div class="h-full bg-blue-500 rounded-full" style="width: 18%;"></div>
+              </div>
+            </div>
+
+            <!-- Room 4 -->
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-xs font-bold text-slate-800">
+                <div class="flex items-center space-x-2">
+                  <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                  <span>Ban Công BBQ Ngoài Trời</span>
+                </div>
+                <span class="font-mono text-[11px] text-slate-500">1 sự cố (12%)</span>
+              </div>
+              <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                <div class="h-full bg-purple-500 rounded-full" style="width: 12%;"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200/80 text-[11px] text-slate-600 flex items-center justify-between">
+            <span class="font-semibold">Tổng số sự cố kiểm toán: <strong>11 Cảnh Báo</strong></span>
+            <span class="font-mono text-emerald-600 font-bold">100% Đã Xử Lý An Toàn</span>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+</body>
+</html>

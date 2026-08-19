@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSMIBot Web OS - Lịch Trình & Cấu Hình Tuyến Đường Tuần Tra</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts Inter & JetBrains Mono -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: '#2563EB',
+            safety: '#16A34A',
+            warning: '#D97706',
+            critical: '#DC2626',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-w-[1440px] min-h-[900px] h-screen bg-slate-50 font-['Inter'] text-slate-800 antialiased flex overflow-hidden">
+
+  <!-- =========================================================================
+       1. LEFT SIDEBAR (Standard 260px Width, All 10 Items, Strict Light Theme)
+       ========================================================================= -->
+  <aside class="w-[260px] min-w-[260px] max-w-[260px] h-screen bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 z-30 select-none">
+    
+    <!-- Logo & Status Header -->
+    <div class="h-16 px-5 border-b border-slate-200 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+          <i class="fa-solid fa-robot text-base"></i>
+        </div>
+        <div>
+          <span class="text-sm font-black text-slate-900 tracking-tight block leading-tight">HSMIBot Web OS</span>
+          <div class="flex items-center space-x-1.5 mt-0.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-[10px] font-mono font-bold text-emerald-600 leading-tight">ONLINE • 24ms</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Links (All 10 Items - Patrol Schedule is Active) -->
+    <div class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+      
+      <!-- 1. Dashboard -->
+      <a href="01_dashboard.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-chart-pie w-4 text-center"></i>
+          <span>Dashboard</span>
+        </div>
+      </a>
+
+      <!-- 2. Camera -->
+      <a href="08_teleop_voice.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-video w-4 text-center"></i>
+          <span>Camera</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">4K AI</span>
+      </a>
+
+      <!-- 3. Map & Nav -->
+      <a href="03_navigation.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-map-location-dot w-4 text-center"></i>
+          <span>Map & Nav</span>
+        </div>
+      </a>
+
+      <!-- 4. Patrol Schedule (ACTIVE) -->
+      <a href="05_scheduler.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold bg-blue-50 text-blue-600 border border-blue-100 shadow-sm transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-calendar-days w-4 text-center"></i>
+          <span>Patrol Schedule</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded">6 Lượt</span>
+      </a>
+
+      <!-- 5. Face ID -->
+      <a href="06_face_id.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-user-shield w-4 text-center"></i>
+          <span>Face ID</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-red-500 text-white px-1.5 py-0.5 rounded">1 NEW</span>
+      </a>
+
+      <!-- 6. Fire Safety -->
+      <a href="07_fire_matrix.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-fire-flame-curved w-4 text-center"></i>
+          <span>Fire Safety</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-orange-100 text-orange-800 px-1.5 py-0.5 rounded">4 LVL</span>
+      </a>
+
+      <!-- 7. Incident Logs -->
+      <a href="09_incidents.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-shield-halved w-4 text-center"></i>
+          <span>Incident Logs</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-red-500 text-white px-1.5 py-0.5 rounded">3</span>
+      </a>
+
+      <!-- 8. SLAM Studio -->
+      <a href="04_slam_studio.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-draw-polygon w-4 text-center"></i>
+          <span>SLAM Studio</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-indigo-50 text-indigo-600 px-1.5 py-0.5 rounded">Studio</span>
+      </a>
+
+      <div class="pt-2 pb-1">
+        <div class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400">Hệ Thống</div>
+      </div>
+
+      <!-- 9. Telemetry -->
+      <a href="10_telemetry.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-microchip w-4 text-center"></i>
+          <span>Robot Health</span>
+        </div>
+        <span class="text-[10px] font-mono text-slate-400">24ms</span>
+      </a>
+
+      <!-- 10. Settings -->
+      <a href="11_settings_profile.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-gear w-4 text-center"></i>
+          <span>Settings</span>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Bottom User Section -->
+    <div class="p-3 border-t border-slate-200 bg-slate-50/50">
+      <div class="flex items-center justify-between p-2 rounded-xl bg-white border border-slate-200 shadow-2xs hover:border-slate-300 transition">
+        <a href="11_settings_profile.html" class="flex items-center space-x-2.5 min-w-0 pr-2 flex-1">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80" alt="Alexander Tran" class="w-9 h-9 rounded-full object-cover border border-slate-200 shrink-0" />
+          <span class="text-xs font-bold text-slate-900 truncate">Alexander Tran</span>
+        </a>
+        <a href="00_auth_portal.html" class="p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0">
+          <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       2. MAIN CONTENT WRAPPER
+       ========================================================================= -->
+  <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+    
+    <!-- Top Header Breadcrumb Bar -->
+    <header class="h-16 min-h-[64px] max-h-[64px] bg-white border-b border-slate-200 px-6 flex items-center justify-between sticky top-0 z-20 select-none">
+      <div class="flex items-center space-x-3 text-xs">
+        <div class="flex items-center space-x-2">
+          <span class="text-slate-600 font-semibold flex items-center space-x-1">
+            <i class="fa-solid fa-house text-blue-600 text-xs mr-1"></i>
+            <span>Home</span>
+          </span>
+          <i class="fa-solid fa-chevron-right text-[10px] text-slate-300"></i>
+          <span class="font-bold text-slate-900 bg-slate-100 px-2.5 py-1 rounded-md">
+            Lịch Trình & Cấu Hình Tuyến Đường Tuần Tra
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <!-- New Routine Quick Action -->
+        <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-sm flex items-center space-x-1.5 cursor-pointer">
+          <i class="fa-solid fa-plus text-xs"></i>
+          <span>Tạo Lịch Trình Mới</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport Scrollable Area -->
+    <main class="flex-1 overflow-y-auto bg-slate-50 p-6 space-y-6">
+      
+      <!-- =====================================================================
+           SECTION 1: ACTIVE PATROL STATUS CARD (TOP BANNER)
+           ===================================================================== -->
+      <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 rounded-2xl p-5 sm:p-6 text-white shadow-xl border border-slate-700/60 relative overflow-hidden">
+        <!-- Background radar glow -->
+        <div class="absolute right-0 top-0 bottom-0 w-96 opacity-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-400 via-sky-600 to-transparent pointer-events-none"></div>
+
+        <div class="relative z-10 space-y-5">
+          
+          <!-- Top Row: Status Badges and Quick Controls -->
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-xl bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-sky-400 shadow-inner">
+                <i class="fa-solid fa-shield-halved text-base animate-pulse"></i>
+              </div>
+              <div>
+                <div class="flex items-center space-x-2">
+                  <span class="text-[11px] font-mono font-black text-sky-300 uppercase tracking-widest bg-sky-950/80 px-2 py-0.5 rounded border border-sky-800/80">
+                    NHIỆM VỤ TUẦN TRA ĐANG CHẠY
+                  </span>
+                  <span class="flex h-2 w-2 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </span>
+                </div>
+                <h2 class="text-lg font-black text-white tracking-tight mt-0.5">
+                  Tuần Tra Ban Đêm Sentry (Toàn Bộ Mặt Bằng v2.1)
+                </h2>
+              </div>
+            </div>
+
+            <!-- Next Scheduled Patrol Countdown & Actions -->
+            <div class="flex items-center space-x-3">
+              <div class="bg-slate-800/90 border border-slate-700/80 rounded-xl px-3.5 py-2 flex items-center space-x-2.5 shadow-sm">
+                <i class="fa-solid fa-clock text-amber-400 text-sm"></i>
+                <div class="text-right">
+                  <div class="text-[10px] uppercase font-bold text-slate-400 font-mono">
+                    LẦN TUẦN TRA KẾ TIẾP
+                  </div>
+                  <div class="text-xs font-black text-amber-300 font-mono">
+                    Trong 45 phút (01:00 AM)
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex items-center space-x-2">
+                <button class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer shadow-sm bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40">
+                  <i class="fa-solid fa-pause text-xs"></i>
+                  <span>Tạm dừng</span>
+                </button>
+
+                <button class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-600 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer shadow-sm">
+                  <i class="fa-solid fa-rotate-left text-xs text-sky-400"></i>
+                  <span>Về Dock</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Middle Progress Row -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between text-xs">
+              <div class="flex items-center space-x-2 font-mono">
+                <span class="text-slate-400">Tiến độ tuần tra:</span>
+                <span class="font-bold text-emerald-400">
+                  3/5 Điểm kiểm soát đã hoàn thành (60%)
+                </span>
+              </div>
+              <div class="flex items-center space-x-2 text-slate-300 text-xs font-mono">
+                <span>Thời gian dừng:</span>
+                <span class="text-sky-300 font-bold bg-sky-950 px-2 py-0.5 rounded border border-sky-800">
+                  14s / 30s còn lại
+                </span>
+              </div>
+            </div>
+
+            <!-- Segmented Progress Bar -->
+            <div class="w-full bg-slate-950/80 rounded-full h-3 p-0.5 border border-slate-700/80 flex gap-1">
+              <div class="h-full rounded-full bg-emerald-500 flex-1 shadow-[0_0_8px_#10b981]"></div>
+              <div class="h-full rounded-full bg-emerald-500 flex-1 shadow-[0_0_8px_#10b981]"></div>
+              <div class="h-full rounded-full bg-sky-500 animate-pulse flex-1 shadow-[0_0_8px_#0ea5e9]"></div>
+              <div class="h-full rounded-full bg-slate-800 flex-1"></div>
+              <div class="h-full rounded-full bg-slate-800 flex-1"></div>
+            </div>
+          </div>
+
+          <!-- Sequential Waypoints Stepper Pill Bar -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 pt-1">
+            
+            <!-- Step 1 (Completed) -->
+            <div class="bg-emerald-950/40 border border-emerald-500/40 rounded-xl p-2.5 flex items-center space-x-2.5">
+              <div class="w-6 h-6 rounded-full bg-emerald-500 text-slate-950 text-xs font-black flex items-center justify-center shrink-0">
+                ✓
+              </div>
+              <div class="min-w-0">
+                <div class="text-[11px] font-bold text-emerald-300 truncate">
+                  1. Phòng Khách
+                </div>
+                <div class="text-[9px] text-emerald-400/80 font-mono">Quét Xong (360° Scan)</div>
+              </div>
+            </div>
+
+            <!-- Step 2 (Completed) -->
+            <div class="bg-emerald-950/40 border border-emerald-500/40 rounded-xl p-2.5 flex items-center space-x-2.5">
+              <div class="w-6 h-6 rounded-full bg-emerald-500 text-slate-950 text-xs font-black flex items-center justify-center shrink-0">
+                ✓
+              </div>
+              <div class="min-w-0">
+                <div class="text-[11px] font-bold text-emerald-300 truncate">
+                  2. Khu Bếp & Gas
+                </div>
+                <div class="text-[9px] text-emerald-400/80 font-mono">Nhiệt độ Bình Thường</div>
+              </div>
+            </div>
+
+            <!-- Step 3 (Active) -->
+            <div class="bg-sky-950/70 border-2 border-sky-400 rounded-xl p-2.5 flex items-center space-x-2.5 shadow-[0_0_12px_rgba(56,189,248,0.2)]">
+              <div class="w-6 h-6 rounded-full bg-sky-400 text-slate-950 text-xs font-black flex items-center justify-center shrink-0 animate-pulse">
+                3
+              </div>
+              <div class="min-w-0">
+                <div class="text-[11px] font-bold text-sky-200 truncate">
+                  3. Cửa Chính Foyer
+                </div>
+                <div class="text-[9px] text-sky-300 font-mono flex items-center space-x-1">
+                  <i class="fa-solid fa-spinner fa-spin text-[9px]"></i>
+                  <span>Đang Kiểm Tra PIR...</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4 (Pending) -->
+            <div class="bg-slate-800/50 border border-slate-700/60 rounded-xl p-2.5 flex items-center space-x-2.5 opacity-60">
+              <div class="w-6 h-6 rounded-full bg-slate-700 text-slate-300 text-xs font-bold flex items-center justify-center shrink-0">
+                4
+              </div>
+              <div class="min-w-0">
+                <div class="text-[11px] font-bold text-slate-300 truncate">
+                  4. Phòng Trẻ Em
+                </div>
+                <div class="text-[9px] text-slate-400 font-mono">Chờ (Pending)</div>
+              </div>
+            </div>
+
+            <!-- Step 5 - Dock (Pending) -->
+            <div class="bg-slate-800/50 border border-slate-700/60 rounded-xl p-2.5 flex items-center space-x-2.5 opacity-60">
+              <div class="w-6 h-6 rounded-full bg-slate-700 text-slate-300 text-xs font-bold flex items-center justify-center shrink-0">
+                🏁
+              </div>
+              <div class="min-w-0">
+                <div class="text-[11px] font-bold text-slate-300 truncate">
+                  5. Trạm Sạc Home
+                </div>
+                <div class="text-[9px] text-slate-400 font-mono">Cập Bến & Sạc</div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- =====================================================================
+           SECTION 2: PATROL ROUTE BUILDER (SPLIT VIEW 7 COLS + 5 COLS)
+           ===================================================================== -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- LEFT SIDE: ROUTE & WAYPOINT SEQUENCE EDITOR (7 Cols) -->
+        <div class="lg:col-span-7 bg-white rounded-2xl border border-slate-200 shadow-2xs p-5 sm:p-6 space-y-6 flex flex-col justify-between">
+          
+          <div class="space-y-5">
+            <!-- Header -->
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+              <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100">
+                  <i class="fa-solid fa-location-arrow text-sm"></i>
+                </div>
+                <div>
+                  <h3 class="text-sm font-extrabold text-slate-900">
+                    Xây Dựng & Cấu Hình Tuyến Đường
+                  </h3>
+                  <p class="text-xs text-slate-500 font-medium">
+                    Sắp xếp thứ tự các phòng và thiết lập hành vi kiểm soát tại từng điểm
+                  </p>
+                </div>
+              </div>
+
+              <span class="px-2.5 py-1 bg-blue-50 text-blue-700 border border-blue-200 text-xs font-mono font-bold rounded-lg">
+                4 Điểm Kiểm Soát
+              </span>
+            </div>
+
+            <!-- Route Name Input -->
+            <div class="space-y-1.5">
+              <label class="block text-xs font-bold text-slate-700">
+                Tên Tuyến Đường Tuần Tra
+              </label>
+              <input
+                type="text"
+                value="Tuần Tra Ban Đêm Sentry (Toàn Bộ Mặt Bằng v2.1)"
+                class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition"
+              />
+            </div>
+
+            <!-- Target Rooms Checklist -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <label class="text-xs font-bold text-slate-700 flex items-center space-x-1.5">
+                  <i class="fa-solid fa-map-pin text-blue-600 text-xs"></i>
+                  <span>Danh Mục Phòng Mục Tiêu</span>
+                </label>
+                <span class="text-[11px] font-mono text-slate-500">
+                  4/6 đã chọn
+                </span>
+              </div>
+
+              <div class="flex flex-wrap gap-2">
+                <button class="px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 border bg-blue-600 text-white border-blue-600 shadow-xs cursor-pointer">
+                  <span class="w-2 h-2 rounded-full bg-white"></span>
+                  <span>Phòng Khách</span>
+                </button>
+                <button class="px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 border bg-blue-600 text-white border-blue-600 shadow-xs cursor-pointer">
+                  <span class="w-2 h-2 rounded-full bg-white"></span>
+                  <span>Khu Bếp & Bàn Ăn</span>
+                </button>
+                <button class="px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 border bg-blue-600 text-white border-blue-600 shadow-xs cursor-pointer">
+                  <span class="w-2 h-2 rounded-full bg-white"></span>
+                  <span>Cửa Chính Ra Vào</span>
+                </button>
+                <button class="px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 border bg-blue-600 text-white border-blue-600 shadow-xs cursor-pointer">
+                  <span class="w-2 h-2 rounded-full bg-white"></span>
+                  <span>Phòng Trẻ Em (Nursery)</span>
+                </button>
+                <button class="px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 border bg-white text-slate-600 border-slate-200 hover:bg-slate-50 cursor-pointer">
+                  <span class="w-2 h-2 rounded-full bg-slate-300"></span>
+                  <span>Ban Công Ngoài</span>
+                </button>
+                <button class="px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 border bg-white text-slate-600 border-slate-200 hover:bg-slate-50 cursor-pointer">
+                  <span class="w-2 h-2 rounded-full bg-slate-300"></span>
+                  <span>Phòng Ngủ Master</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Ordered Waypoint List (Reorderable) -->
+            <div class="space-y-3 pt-2">
+              <div class="flex items-center justify-between">
+                <label class="text-xs font-bold text-slate-700 flex items-center space-x-1.5 uppercase tracking-wider">
+                  <i class="fa-solid fa-sliders text-purple-600 text-xs"></i>
+                  <span>DANH SÁCH ĐIỂM KIỂM SOÁT (THEO THỨ TỰ)</span>
+                </label>
+
+                <button class="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-lg text-xs font-bold flex items-center space-x-1 transition cursor-pointer">
+                  <i class="fa-solid fa-plus text-xs"></i>
+                  <span>Thêm Điểm Kiểm Tra</span>
+                </button>
+              </div>
+
+              <div class="space-y-2.5">
+                
+                <!-- Waypoint 1 -->
+                <div class="p-3.5 rounded-xl border transition-all cursor-pointer flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-white border-slate-200 hover:bg-slate-50">
+                  <div class="flex items-start space-x-3 min-w-0 flex-1">
+                    <div class="flex flex-col items-center space-y-1 shrink-0 pt-0.5">
+                      <div class="w-7 h-7 rounded-xl bg-slate-900 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                        1
+                      </div>
+                      <span class="text-[9px] font-mono text-slate-400 font-bold">P1</span>
+                    </div>
+
+                    <div class="min-w-0 flex-1">
+                      <div class="flex items-center space-x-2 flex-wrap">
+                        <span class="text-xs font-bold text-slate-900 truncate">Tâm Phòng Khách</span>
+                        <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[10px] font-mono font-bold">
+                          30s Thời gian dừng
+                        </span>
+                      </div>
+                      <div class="text-[11px] text-slate-600 font-medium mt-0.5">
+                        <span class="text-blue-600 font-semibold">⚡ Quét 360° Panoramic + Nhận Diện Khuôn Mặt</span>
+                      </div>
+
+                      <div class="flex items-center space-x-1.5 mt-2 flex-wrap">
+                        <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-white text-slate-700 border border-slate-200 flex items-center space-x-1">
+                          <i class="fa-solid fa-camera text-blue-500 text-[9px]"></i>
+                          <span>CAMERA</span>
+                        </span>
+                        <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-white text-slate-700 border border-slate-200 flex items-center space-x-1">
+                          <i class="fa-solid fa-radar text-sky-500 text-[9px]"></i>
+                          <span>LIDAR</span>
+                        </span>
+                        <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-white text-slate-700 border border-slate-200 flex items-center space-x-1">
+                          <i class="fa-solid fa-eye text-purple-500 text-[9px]"></i>
+                          <span>PTZ</span>
+                        </span>
+                        <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-amber-50 text-amber-800 border border-amber-200">
+                          0.4 m/s
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center space-x-1 self-end sm:self-center shrink-0">
+                    <button class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-white border border-transparent hover:border-slate-200 transition cursor-pointer disabled:opacity-30" disabled>
+                      <i class="fa-solid fa-arrow-up text-xs"></i>
+                    </button>
+                    <button class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-white border border-transparent hover:border-slate-200 transition cursor-pointer">
+                      <i class="fa-solid fa-arrow-down text-xs"></i>
+                    </button>
+                    <button class="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition cursor-pointer">
+                      <i class="fa-solid fa-trash text-xs"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Waypoint 2 -->
+                <div class="p-3.5 rounded-xl border transition-all cursor-pointer flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-white border-slate-200 hover:bg-slate-50">
+                  <div class="flex items-start space-x-3 min-w-0 flex-1">
+                    <div class="flex flex-col items-center space-y-1 shrink-0 pt-0.5">
+                      <div class="w-7 h-7 rounded-xl bg-slate-900 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                        2
+                      </div>
+                      <span class="text-[9px] font-mono text-slate-400 font-bold">P2</span>
+                    </div>
+
+                    <div class="min-w-0 flex-1">
+                      <div class="flex items-center space-x-2 flex-wrap">
+                        <span class="text-xs font-bold text-slate-900 truncate">Khu Bếp & Bếp Gas</span>
+                        <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[10px] font-mono font-bold">
+                          45s Thời gian dừng
+                        </span>
+                      </div>
+                      <div class="text-[11px] text-slate-600 font-medium mt-0.5">
+                        <span class="text-blue-600 font-semibold">⚡ Chẩn Đoán Cảm Biến Nhiệt & Khói MQ-2</span>
+                      </div>
+
+                      <div class="flex items-center space-x-1.5 mt-2 flex-wrap">
+                        <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-white text-slate-700 border border-slate-200 flex items-center space-x-1">
+                          <i class="fa-solid fa-fire text-rose-500 text-[9px]"></i>
+                          <span>THERMAL</span>
+                        </span>
+                        <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-white text-slate-700 border border-slate-200 flex items-center space-x-1">
+                          <i class="fa-solid fa-smog text-amber-500 text-[9px]"></i>
+                          <span>SMOKE</span>
+                        </span>
+                        <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-white text-slate-700 border border-slate-200 flex items-center space-x-1">
+                          <i class="fa-solid fa-camera text-blue-500 text-[9px]"></i>
+                          <span>CAMERA</span>
+                        </span>
+                        <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-amber-50 text-amber-800 border border-amber-200">
+                          0.2 m/s
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center space-x-1 self-end sm:self-center shrink-0">
+                    <button class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-white border border-transparent hover:border-slate-200 transition cursor-pointer">
+                      <i class="fa-solid fa-arrow-up text-xs"></i>
+                    </button>
+                    <button class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-white border border-transparent hover:border-slate-200 transition cursor-pointer">
+                      <i class="fa-solid fa-arrow-down text-xs"></i>
+                    </button>
+                    <button class="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition cursor-pointer">
+                      <i class="fa-solid fa-trash text-xs"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Waypoint 3 (Selected Active) -->
+                <div class="p-3.5 rounded-xl border transition-all cursor-pointer flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-blue-50/70 border-blue-400 ring-2 ring-blue-500/20 shadow-xs">
+                  <div class="flex items-start space-x-3 min-w-0 flex-1">
+                    <div class="flex flex-col items-center space-y-1 shrink-0 pt-0.5">
+                      <div class="w-7 h-7 rounded-xl bg-slate-900 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                        3
+                      </div>
+                      <span class="text-[9px] font-mono text-slate-400 font-bold">P3</span>
+                    </div>
+
+                    <div class="min-w-0 flex-1">
+                      <div class="flex items-center space-x-2 flex-wrap">
+                        <span class="text-xs font-bold text-slate-900 truncate">Cửa Chính Ra Vào</span>
+                        <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[10px] font-mono font-bold">
+                          15s Thời gian dừng
+                        </span>
+                      </div>
+                      <div class="text-[11px] text-slate-600 font-medium mt-0.5">
+                        <span class="text-blue-600 font-semibold">⚡ Kiểm Tra Cảm Biến Chuyển Động & Chụp Ảnh</span>
+                      </div>
+
+                      <div class="flex items-center space-x-1.5 mt-2 flex-wrap">
+                        <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-white text-slate-700 border border-slate-200 flex items-center space-x-1">
+                          <i class="fa-solid fa-wave-square text-emerald-500 text-[9px]"></i>
+                          <span>MOTION</span>
+                        </span>
+                        <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-white text-slate-700 border border-slate-200 flex items-center space-x-1">
+                          <i class="fa-solid fa-camera text-blue-500 text-[9px]"></i>
+                          <span>CAMERA</span>
+                        </span>
+                        <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-white text-slate-700 border border-slate-200 flex items-center space-x-1">
+                          <i class="fa-solid fa-radar text-sky-500 text-[9px]"></i>
+                          <span>LIDAR</span>
+                        </span>
+                        <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-amber-50 text-amber-800 border border-amber-200">
+                          0.35 m/s
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center space-x-1 self-end sm:self-center shrink-0">
+                    <button class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-white border border-transparent hover:border-slate-200 transition cursor-pointer">
+                      <i class="fa-solid fa-arrow-up text-xs"></i>
+                    </button>
+                    <button class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-white border border-transparent hover:border-slate-200 transition cursor-pointer">
+                      <i class="fa-solid fa-arrow-down text-xs"></i>
+                    </button>
+                    <button class="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition cursor-pointer">
+                      <i class="fa-solid fa-trash text-xs"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Waypoint 4 -->
+                <div class="p-3.5 rounded-xl border transition-all cursor-pointer flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-white border-slate-200 hover:bg-slate-50">
+                  <div class="flex items-start space-x-3 min-w-0 flex-1">
+                    <div class="flex flex-col items-center space-y-1 shrink-0 pt-0.5">
+                      <div class="w-7 h-7 rounded-xl bg-slate-900 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                        4
+                      </div>
+                      <span class="text-[9px] font-mono text-slate-400 font-bold">P4</span>
+                    </div>
+
+                    <div class="min-w-0 flex-1">
+                      <div class="flex items-center space-x-2 flex-wrap">
+                        <span class="text-xs font-bold text-slate-900 truncate">Phòng Trẻ Em & Cũi</span>
+                        <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[10px] font-mono font-bold">
+                          25s Thời gian dừng
+                        </span>
+                      </div>
+                      <div class="text-[11px] text-slate-600 font-medium mt-0.5">
+                        <span class="text-blue-600 font-semibold">⚡ Chế Độ Yên Lặng & Phát Hiện Âm Thanh Tiếng Khóc</span>
+                      </div>
+
+                      <div class="flex items-center space-x-1.5 mt-2 flex-wrap">
+                        <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-white text-slate-700 border border-slate-200 flex items-center space-x-1">
+                          <i class="fa-solid fa-camera text-blue-500 text-[9px]"></i>
+                          <span>CAMERA</span>
+                        </span>
+                        <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-white text-slate-700 border border-slate-200 flex items-center space-x-1">
+                          <i class="fa-solid fa-radar text-sky-500 text-[9px]"></i>
+                          <span>LIDAR</span>
+                        </span>
+                        <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-amber-50 text-amber-800 border border-amber-200">
+                          0.25 m/s
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center space-x-1 self-end sm:self-center shrink-0">
+                    <button class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-white border border-transparent hover:border-slate-200 transition cursor-pointer">
+                      <i class="fa-solid fa-arrow-up text-xs"></i>
+                    </button>
+                    <button class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-white border border-transparent hover:border-slate-200 transition cursor-pointer disabled:opacity-30" disabled>
+                      <i class="fa-solid fa-arrow-down text-xs"></i>
+                    </button>
+                    <button class="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition cursor-pointer">
+                      <i class="fa-solid fa-trash text-xs"></i>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Save Route Preset Button -->
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+            <div class="text-xs text-slate-500 font-mono">
+              Tổng lộ trình ước tính: <strong class="text-slate-900 font-bold">38.4m (~4 phút 20s)</strong>
+            </div>
+
+            <button class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition flex items-center space-x-1.5 shadow-xs cursor-pointer">
+              <i class="fa-solid fa-check text-emerald-400 text-xs"></i>
+              <span>Lưu Tuyến Đường</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- RIGHT SIDE: MINI 2D MAP PREVIEW (5 Cols) -->
+        <div class="lg:col-span-5 bg-[#0B1120] rounded-2xl border border-slate-800 p-5 text-white shadow-xl flex flex-col justify-between relative overflow-hidden">
+          
+          <!-- Header Bar -->
+          <div class="flex items-center justify-between border-b border-slate-800/80 pb-3 z-10">
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <h4 class="text-xs font-black text-white uppercase tracking-wider font-mono">
+                  BẢN ĐỒ 2D TUYẾN ĐƯỜNG MÔ PHỎNG
+                </h4>
+              </div>
+              <p class="text-[10px] text-slate-400 font-mono mt-0.5">
+                Visual sequence theo thời gian thực (CycloneDDS)
+              </p>
+            </div>
+
+            <span class="px-2 py-0.5 bg-slate-800 text-sky-400 border border-slate-700 rounded text-[10px] font-mono font-bold">
+              Scale 1:50
+            </span>
+          </div>
+
+          <!-- Mini 2D Canvas Area -->
+          <div class="my-4 relative w-full aspect-[4/3] bg-[#070B14] rounded-xl border border-slate-800/90 overflow-hidden select-none flex items-center justify-center">
+            
+            <!-- Background Grid -->
+            <div class="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] opacity-40"></div>
+
+            <!-- SVG Floorplan Walls & Trajectory Path -->
+            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 300">
+              <!-- Outer Perimeter -->
+              <rect x="30" y="25" width="340" height="245" fill="none" stroke="#334155" stroke-width="2.5" rx="8" />
+              
+              <!-- Internal Partitions -->
+              <line x1="200" y1="25" x2="200" y2="155" stroke="#334155" stroke-width="2" />
+              <line x1="30" y1="155" x2="150" y2="155" stroke="#334155" stroke-width="2" />
+              <line x1="280" y1="155" x2="370" y2="155" stroke="#334155" stroke-width="2" />
+              <line x1="280" y1="155" x2="280" y2="270" stroke="#334155" stroke-width="2" />
+
+              <!-- Room Text Indicators -->
+              <text x="110" y="65" fill="#64748b" font-size="8" font-family="'JetBrains Mono'" font-weight="bold" text-anchor="middle">LIVING ROOM</text>
+              <text x="290" y="65" fill="#64748b" font-size="8" font-family="'JetBrains Mono'" font-weight="bold" text-anchor="middle">NURSERY</text>
+              <text x="95" y="200" fill="#64748b" font-size="8" font-family="'JetBrains Mono'" font-weight="bold" text-anchor="middle">KITCHEN</text>
+              <text x="325" y="210" fill="#64748b" font-size="8" font-family="'JetBrains Mono'" font-weight="bold" text-anchor="middle">BATHROOM</text>
+
+              <!-- Dashed Ordered Patrol Trajectory -->
+              <defs>
+                <linearGradient id="patrolGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#38bdf8" />
+                  <stop offset="100%" stop-color="#818cf8" />
+                </linearGradient>
+              </defs>
+
+              <polyline
+                points="88,246 120,84 96,225 216,252 296,84 88,246"
+                fill="none"
+                stroke="url(#patrolGrad)"
+                stroke-width="2.5"
+                stroke-dasharray="6,4"
+                stroke-linecap="round"
+              />
+            </svg>
+
+            <!-- Sequential Waypoint Number Badges on Canvas -->
+            <!-- Waypoint 1 -->
+            <div style="left: 30%; top: 28%;" class="absolute -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer">
+              <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black font-mono shadow-lg border-2 bg-slate-900 border-blue-400 text-blue-300">
+                1
+              </div>
+            </div>
+
+            <!-- Waypoint 2 -->
+            <div style="left: 24%; top: 75%;" class="absolute -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer">
+              <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black font-mono shadow-lg border-2 bg-slate-900 border-blue-400 text-blue-300">
+                2
+              </div>
+            </div>
+
+            <!-- Waypoint 3 (Active Pulse) -->
+            <div style="left: 54%; top: 84%;" class="absolute -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer">
+              <div class="w-9 h-9 -top-1.5 -left-1.5 rounded-full border border-sky-400 bg-sky-400/20 absolute animate-ping"></div>
+              <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black font-mono shadow-lg border-2 bg-sky-400 border-white text-slate-950 shadow-[0_0_12px_#38bdf8]">
+                3
+              </div>
+            </div>
+
+            <!-- Waypoint 4 -->
+            <div style="left: 74%; top: 28%;" class="absolute -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer">
+              <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black font-mono shadow-lg border-2 bg-slate-900 border-blue-400 text-blue-300">
+                4
+              </div>
+            </div>
+
+            <!-- DOCKING STATION BADGE -->
+            <div style="left: 22%; top: 82%;" class="absolute -translate-x-1/2 -translate-y-1/2 z-15" title="Home Base Dock-01">
+              <div class="w-7 h-7 rounded-xl bg-emerald-950 border border-emerald-400 flex items-center justify-center text-emerald-300 text-[10px] font-bold shadow-[0_0_10px_#10b981]">
+                ⚡
+              </div>
+              <span class="absolute top-7 left-1/2 -translate-x-1/2 text-[8px] font-mono text-emerald-400 whitespace-nowrap font-bold">
+                Dock
+              </span>
+            </div>
+
+            <!-- LIVE ROBOT POSITION -->
+            <div style="left: 54%; top: 84%;" class="absolute -translate-x-1/2 -translate-y-1/2 z-25 pointer-events-none">
+              <div class="w-10 h-10 rounded-full border border-sky-400/50 bg-sky-400/10 -top-1.5 -left-1.5 absolute animate-pulse"></div>
+              <div class="w-7 h-7 rounded-full bg-blue-600 border-2 border-white shadow-xl flex items-center justify-center text-white text-xs">
+                🤖
+              </div>
+              <div class="absolute top-7 left-1/2 -translate-x-1/2 text-[8px] font-mono bg-blue-950/90 text-sky-300 px-1.5 py-0.5 rounded border border-blue-700 whitespace-nowrap font-bold">
+                Robot Active
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Mini 2D Footer Stats -->
+          <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3 flex items-center justify-between text-xs font-mono">
+            <div class="flex items-center space-x-2 text-slate-300">
+              <span class="text-sky-400 font-bold">Sequence:</span>
+              <span>1 → 2 → 3 → 4 → Dock</span>
+            </div>
+            <div class="text-emerald-400 font-bold">
+              4 Waypoints • 38.4m Loop
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- =====================================================================
+           SECTION 3: SCHEDULE MATRIX TABLE
+           ===================================================================== -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
+        
+        <!-- Table Header Controls -->
+        <div class="p-5 sm:p-6 border-b border-slate-200 flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-100">
+              <i class="fa-solid fa-calendar-check text-base"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-extrabold text-slate-900">
+                Ma Trận Lịch Trình Tuần Tra Định Kỳ
+              </h3>
+              <p class="text-xs text-slate-500 font-medium">
+                Tự động kích hoạt tuần tra theo mốc giờ hoặc chế độ Vắng nhà (Away Mode)
+              </p>
+            </div>
+          </div>
+
+          <button class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-xs cursor-pointer">
+            <i class="fa-solid fa-plus text-xs"></i>
+            <span>Tạo Lịch Trình Mới</span>
+          </button>
+        </div>
+
+        <!-- Responsive Table -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-50 border-b border-slate-200 text-[11px] font-black text-slate-500 uppercase tracking-wider font-mono">
+              <tr>
+                <th class="py-3.5 px-5">TÊN LỊCH TRÌNH</th>
+                <th class="py-3.5 px-4">THỜI ĐIỂM KÍCH HOẠT</th>
+                <th class="py-3.5 px-4">TẦN SUẤT LẶP LẠI</th>
+                <th class="py-3.5 px-4">TUYẾN ĐƯỜNG & PHÒNG</th>
+                <th class="py-3.5 px-4">TRẠNG THÁI</th>
+                <th class="py-3.5 px-5 text-right">THAO TÁC</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 font-medium text-slate-700">
+              
+              <!-- Row 1: Night Sweep -->
+              <tr class="hover:bg-slate-50/80 transition-colors">
+                <td class="py-4 px-5">
+                  <div class="flex items-center space-x-2.5">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 bg-purple-100 text-purple-700">
+                      <i class="fa-solid fa-shield text-xs"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-slate-900">
+                        Tuần Tra Ban Đêm Sentry
+                      </div>
+                      <div class="text-[10px] font-mono text-slate-400">
+                        Mode: <span class="uppercase font-bold text-slate-600">STEALTH</span> • Next: 2026-08-17 01:00
+                      </div>
+                    </div>
+                  </div>
+                </td>
+
+                <td class="py-4 px-4">
+                  <div class="flex items-center space-x-1.5">
+                    <i class="fa-solid fa-clock text-blue-600 text-xs shrink-0"></i>
+                    <span class="font-bold text-slate-800 font-mono text-xs">
+                      01:00 AM Hàng Ngày
+                    </span>
+                  </div>
+                </td>
+
+                <td class="py-4 px-4">
+                  <div>
+                    <div class="text-xs font-semibold text-slate-800">
+                      Hằng ngày (24/7)
+                    </div>
+                    <div class="flex gap-1 mt-1">
+                      <span class="text-[9px] font-mono px-1 py-0.5 bg-slate-100 text-slate-600 rounded">Mon</span>
+                      <span class="text-[9px] font-mono px-1 py-0.5 bg-slate-100 text-slate-600 rounded">Tue</span>
+                      <span class="text-[9px] font-mono px-1 py-0.5 bg-slate-100 text-slate-600 rounded">Wed</span>
+                      <span class="text-[9px] font-mono px-1 py-0.5 bg-slate-100 text-slate-600 rounded">Thu</span>
+                      <span class="text-[9px] font-mono px-1 py-0.5 bg-slate-100 text-slate-600 rounded">Fri</span>
+                      <span class="text-[9px] font-mono px-1 py-0.5 bg-slate-100 text-slate-600 rounded">+2</span>
+                    </div>
+                  </div>
+                </td>
+
+                <td class="py-4 px-4">
+                  <div>
+                    <div class="text-xs font-bold text-slate-900 flex items-center space-x-1">
+                      <i class="fa-solid fa-location-arrow text-purple-600 text-[10px]"></i>
+                      <span>Tuyến Vành Đai Toàn Bộ Nhà</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1 mt-1">
+                      <span class="text-[10px] px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded border border-blue-100">Phòng Khách</span>
+                      <span class="text-[10px] px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded border border-blue-100">Bếp</span>
+                      <span class="text-[10px] px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded border border-blue-100">Cửa Chính</span>
+                      <span class="text-[10px] px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded border border-blue-100">Phòng Trẻ Em</span>
+                    </div>
+                  </div>
+                </td>
+
+                <td class="py-4 px-4">
+                  <div class="flex items-center space-x-1.5 cursor-pointer">
+                    <i class="fa-solid fa-toggle-on text-emerald-600 text-xl"></i>
+                    <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                      Active
+                    </span>
+                  </div>
+                </td>
+
+                <td class="py-4 px-5 text-right">
+                  <div class="flex items-center justify-end space-x-1.5">
+                    <button class="px-2.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-[11px] font-bold transition flex items-center space-x-1 cursor-pointer shadow-2xs">
+                      <i class="fa-solid fa-play text-emerald-400 text-[9px]"></i>
+                      <span>Chạy ngay</span>
+                    </button>
+                    <button class="p-1.5 text-slate-400 hover:text-blue-600 rounded-lg hover:bg-slate-100 transition cursor-pointer" title="Chỉnh sửa">
+                      <i class="fa-solid fa-pen-to-square text-xs"></i>
+                    </button>
+                    <button class="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition cursor-pointer" title="Xóa">
+                      <i class="fa-solid fa-trash text-xs"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 2: Away Mode -->
+              <tr class="hover:bg-slate-50/80 transition-colors">
+                <td class="py-4 px-5">
+                  <div class="flex items-center space-x-2.5">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 bg-amber-100 text-amber-800">
+                      <i class="fa-solid fa-shield text-xs"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-slate-900">
+                        Tuần Tra Chế Độ Vắng Nhà (Away Mode)
+                      </div>
+                      <div class="text-[10px] font-mono text-slate-400">
+                        Mode: <span class="uppercase font-bold text-slate-600">DETERRENT</span> • Next: Trong 45 phút
+                      </div>
+                    </div>
+                  </div>
+                </td>
+
+                <td class="py-4 px-4">
+                  <div class="flex items-center space-x-1.5">
+                    <i class="fa-solid fa-clock text-blue-600 text-xs shrink-0"></i>
+                    <span class="font-bold text-slate-800 font-mono text-xs">
+                      Khi Bật Vắng Nhà (Mỗi 2 giờ)
+                    </span>
+                  </div>
+                </td>
+
+                <td class="py-4 px-4">
+                  <div>
+                    <div class="text-xs font-semibold text-slate-800">
+                      Tự động khi vắng nhà
+                    </div>
+                    <div class="flex gap-1 mt-1">
+                      <span class="text-[9px] font-mono px-1 py-0.5 bg-slate-100 text-slate-600 rounded">Mon</span>
+                      <span class="text-[9px] font-mono px-1 py-0.5 bg-slate-100 text-slate-600 rounded">Tue</span>
+                      <span class="text-[9px] font-mono px-1 py-0.5 bg-slate-100 text-slate-600 rounded">Wed</span>
+                      <span class="text-[9px] font-mono px-1 py-0.5 bg-slate-100 text-slate-600 rounded">Thu</span>
+                      <span class="text-[9px] font-mono px-1 py-0.5 bg-slate-100 text-slate-600 rounded">Fri</span>
+                    </div>
+                  </div>
+                </td>
+
+                <td class="py-4 px-4">
+                  <div>
+                    <div class="text-xs font-bold text-slate-900 flex items-center space-x-1">
+                      <i class="fa-solid fa-location-arrow text-purple-600 text-[10px]"></i>
+                      <span>Tuyến Chống Đột Nhập Nhanh</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1 mt-1">
+                      <span class="text-[10px] px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded border border-blue-100">Cửa Chính</span>
+                      <span class="text-[10px] px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded border border-blue-100">Ban Công</span>
+                      <span class="text-[10px] px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded border border-blue-100">Phòng Khách</span>
+                    </div>
+                  </div>
+                </td>
+
+                <td class="py-4 px-4">
+                  <div class="flex items-center space-x-1.5 cursor-pointer">
+                    <i class="fa-solid fa-toggle-on text-emerald-600 text-xl"></i>
+                    <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                      Active
+                    </span>
+                  </div>
+                </td>
+
+                <td class="py-4 px-5 text-right">
+                  <div class="flex items-center justify-end space-x-1.5">
+                    <button class="px-2.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-[11px] font-bold transition flex items-center space-x-1 cursor-pointer shadow-2xs">
+                      <i class="fa-solid fa-play text-emerald-400 text-[9px]"></i>
+                      <span>Chạy ngay</span>
+                    </button>
+                    <button class="p-1.5 text-slate-400 hover:text-blue-600 rounded-lg hover:bg-slate-100 transition cursor-pointer" title="Chỉnh sửa">
+                      <i class="fa-solid fa-pen-to-square text-xs"></i>
+                    </button>
+                    <button class="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition cursor-pointer" title="Xóa">
+                      <i class="fa-solid fa-trash text-xs"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 3: Weekend Kitchen -->
+              <tr class="hover:bg-slate-50/80 transition-colors">
+                <td class="py-4 px-5">
+                  <div class="flex items-center space-x-2.5">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 bg-blue-100 text-blue-700">
+                      <i class="fa-solid fa-shield text-xs"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-slate-900">
+                        Kiểm Tra An Toàn Bếp & Cháy Nổ Chiều
+                      </div>
+                      <div class="text-[10px] font-mono text-slate-400">
+                        Mode: <span class="uppercase font-bold text-slate-600">QUICK</span> • Next: 2026-08-22 15:30
+                      </div>
+                    </div>
+                  </div>
+                </td>
+
+                <td class="py-4 px-4">
+                  <div class="flex items-center space-x-1.5">
+                    <i class="fa-solid fa-clock text-blue-600 text-xs shrink-0"></i>
+                    <span class="font-bold text-slate-800 font-mono text-xs">
+                      03:30 PM (Thứ 7, CN)
+                    </span>
+                  </div>
+                </td>
+
+                <td class="py-4 px-4">
+                  <div>
+                    <div class="text-xs font-semibold text-slate-800">
+                      Cuối tuần (T7, CN)
+                    </div>
+                    <div class="flex gap-1 mt-1">
+                      <span class="text-[9px] font-mono px-1 py-0.5 bg-slate-100 text-slate-600 rounded">Sat</span>
+                      <span class="text-[9px] font-mono px-1 py-0.5 bg-slate-100 text-slate-600 rounded">Sun</span>
+                    </div>
+                  </div>
+                </td>
+
+                <td class="py-4 px-4">
+                  <div>
+                    <div class="text-xs font-bold text-slate-900 flex items-center space-x-1">
+                      <i class="fa-solid fa-location-arrow text-purple-600 text-[10px]"></i>
+                      <span>Tuyến Kiểm Tra Cảm Biến Khói & Gas</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1 mt-1">
+                      <span class="text-[10px] px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded border border-blue-100">Khu Bếp</span>
+                      <span class="text-[10px] px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded border border-blue-100">Bàn Ăn</span>
+                    </div>
+                  </div>
+                </td>
+
+                <td class="py-4 px-4">
+                  <div class="flex items-center space-x-1.5 cursor-pointer">
+                    <i class="fa-solid fa-toggle-off text-slate-400 text-xl"></i>
+                    <span class="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">
+                      Inactive
+                    </span>
+                  </div>
+                </td>
+
+                <td class="py-4 px-5 text-right">
+                  <div class="flex items-center justify-end space-x-1.5">
+                    <button class="px-2.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-[11px] font-bold transition flex items-center space-x-1 cursor-pointer shadow-2xs">
+                      <i class="fa-solid fa-play text-emerald-400 text-[9px]"></i>
+                      <span>Chạy ngay</span>
+                    </button>
+                    <button class="p-1.5 text-slate-400 hover:text-blue-600 rounded-lg hover:bg-slate-100 transition cursor-pointer" title="Chỉnh sửa">
+                      <i class="fa-solid fa-pen-to-square text-xs"></i>
+                    </button>
+                    <button class="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition cursor-pointer" title="Xóa">
+                      <i class="fa-solid fa-trash text-xs"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

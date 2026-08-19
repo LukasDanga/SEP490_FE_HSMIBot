@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSMIBot Web OS - Map & Nav (2D Smart Butler Villa Floorplan & Teleop)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts Inter & JetBrains Mono -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: '#2563EB',
+            safety: '#16A34A',
+            warning: '#D97706',
+            critical: '#DC2626',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-w-[1440px] min-h-[900px] h-screen bg-slate-50 font-['Inter'] text-slate-800 antialiased flex overflow-hidden">
+
+  <!-- =========================================================================
+       1. LEFT SIDEBAR (Standard 260px Width, All 10 Items, Strict Light Theme)
+       ========================================================================= -->
+  <aside class="w-[260px] min-w-[260px] max-w-[260px] h-screen bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 z-30 select-none">
+    
+    <!-- Logo & Status Header -->
+    <div class="h-16 px-5 border-b border-slate-200 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+          <i class="fa-solid fa-robot text-base"></i>
+        </div>
+        <div>
+          <span class="text-sm font-black text-slate-900 tracking-tight block leading-tight">HSMIBot Web OS</span>
+          <div class="flex items-center space-x-1.5 mt-0.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-[10px] font-mono font-bold text-emerald-600 leading-tight">ONLINE • 24ms</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Links (All 10 Items - Map & Nav is Active) -->
+    <div class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+      
+      <!-- 1. Dashboard -->
+      <a href="01_dashboard.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-chart-pie w-4 text-center"></i>
+          <span>Dashboard</span>
+        </div>
+      </a>
+
+      <!-- 2. Camera -->
+      <a href="08_teleop_voice.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-video w-4 text-center"></i>
+          <span>Camera</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">4K AI</span>
+      </a>
+
+      <!-- 3. Map & Nav (ACTIVE) -->
+      <a href="03_navigation.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold bg-blue-50 text-blue-600 border border-blue-100 shadow-sm transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-map-location-dot w-4 text-center"></i>
+          <span>Map & Nav</span>
+        </div>
+        <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+      </a>
+
+      <!-- 4. Patrol Schedule -->
+      <a href="05_scheduler.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-calendar-days w-4 text-center"></i>
+          <span>Patrol Schedule</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded">6 Lượt</span>
+      </a>
+
+      <!-- 5. Face ID -->
+      <a href="06_face_id.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-user-shield w-4 text-center"></i>
+          <span>Face ID</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-red-500 text-white px-1.5 py-0.5 rounded">1 NEW</span>
+      </a>
+
+      <!-- 6. Fire Safety -->
+      <a href="07_fire_matrix.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-fire-flame-curved w-4 text-center"></i>
+          <span>Fire Safety</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-orange-100 text-orange-800 px-1.5 py-0.5 rounded">4 LVL</span>
+      </a>
+
+      <!-- 7. Incident Logs -->
+      <a href="09_incidents.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-shield-halved w-4 text-center"></i>
+          <span>Incident Logs</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-red-500 text-white px-1.5 py-0.5 rounded">3</span>
+      </a>
+
+      <!-- 8. SLAM Studio -->
+      <a href="04_slam_studio.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-draw-polygon w-4 text-center"></i>
+          <span>SLAM Studio</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-indigo-50 text-indigo-600 px-1.5 py-0.5 rounded">Studio</span>
+      </a>
+
+      <div class="pt-2 pb-1">
+        <div class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400">Hệ Thống</div>
+      </div>
+
+      <!-- 9. Telemetry -->
+      <a href="10_telemetry.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-microchip w-4 text-center"></i>
+          <span>Robot Health</span>
+        </div>
+        <span class="text-[10px] font-mono text-slate-400">24ms</span>
+      </a>
+
+      <!-- 10. Settings -->
+      <a href="11_settings_profile.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-gear w-4 text-center"></i>
+          <span>Settings</span>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Bottom User Section -->
+    <div class="p-3 border-t border-slate-200 bg-slate-50/50">
+      <div class="flex items-center justify-between p-2 rounded-xl bg-white border border-slate-200 shadow-2xs hover:border-slate-300 transition">
+        <a href="11_settings_profile.html" class="flex items-center space-x-2.5 min-w-0 pr-2 flex-1">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80" alt="Alexander Tran" class="w-9 h-9 rounded-full object-cover border border-slate-200 shrink-0" />
+          <span class="text-xs font-bold text-slate-900 truncate">Alexander Tran</span>
+        </a>
+        <a href="00_auth_portal.html" class="p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0">
+          <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       2. MAIN CONTENT WRAPPER
+       ========================================================================= -->
+  <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+    
+    <!-- Top Header Breadcrumb Bar -->
+    <header class="h-16 min-h-[64px] max-h-[64px] bg-white border-b border-slate-200 px-6 flex items-center justify-between sticky top-0 z-20 select-none">
+      <div class="flex items-center space-x-3 text-xs">
+        <div class="flex items-center space-x-2">
+          <span class="text-slate-600 font-semibold flex items-center space-x-1">
+            <i class="fa-solid fa-house text-blue-600 text-xs mr-1"></i>
+            <span>Home</span>
+          </span>
+          <i class="fa-solid fa-chevron-right text-[10px] text-slate-300"></i>
+          <span class="font-bold text-slate-900 bg-slate-100 px-2.5 py-1 rounded-md">
+            2D Interactive Map & Nav2 Dispatch
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <!-- Return to Dock Quick Dispatch -->
+        <button class="px-4 py-2 bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer">
+          <i class="fa-solid fa-charging-station"></i>
+          <span>Trạm Sạc Tự Động</span>
+        </button>
+        <!-- Emergency Stop -->
+        <button class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-black tracking-wider uppercase transition shadow-md shadow-red-600/20 flex items-center space-x-1.5 cursor-pointer">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span>DỪNG KHẨN CẤP</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Sub-Header Command Bar (Mode Tabs & Live Robot State) -->
+    <div class="bg-white border-b border-slate-200 px-6 py-2.5 flex items-center justify-between shadow-2xs z-10 shrink-0">
+      
+      <!-- Left: Branding & Sub-Tabs -->
+      <div class="flex items-center space-x-3">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-sm">
+            <i class="fa-solid fa-robot text-sm"></i>
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="text-xs font-black text-slate-900 tracking-wide font-mono">HSMIBot SMART BUTLER</span>
+              <span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono text-[9px] font-bold">ROS2 ACTIVE</span>
+            </div>
+            <div class="text-[10px] text-blue-600 font-semibold">Bản Đồ 2D Biệt Thự & Quản Gia</div>
+          </div>
+        </div>
+
+        <div class="h-6 w-px bg-slate-200"></div>
+
+        <!-- Mode Sub-Tabs -->
+        <div class="flex items-center space-x-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
+          <button class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center space-x-1.5 bg-blue-600 text-white shadow-sm cursor-pointer">
+            <i class="fa-solid fa-location-crosshairs text-xs"></i>
+            <span>Giám Sát & Điều Khiển Lái</span>
+          </button>
+          <button class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center space-x-1.5 cursor-pointer">
+            <i class="fa-solid fa-pen-to-square text-xs"></i>
+            <span>Đổi Tên & Quản Lý Phòng</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Center: Butler Status Badge -->
+      <div class="flex items-center space-x-3 bg-slate-50 border border-slate-200 px-3.5 py-1.5 rounded-full">
+        <div class="flex items-center space-x-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="text-xs font-mono font-bold text-slate-900">Butler-01 [PRO]</span>
+        </div>
+        <span class="text-slate-300 font-mono text-xs">|</span>
+        <div class="flex items-center space-x-1.5 text-xs font-mono font-bold text-blue-700">
+          <span class="px-2 py-0.5 rounded bg-blue-100 border border-blue-200 text-[10px] uppercase font-bold">
+            🛡️ Đang Tuần Tra
+          </span>
+        </div>
+        <span class="text-slate-300 font-mono text-xs">|</span>
+        <span class="text-xs font-mono font-bold text-emerald-600">Sẵn Sàng Phục Vụ</span>
+      </div>
+
+      <!-- Right: Toast Message -->
+      <div class="px-3 py-1 bg-blue-50 border border-blue-200 rounded-xl text-xs font-bold text-blue-700 flex items-center space-x-1.5">
+        <i class="fa-solid fa-tower-broadcast text-blue-500 animate-pulse text-xs"></i>
+        <span>Đang tuần tra lộ trình Biệt Thự</span>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         3. MAIN MAP & TELEOP WORKSPACE (8 COLS MAP + 4 COLS CONTROLLER PANEL)
+         ========================================================================= -->
+    <main class="flex-1 overflow-hidden p-4 grid grid-cols-12 gap-4 bg-slate-100 min-h-0">
+      
+      <!-- LEFT: 2D HOME FLOORPLAN MAP CANVAS (8 Cols) -->
+      <div class="col-span-8 relative bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden shadow-md flex flex-col justify-between">
+        
+        <!-- Top Coordinate Readout & Movement Toast -->
+        <div class="absolute top-3 left-3 z-20 flex items-center space-x-3 bg-slate-900/90 border border-sky-500/50 px-3.5 py-1.5 rounded-xl backdrop-blur text-xs font-mono shadow-lg">
+          <div class="w-4 h-4 flex items-center justify-center text-sky-400 border-r border-slate-700 pr-2 mr-1">
+            <i class="fa-solid fa-crosshairs text-xs"></i>
+          </div>
+          <div class="text-slate-300 font-semibold space-x-2">
+            <span>X: <strong class="text-sky-300 font-bold">4.48 m</strong></span>
+            <span class="text-slate-600">|</span>
+            <span>Y: <strong class="text-sky-300 font-bold">3.58 m</strong></span>
+            <span class="text-slate-600">|</span>
+            <span class="text-amber-400 font-bold">θ: 270°</span>
+          </div>
+          <div class="flex items-center space-x-1.5 pl-2 border-l border-slate-700 text-[11px] text-emerald-400 font-bold">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span>Sẵn sàng điều khiển</span>
+          </div>
+        </div>
+
+        <!-- Top-Right Floating Controls -->
+        <div class="absolute top-3 right-3 z-20 flex flex-col space-y-2">
+          <!-- Layer Menu -->
+          <button class="w-9 h-9 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-sky-400 flex items-center justify-center shadow-lg transition" title="Lớp bản đồ">
+            <i class="fa-solid fa-layer-group text-xs"></i>
+          </button>
+          <!-- Center On Robot -->
+          <button class="w-9 h-9 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-emerald-400 flex items-center justify-center shadow-lg transition" title="Căn giữa vào Robot">
+            <i class="fa-solid fa-crosshairs text-xs"></i>
+          </button>
+          <!-- Zoom Controls -->
+          <div class="flex flex-col rounded-xl bg-slate-900/90 border border-slate-700 overflow-hidden shadow-lg">
+            <button class="w-9 h-8 hover:bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center border-b border-slate-800 transition">
+              <i class="fa-solid fa-plus text-[10px]"></i>
+            </button>
+            <button class="w-9 h-8 hover:bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center transition">
+              <i class="fa-solid fa-minus text-[10px]"></i>
+            </button>
+          </div>
+          <!-- Compass N -->
+          <div class="w-9 h-9 rounded-xl bg-slate-900/90 border border-slate-700 text-slate-300 flex flex-col items-center justify-center shadow-lg">
+            <i class="fa-solid fa-compass text-red-500 text-xs"></i>
+            <span class="text-[7px] font-mono font-bold text-slate-400">N</span>
+          </div>
+        </div>
+
+        <!-- SVG 2D Villa Floorplan (Exact Structure matching App Canvas) -->
+        <div class="w-full h-full flex items-center justify-center p-2 overflow-hidden cursor-crosshair">
+          <svg viewBox="0 0 1440 840" class="w-full h-full object-contain select-none" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="homeGridPattern" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#161F2E" stroke-width="0.75" />
+                <circle cx="0" cy="0" r="1" fill="#243247" />
+              </pattern>
+              <radialGradient id="butlerActiveGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#00F0FF" stop-opacity="0.5" />
+                <stop offset="70%" stop-color="#0284C7" stop-opacity="0.2" />
+                <stop offset="100%" stop-color="#0284C7" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+
+            <!-- Background Grid -->
+            <rect width="1440" height="840" fill="#0B0F17" />
+            <rect width="1440" height="840" fill="url(#homeGridPattern)" />
+
+            <!-- Villa Outer Structural Walls -->
+            <path d="M 120 70 H 230 V 40 H 860 V 70 H 1320 V 620 H 1170 V 780 H 160 V 670 H 120 Z" fill="#0F172A" stroke="#475569" stroke-width="3" />
+
+            <!-- 360° LiDAR Laser Scan Rays -->
+            <g opacity="0.6" stroke="#1E293B" stroke-width="0.5">
+              <path d="M 120 70 L 450 350 M 130 90 L 440 370 M 140 120 L 460 380 M 150 150 L 430 400 M 120 200 L 470 420" />
+              <path d="M 120 300 L 440 450 M 120 400 L 480 480 M 120 500 L 450 520 M 120 600 L 460 560 M 160 670 L 480 600" />
+              <path d="M 450 70 L 720 200 M 470 70 L 740 220 M 500 70 L 760 250 M 550 70 L 780 280 M 600 70 L 800 300" />
+              <path d="M 860 120 L 450 350 M 860 180 L 460 380 M 860 240 L 470 410 M 860 300 L 480 440 M 860 360 L 500 480" />
+              <path d="M 860 70 L 1320 480 M 880 70 L 1310 500 M 920 70 L 1300 520 M 960 70 L 1290 540 M 1000 70 L 1280 560" />
+            </g>
+
+            <!-- Room Zones (Semi-transparent Rectangles) -->
+            <!-- 1. Charging Dock Zone -->
+            <rect x="238" y="80" width="105" height="90" rx="8" fill="#EAB308" fill-opacity="0.08" stroke="#EAB308" stroke-width="1.5" stroke-dasharray="4,4" />
+            <text x="290" y="130" fill="#FDE047" font-size="11" font-family="'JetBrains Mono'" font-weight="bold" text-anchor="middle">⚡ TRẠM SẠC</text>
+
+            <!-- 2. Main Living Room -->
+            <rect x="448" y="80" width="260" height="490" rx="8" fill="#111827" fill-opacity="0.4" stroke="#475569" stroke-width="1.5" stroke-dasharray="4,4" />
+            <text x="578" y="320" fill="#94A3B8" font-size="12" font-family="'JetBrains Mono'" font-weight="bold" text-anchor="middle">🛋️ PHÒNG KHÁCH & TIẾP KHÁCH</text>
+
+            <!-- 3. Master Bedroom Suite -->
+            <rect x="858" y="80" width="400" height="420" rx="8" fill="#131B2B" fill-opacity="0.4" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,4" />
+            <text x="1058" y="280" fill="#94A3B8" font-size="12" font-family="'JetBrains Mono'" font-weight="bold" text-anchor="middle">🛏️ PHÒNG NGỦ MASTER</text>
+
+            <!-- 4. Study & Home Office -->
+            <rect x="870" y="580" width="150" height="180" rx="8" fill="#0F172A" fill-opacity="0.4" stroke="#475569" stroke-width="1.5" stroke-dasharray="4,4" />
+            <text x="945" y="675" fill="#94A3B8" font-size="11" font-family="'JetBrains Mono'" font-weight="bold" text-anchor="middle">📚 PHÒNG ĐỌC SÁCH</text>
+
+            <!-- 5. Kitchen & Dining -->
+            <rect x="1100" y="610" width="160" height="160" rx="8" fill="#0C2333" fill-opacity="0.4" stroke="#0284C7" stroke-width="1.5" stroke-dasharray="4,4" />
+            <text x="1180" y="695" fill="#38BDF8" font-size="11" font-family="'JetBrains Mono'" font-weight="bold" text-anchor="middle">🍳 PHÒNG BẾP & ĂN</text>
+
+            <!-- 6. Central Foyer Hub -->
+            <rect x="710" y="490" width="150" height="120" rx="8" fill="#84CC16" fill-opacity="0.08" stroke="#84CC16" stroke-width="1.5" stroke-dasharray="4,4" />
+            <text x="785" y="555" fill="#BEF264" font-size="11" font-family="'JetBrains Mono'" font-weight="bold" text-anchor="middle">🧭 SẢNH TRUNG TÂM</text>
+
+            <!-- Nav2 Trajectory Path (Curved Bezier Blue Spline) -->
+            <path d="M 280 125 Q 500 280 760 670 T 1180 690" stroke="#00F0FF" stroke-width="2.5" stroke-dasharray="6,6" fill="none" opacity="0.8" />
+
+            <!-- Target Dispatch Crosshair Goal -->
+            <g transform="translate(1180, 690)">
+              <circle cx="0" cy="0" r="18" fill="#10B981" fill-opacity="0.2" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4" />
+              <circle cx="0" cy="0" r="6" fill="#10B981" />
+              <line x1="-12" y1="0" x2="12" y2="0" stroke="#FFFFFF" stroke-width="1.5" />
+              <line x1="0" y1="-12" x2="0" y2="12" stroke="#FFFFFF" stroke-width="1.5" />
+            </g>
+
+            <!-- Active Butler Robot Avatar (Oriented Angle 270°) -->
+            <g transform="translate(760, 670) rotate(270)">
+              <!-- Safety Halo -->
+              <circle cx="0" cy="0" r="42" fill="url(#butlerActiveGlow)" />
+              <circle cx="0" cy="0" r="32" stroke="#00F0FF" stroke-width="2" stroke-dasharray="4,4" fill="none" opacity="0.9" />
+
+              <!-- Chassis Body -->
+              <rect x="-28" y="-20" width="56" height="40" rx="10" fill="#FFFFFF" stroke="#0B0F17" stroke-width="3" />
+              <!-- Heading Pointer -->
+              <path d="M 28 0 L 14 -10 L 14 10 Z" fill="#0284C7" />
+              <!-- 360° LiDAR Dome Sensor -->
+              <circle cx="-2" cy="0" r="10" fill="#0B0F17" stroke="#38BDF8" stroke-width="2.5" />
+              <circle cx="-2" cy="0" r="4.5" fill="#00F0FF" />
+              <!-- Laser Cone -->
+              <path d="M 24 -16 L 56 -32 A 64 64 0 0 1 56 32 L 24 16 Z" fill="#22C55E" fill-opacity="0.3" stroke="#22C55E" stroke-width="1.5" stroke-dasharray="2,2" />
+              <!-- Label Tag -->
+              <rect x="-18" y="-6" width="30" height="12" rx="3" fill="#0F172A" />
+              <text x="-3" y="3" fill="#FFFFFF" font-size="7.5" font-family="'JetBrains Mono'" font-weight="900" text-anchor="middle">BUTLER</text>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Floating Target Dispatch Popover Box -->
+        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-72 bg-slate-900 border border-sky-400 rounded-2xl p-4 shadow-2xl space-y-3 backdrop-blur">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+            <div class="flex items-center space-x-2">
+              <div class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></div>
+              <span class="text-xs font-black text-white font-mono uppercase">ĐIỀU PHỐI QUẢN GIA</span>
+            </div>
+            <button class="text-slate-400 hover:text-white text-xs font-bold px-1">✕</button>
+          </div>
+          <div class="text-xs font-mono space-y-1">
+            <div class="text-sky-300 font-bold text-sm">🍳 Phòng Bếp & Bàn Ăn</div>
+            <div class="text-slate-400 text-[11px]">Tọa độ mục tiêu: [x: 5.12m, y: -3.36m]</div>
+          </div>
+          <div class="flex items-center space-x-2 pt-1">
+            <button class="flex-1 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-blue-500/25 transition flex items-center justify-center space-x-1.5 cursor-pointer">
+              <i class="fa-solid fa-location-arrow text-xs"></i>
+              <span>ĐẾN ĐÂY NGAY</span>
+            </button>
+            <button class="px-3 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs rounded-xl font-bold transition cursor-pointer">
+              Hủy
+            </button>
+          </div>
+        </div>
+
+        <!-- Bottom Map Status Bar -->
+        <div class="p-2.5 bg-slate-900/95 border-t border-slate-800 flex items-center justify-between text-xs font-mono">
+          <div class="flex items-center space-x-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-slate-300 font-medium text-[11px]">
+              Sơ Đồ Biệt Thự Thông Minh (SLAM 0.05m/px) • CycloneDDS
+            </span>
+          </div>
+          <div class="flex items-center space-x-2 bg-slate-800 border border-slate-700 px-3 py-1 rounded-full text-slate-200 text-xs">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span class="font-bold">Đồng Bộ Trực Tiếp</span>
+            <span class="text-slate-500">&gt;</span>
+            <span class="text-emerald-400 font-bold">Floor 1</span>
+          </div>
+          <div class="flex items-center space-x-2 text-sky-300 text-[11px] font-black bg-sky-950/80 border border-sky-500/50 px-3 py-1 rounded-xl">
+            <i class="fa-solid fa-keyboard text-sky-400 animate-pulse text-xs"></i>
+            <span>Lái Bằng Phím: W A S D hoặc ↑ ↓ ← →</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: SMART BUTLER TELEOP PANEL, ACTIVITIES & LOCATIONS (4 Cols) -->
+      <div class="col-span-4 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col justify-between space-y-3 overflow-y-auto">
+        
+        <div class="space-y-3.5">
+          
+          <!-- Robot Identity Header -->
+          <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-9 h-9 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 shadow-2xs">
+                <i class="fa-solid fa-robot text-base"></i>
+              </div>
+              <div>
+                <h3 class="text-xs font-black text-slate-900 font-mono">Butler-01 [PRO]</h3>
+                <div class="text-[10px] text-slate-500 font-mono">Robot Quản Gia Thông Minh</div>
+              </div>
+            </div>
+
+            <!-- Duty Toggle Switch -->
+            <button class="px-2.5 py-1 rounded-lg text-[10px] font-mono font-black border bg-emerald-50 border-emerald-200 text-emerald-700 flex items-center space-x-1 shadow-2xs">
+              <i class="fa-solid fa-power-off text-[9px]"></i>
+              <span>SẴN SÀNG</span>
+            </button>
+          </div>
+
+          <!-- 1. REAL-TIME TELEOP D-PAD CONTROLLER -->
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 shadow-2xs space-y-2">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-1.5">
+              <span class="text-xs font-mono font-black text-slate-900 uppercase flex items-center space-x-1.5">
+                <i class="fa-solid fa-gamepad text-blue-600 text-xs"></i>
+                <span>BẢNG PHÍM LÁI TRỰC TIẾP</span>
+              </span>
+              <span class="text-[10px] font-mono text-emerald-700 font-bold bg-emerald-100 px-1.5 py-0.5 rounded">
+                ROS2 /cmd_vel
+              </span>
+            </div>
+
+            <!-- D-Pad Buttons -->
+            <div class="flex flex-col items-center space-y-1.5 py-1">
+              <!-- Up Button -->
+              <button class="w-16 h-10 rounded-xl bg-white hover:bg-blue-600 text-slate-700 hover:text-white border border-slate-200 flex flex-col items-center justify-center shadow-2xs transition active:scale-95 cursor-pointer font-mono font-bold">
+                <i class="fa-solid fa-arrow-up text-xs"></i>
+                <span class="text-[8px]">W / ↑</span>
+              </button>
+
+              <!-- Left, Stop, Right Row -->
+              <div class="flex items-center space-x-2">
+                <button class="w-14 h-10 rounded-xl bg-white hover:bg-blue-600 text-slate-700 hover:text-white border border-slate-200 flex flex-col items-center justify-center shadow-2xs transition active:scale-95 cursor-pointer font-mono font-bold">
+                  <i class="fa-solid fa-arrow-left text-xs"></i>
+                  <span class="text-[8px]">A / ←</span>
+                </button>
+                <button class="w-14 h-10 rounded-xl bg-red-600 hover:bg-red-700 text-white border border-red-500 flex flex-col items-center justify-center shadow-2xs transition active:scale-95 cursor-pointer font-mono font-black">
+                  <i class="fa-solid fa-hand text-xs"></i>
+                  <span class="text-[8px]">STOP</span>
+                </button>
+                <button class="w-14 h-10 rounded-xl bg-white hover:bg-blue-600 text-slate-700 hover:text-white border border-slate-200 flex flex-col items-center justify-center shadow-2xs transition active:scale-95 cursor-pointer font-mono font-bold">
+                  <i class="fa-solid fa-arrow-right text-xs"></i>
+                  <span class="text-[8px]">D / →</span>
+                </button>
+              </div>
+
+              <!-- Down Button -->
+              <button class="w-16 h-10 rounded-xl bg-white hover:bg-blue-600 text-slate-700 hover:text-white border border-slate-200 flex flex-col items-center justify-center shadow-2xs transition active:scale-95 cursor-pointer font-mono font-bold">
+                <i class="fa-solid fa-arrow-down text-xs"></i>
+                <span class="text-[8px]">S / ↓</span>
+              </button>
+            </div>
+
+            <!-- Speed Slider Control -->
+            <div class="pt-1 border-t border-slate-200 flex items-center justify-between text-xs font-mono">
+              <span class="text-slate-500 text-[11px] font-bold">Tốc độ lái:</span>
+              <span class="text-blue-600 font-bold bg-blue-50 px-2 py-0.5 rounded border border-blue-100">0.80 m/s</span>
+            </div>
+          </div>
+
+          <!-- 2. BUTLER ACTIVITIES (4 Modes) -->
+          <div class="space-y-1.5">
+            <span class="text-[11px] font-mono font-black text-slate-500 uppercase block">HOẠT ĐỘNG QUẢN GIA:</span>
+            <div class="grid grid-cols-2 gap-1.5">
+              <button class="p-2.5 rounded-xl border text-xs font-bold flex items-center space-x-2 bg-blue-50 border-blue-200 text-blue-700 shadow-2xs">
+                <i class="fa-solid fa-shield-halved text-xs text-blue-600"></i>
+                <span>Tuần Tra</span>
+              </button>
+              <button class="p-2.5 rounded-xl border text-xs font-bold flex items-center space-x-2 bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700">
+                <i class="fa-solid fa-bolt text-xs text-amber-500"></i>
+                <span>Sạc Pin</span>
+              </button>
+              <button class="p-2.5 rounded-xl border text-xs font-bold flex items-center space-x-2 bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700">
+                <i class="fa-solid fa-mug-hot text-xs text-slate-500"></i>
+                <span>Chờ Lệnh</span>
+              </button>
+              <button class="p-2.5 rounded-xl border text-xs font-bold flex items-center space-x-2 bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700">
+                <i class="fa-solid fa-wrench text-xs text-indigo-500"></i>
+                <span>Tự Kiểm Tra</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. PRESET ROOM WAYPOINTS -->
+          <div class="space-y-1.5">
+            <span class="text-[11px] font-mono font-black text-slate-500 uppercase block">ĐIỂM ĐẾN CÀI SẴN:</span>
+            <div class="space-y-1">
+              <button class="w-full px-3 py-2 rounded-xl border text-xs font-bold flex items-center justify-between bg-white hover:bg-slate-50 border-slate-200 text-slate-800 shadow-2xs transition cursor-pointer">
+                <div class="flex items-center space-x-2">
+                  <i class="fa-solid fa-couch text-slate-500 text-xs"></i>
+                  <span>Bàn Trà Phòng Khách</span>
+                </div>
+                <span class="text-[10px] font-mono text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">Đến ngay</span>
+              </button>
+
+              <button class="w-full px-3 py-2 rounded-xl border text-xs font-bold flex items-center justify-between bg-white hover:bg-slate-50 border-slate-200 text-slate-800 shadow-2xs transition cursor-pointer">
+                <div class="flex items-center space-x-2">
+                  <i class="fa-solid fa-bed text-slate-500 text-xs"></i>
+                  <span>Cửa Phòng Ngủ Master</span>
+                </div>
+                <span class="text-[10px] font-mono text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">Đến ngay</span>
+              </button>
+
+              <button class="w-full px-3 py-2 rounded-xl border text-xs font-bold flex items-center justify-between bg-white hover:bg-slate-50 border-slate-200 text-slate-800 shadow-2xs transition cursor-pointer">
+                <div class="flex items-center space-x-2">
+                  <i class="fa-solid fa-book-open text-slate-500 text-xs"></i>
+                  <span>Bàn Làm Việc & Sách</span>
+                </div>
+                <span class="text-[10px] font-mono text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">Đến ngay</span>
+              </button>
+
+              <button class="w-full px-3 py-2 rounded-xl border text-xs font-bold flex items-center justify-between bg-white hover:bg-slate-50 border-slate-200 text-slate-800 shadow-2xs transition cursor-pointer">
+                <div class="flex items-center space-x-2">
+                  <i class="fa-solid fa-kitchen-set text-slate-500 text-xs"></i>
+                  <span>Quầy Bếp & Bàn Ăn</span>
+                </div>
+                <span class="text-[10px] font-mono text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">Đến ngay</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Robot Hardware Metrics Footer -->
+        <div class="pt-3 border-t border-slate-200 space-y-1.5 text-xs font-mono">
+          <div class="flex justify-between items-center text-slate-500">
+            <span>Trạng thái Pin LiFePO4:</span>
+            <span class="text-emerald-600 font-bold">88% (27.2V)</span>
+          </div>
+          <div class="flex justify-between items-center text-slate-500">
+            <span>Độ trễ Nav2 CycloneDDS:</span>
+            <span class="text-blue-600 font-bold">24ms</span>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

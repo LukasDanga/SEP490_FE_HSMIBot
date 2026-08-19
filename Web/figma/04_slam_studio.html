@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSMIBot Web OS - SLAM Mapping Studio (English)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: '#2563EB',
+            safety: '#16A34A',
+            warning: '#D97706',
+            critical: '#DC2626',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-w-[1440px] min-h-[900px] h-screen bg-slate-50 font-['Inter'] text-slate-800 antialiased flex overflow-hidden">
+
+  <!-- =========================================================================
+       1. LEFT SIDEBAR (Fixed 260px)
+       ========================================================================= -->
+  <aside class="w-[260px] min-w-[260px] max-w-[260px] h-screen bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 z-30 select-none">
+    <div class="h-16 px-5 border-b border-slate-200 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+          <i class="fa-solid fa-robot text-base"></i>
+        </div>
+        <div>
+          <span class="text-sm font-black text-slate-900 tracking-tight block leading-tight">HSMIBot Web OS</span>
+          <div class="flex items-center space-x-1.5 mt-0.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-[10px] font-mono font-bold text-emerald-600 leading-tight">ONLINE • 24ms</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+      <a href="01_dashboard.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-chart-pie w-4 text-center"></i><span>Dashboard</span></div>
+      </a>
+      <a href="08_teleop_voice.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-video w-4 text-center"></i><span>Camera</span></div>
+        <span class="text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">4K AI</span>
+      </a>
+      <a href="03_navigation.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-map-location-dot w-4 text-center"></i><span>Map & Nav</span></div>
+      </a>
+      <a href="05_scheduler.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-calendar-days w-4 text-center"></i><span>Patrol Schedule</span></div>
+      </a>
+      <a href="06_face_id.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-user-shield w-4 text-center"></i><span>Face ID</span></div>
+        <span class="text-[10px] font-mono font-bold bg-red-500 text-white px-1.5 py-0.5 rounded">1 NEW</span>
+      </a>
+      <a href="07_fire_matrix.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-fire-flame-curved w-4 text-center"></i><span>Fire Safety</span></div>
+        <span class="text-[10px] font-mono font-bold bg-orange-100 text-orange-800 px-1.5 py-0.5 rounded">4 LVL</span>
+      </a>
+      <a href="09_incidents.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-shield-halved w-4 text-center"></i><span>Incident Logs</span></div>
+        <span class="text-[10px] font-mono font-bold bg-red-500 text-white px-1.5 py-0.5 rounded">3</span>
+      </a>
+      <a href="04_slam_studio.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold bg-blue-50 text-blue-600 transition shadow-2xs">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-draw-polygon w-4 text-center"></i><span>SLAM Studio</span></div>
+        <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+      </a>
+      <a href="10_telemetry.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-microchip w-4 text-center"></i><span>Robot Health</span></div>
+      </a>
+      <a href="11_settings_profile.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-gear w-4 text-center"></i><span>Settings</span></div>
+      </a>
+    </div>
+
+    <!-- Bottom User Section -->
+    <div class="p-3 border-t border-slate-200 bg-slate-50/50">
+      <div class="flex items-center justify-between p-2 rounded-xl bg-white border border-slate-200 shadow-2xs hover:border-slate-300 transition">
+        <a href="11_settings_profile.html" class="flex items-center space-x-2.5 min-w-0 pr-2 flex-1">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80" alt="Alexander Tran" class="w-9 h-9 rounded-full object-cover border border-slate-200 shrink-0" />
+          <span class="text-xs font-bold text-slate-900 truncate">Alexander Tran</span>
+        </a>
+        <a href="00_auth_portal.html" class="p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0">
+          <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       2. MAIN CONTENT WRAPPER
+       ========================================================================= -->
+  <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+    
+    <!-- Top Header -->
+    <header class="h-16 min-h-[64px] max-h-[64px] bg-white border-b border-slate-200 px-6 flex items-center justify-between sticky top-0 z-20 select-none">
+      <div class="flex items-center space-x-3 text-xs">
+        <div class="flex items-center space-x-2">
+          <span class="text-slate-600 font-semibold flex items-center space-x-1">
+            <i class="fa-solid fa-house text-blue-600 text-xs mr-1"></i>
+            <span>Home</span>
+          </span>
+          <i class="fa-solid fa-chevron-right text-[10px] text-slate-300"></i>
+          <span class="font-bold text-slate-900 bg-slate-100 px-2.5 py-1 rounded-md">
+            SLAM Mapping Studio & Virtual Zones (Cartographer)
+          </span>
+        </div>
+      </div>
+
+      <!-- Export Map Button -->
+      <div class="flex items-center space-x-3">
+        <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-sm flex items-center space-x-1.5 cursor-pointer">
+          <i class="fa-solid fa-floppy-disk"></i>
+          <span>Save & Export Map (.yaml / .pgm)</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport Body: SLAM Studio Tools & Mesh Canvas -->
+    <main class="flex-1 overflow-hidden bg-slate-100 relative p-6 flex flex-col justify-between">
+      
+      <!-- 1. SLAM DRAWING TOOLBAR (TOP FLOATING BAR) -->
+      <div class="z-10 bg-white/95 backdrop-blur rounded-2xl border border-slate-200 p-2 shadow-md flex items-center justify-between max-w-2xl">
+        <div class="flex items-center space-x-1.5">
+          <button class="px-3 py-2 rounded-xl text-xs font-bold bg-blue-50 text-blue-600 border border-blue-200 flex items-center space-x-1.5">
+            <i class="fa-solid fa-arrow-pointer"></i>
+            <span>Select</span>
+          </button>
+
+          <button class="px-3 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 flex items-center space-x-1.5">
+            <i class="fa-solid fa-ban text-red-500"></i>
+            <span>Virtual Wall</span>
+          </button>
+
+          <button class="px-3 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 flex items-center space-x-1.5">
+            <i class="fa-solid fa-draw-polygon text-red-500"></i>
+            <span>Keep-Out Zone</span>
+          </button>
+
+          <button class="px-3 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 flex items-center space-x-1.5">
+            <i class="fa-solid fa-gauge-simple-low text-amber-500"></i>
+            <span>Slow Speed Zone</span>
+          </button>
+        </div>
+
+        <div class="flex items-center space-x-2 pl-3 border-l border-slate-200">
+          <span class="text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">
+            SLAM ACTIVE
+          </span>
+        </div>
+      </div>
+
+      <!-- 2. CARTOGRAPHER SLAM OCCUPANCY GRID MESH CANVAS -->
+      <div class="absolute inset-0 m-6 bg-slate-900 rounded-3xl border border-slate-800 shadow-2xl overflow-hidden flex items-center justify-center">
+        
+        <svg class="w-full h-full opacity-90" viewBox="0 0 1000 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Fine Occupancy Grid Mesh -->
+          <pattern id="slamGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+            <rect width="20" height="20" fill="none" stroke="#1e293b" stroke-width="0.5" />
+          </pattern>
+          <rect width="1000" height="600" fill="url(#slamGrid)" />
+
+          <!-- Real-Time Discovered Perimeter (Cyan Glowing Lines) -->
+          <rect x="120" y="80" width="760" height="440" rx="6" stroke="#0ea5e9" stroke-width="4" stroke-dasharray="4 2" fill="#0f172a" fill-opacity="0.6" />
+
+          <!-- Internal Partition Scanned Walls -->
+          <line x1="420" y1="80" x2="420" y2="320" stroke="#0ea5e9" stroke-width="4" />
+          <line x1="420" y1="400" x2="420" y2="520" stroke="#0ea5e9" stroke-width="4" />
+
+          <!-- Virtual Wall Annotation (Drawn by user - Red Stripe) -->
+          <line x1="420" y1="320" x2="420" y2="400" stroke="#ef4444" stroke-width="6" stroke-dasharray="8 4" />
+          <text x="430" y="365" fill="#f87171" font-size="11" font-family="monospace" font-weight="bold">VIRTUAL WALL</text>
+
+          <!-- Keep-Out Zone Polygon (Red Striped Area for Balcony / Stairs) -->
+          <rect x="650" y="100" width="200" height="140" rx="4" fill="#dc2626" fill-opacity="0.15" stroke="#ef4444" stroke-width="2" stroke-dasharray="6 4" />
+          <text x="670" y="175" fill="#fca5a5" font-size="12" font-family="Inter" font-weight="700">KEEP-OUT (STAIRS)</text>
+
+          <!-- Slow Zone Polygon (Yellow Area near Kitchen Dining) -->
+          <rect x="150" y="340" width="240" height="150" rx="4" fill="#d97706" fill-opacity="0.15" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 4" />
+          <text x="180" y="420" fill="#fde68a" font-size="12" font-family="Inter" font-weight="700">SLOW ZONE (0.2 m/s)</text>
+
+          <!-- Active Robot Mapping Position -->
+          <g transform="translate(320, 240)">
+            <circle cx="0" cy="0" r="16" fill="#2563eb" stroke="#ffffff" stroke-width="2.5" />
+            <polygon points="0,-8 5,5 0,2 -5,5" fill="#ffffff" />
+            <circle cx="0" cy="0" r="36" fill="none" stroke="#38bdf8" stroke-width="1" stroke-dasharray="2 4" />
+          </g>
+        </svg>
+
+        <!-- Right Floating Layer Tree & Resolution Adjuster -->
+        <div class="absolute top-6 right-6 bg-white/95 backdrop-blur rounded-2xl border border-slate-200 shadow-xl p-4 w-64 space-y-3 z-10">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+            <span class="text-xs font-black text-slate-900">Map Layers</span>
+            <span class="text-[10px] font-mono font-bold text-slate-400">Res: 0.05 m/px</span>
+          </div>
+
+          <div class="space-y-2 text-xs">
+            <label class="flex items-center justify-between text-slate-700 font-semibold cursor-pointer">
+              <span>Occupancy Grid (.pgm)</span>
+              <input type="checkbox" checked class="rounded text-blue-600" />
+            </label>
+            <label class="flex items-center justify-between text-slate-700 font-semibold cursor-pointer">
+              <span>Virtual Barriers (3)</span>
+              <input type="checkbox" checked class="rounded text-blue-600" />
+            </label>
+            <label class="flex items-center justify-between text-slate-700 font-semibold cursor-pointer">
+              <span>Restricted Polygons (1)</span>
+              <input type="checkbox" checked class="rounded text-blue-600" />
+            </label>
+          </div>
+
+          <div class="pt-2 border-t border-slate-100 text-[11px] font-mono text-slate-500">
+            Loop Closure: 99.1% Confidence
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 3. BOTTOM SLAM METRICS & ALGORITHM TOGGLES -->
+      <div class="z-10 bg-white/95 backdrop-blur rounded-2xl border border-slate-200 p-3 shadow-md flex items-center justify-between max-w-xl mx-auto w-full">
+        <div class="text-center px-4">
+          <span class="text-[10px] font-mono text-slate-400 font-bold uppercase block">Algorithm</span>
+          <span class="text-xs font-mono font-black text-slate-900">Cartographer 2D</span>
+        </div>
+        <div class="w-[1px] h-6 bg-slate-200"></div>
+        <div class="text-center px-4">
+          <span class="text-[10px] font-mono text-slate-400 font-bold uppercase block">Map Area</span>
+          <span class="text-xs font-mono font-black text-slate-900">385 m² Scanned</span>
+        </div>
+        <div class="w-[1px] h-6 bg-slate-200"></div>
+        <div class="text-center px-4">
+          <span class="text-[10px] font-mono text-slate-400 font-bold uppercase block">Submaps</span>
+          <span class="text-xs font-mono font-black text-blue-600">14 Closed Loops</span>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+</body>
+</html>

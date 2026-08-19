@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSMIBot Web OS - Hardware Diagnostics & ROS2 Telemetry (English)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: '#2563EB',
+            safety: '#16A34A',
+            warning: '#D97706',
+            critical: '#DC2626',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-w-[1440px] min-h-[900px] h-screen bg-slate-50 font-['Inter'] text-slate-800 antialiased flex overflow-hidden">
+
+  <!-- =========================================================================
+       1. LEFT SIDEBAR (Fixed 260px)
+       ========================================================================= -->
+  <aside class="w-[260px] min-w-[260px] max-w-[260px] h-screen bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 z-30 select-none">
+    <div class="h-16 px-5 border-b border-slate-200 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+          <i class="fa-solid fa-robot text-base"></i>
+        </div>
+        <div>
+          <span class="text-sm font-black text-slate-900 tracking-tight block leading-tight">HSMIBot Web OS</span>
+          <div class="flex items-center space-x-1.5 mt-0.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-[10px] font-mono font-bold text-emerald-600 leading-tight">ONLINE • 24ms</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+      <a href="01_dashboard.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-chart-pie w-4 text-center"></i><span>Dashboard</span></div>
+      </a>
+      <a href="08_teleop_voice.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-video w-4 text-center"></i><span>Camera</span></div>
+        <span class="text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">4K AI</span>
+      </a>
+      <a href="03_navigation.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-map-location-dot w-4 text-center"></i><span>Map & Nav</span></div>
+      </a>
+      <a href="05_scheduler.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-calendar-days w-4 text-center"></i><span>Patrol Schedule</span></div>
+      </a>
+      <a href="06_face_id.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-user-shield w-4 text-center"></i><span>Face ID</span></div>
+        <span class="text-[10px] font-mono font-bold bg-red-500 text-white px-1.5 py-0.5 rounded">1 NEW</span>
+      </a>
+      <a href="07_fire_matrix.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-fire-flame-curved w-4 text-center"></i><span>Fire Safety</span></div>
+        <span class="text-[10px] font-mono font-bold bg-orange-100 text-orange-800 px-1.5 py-0.5 rounded">4 LVL</span>
+      </a>
+      <a href="09_incidents.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-shield-halved w-4 text-center"></i><span>Incident Logs</span></div>
+        <span class="text-[10px] font-mono font-bold bg-red-500 text-white px-1.5 py-0.5 rounded">3</span>
+      </a>
+      <a href="04_slam_studio.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-draw-polygon w-4 text-center"></i><span>SLAM Studio</span></div>
+      </a>
+      <a href="10_telemetry.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold bg-blue-50 text-blue-600 transition shadow-2xs">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-microchip w-4 text-center"></i><span>Robot Health</span></div>
+        <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+      </a>
+      <a href="11_settings_profile.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-gear w-4 text-center"></i><span>Settings</span></div>
+      </a>
+    </div>
+
+    <!-- Bottom User Section -->
+    <div class="p-3 border-t border-slate-200 bg-slate-50/50">
+      <div class="flex items-center justify-between p-2 rounded-xl bg-white border border-slate-200 shadow-2xs hover:border-slate-300 transition">
+        <a href="11_settings_profile.html" class="flex items-center space-x-2.5 min-w-0 pr-2 flex-1">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80" alt="Alexander Tran" class="w-9 h-9 rounded-full object-cover border border-slate-200 shrink-0" />
+          <span class="text-xs font-bold text-slate-900 truncate">Alexander Tran</span>
+        </a>
+        <a href="00_auth_portal.html" class="p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0">
+          <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       2. MAIN CONTENT WRAPPER
+       ========================================================================= -->
+  <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+    
+    <!-- Top Header -->
+    <header class="h-16 min-h-[64px] max-h-[64px] bg-white border-b border-slate-200 px-6 flex items-center justify-between sticky top-0 z-20 select-none">
+      <div class="flex items-center space-x-3 text-xs">
+        <div class="flex items-center space-x-2">
+          <span class="text-slate-600 font-semibold flex items-center space-x-1">
+            <i class="fa-solid fa-house text-blue-600 text-xs mr-1"></i>
+            <span>Home</span>
+          </span>
+          <i class="fa-solid fa-chevron-right text-[10px] text-slate-300"></i>
+          <span class="font-bold text-slate-900 bg-slate-100 px-2.5 py-1 rounded-md">
+            Hardware Diagnostics & ROS2 Node Diagnostics
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-100 text-emerald-800">
+          SYSTEM HEALTH: 100% NOMINAL
+        </span>
+      </div>
+    </header>
+
+    <!-- Main Viewport Body -->
+    <main class="flex-1 overflow-y-auto bg-slate-50 p-6 space-y-6">
+      
+      <!-- 1. HARDWARE COMPONENT STATUS CARDS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- Motor 1 (Left Wheel) -->
+        <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Left BLDC Motor</span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+          </div>
+          <div class="text-2xl font-black text-slate-900 font-mono">1,240 RPM</div>
+          <div class="text-[11px] text-emerald-600 font-bold">Encoder Feedback OK • 38.2°C</div>
+        </div>
+
+        <!-- Motor 2 (Right Wheel) -->
+        <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Right BLDC Motor</span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+          </div>
+          <div class="text-2xl font-black text-slate-900 font-mono">1,240 RPM</div>
+          <div class="text-[11px] text-emerald-600 font-bold">Encoder Feedback OK • 39.1°C</div>
+        </div>
+
+        <!-- Jetson Xavier NPU -->
+        <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Jetson Xavier NPU</span>
+            <i class="fa-solid fa-microchip text-purple-600"></i>
+          </div>
+          <div class="text-2xl font-black text-purple-600 font-mono">48.5 °C</div>
+          <div class="text-[11px] text-slate-500 font-medium">Fan at 45% • 8-Core ARM Active</div>
+        </div>
+
+        <!-- Battery BMS Life -->
+        <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">LiFePO4 BMS</span>
+            <i class="fa-solid fa-car-battery text-blue-600"></i>
+          </div>
+          <div class="text-2xl font-black text-slate-900 font-mono">25.4 V</div>
+          <div class="text-[11px] text-emerald-600 font-bold">Health: 98% (42 Cycles)</div>
+        </div>
+
+      </div>
+
+      <!-- 2. ROS2 TOPIC BUS & NODE GRAPH MONITOR -->
+      <div class="bg-white rounded-3xl border border-slate-200 shadow-2xs p-6 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div>
+            <h2 class="text-sm font-black text-slate-900 flex items-center space-x-2">
+              <i class="fa-solid fa-network-wired text-blue-600"></i>
+              <span>Active ROS2 Topic Subscriptions & DDS Rates</span>
+            </h2>
+            <p class="text-xs text-slate-500 mt-0.5">Real-time introspection into CycloneDDS robot middleware.</p>
+          </div>
+          <span class="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-slate-100 text-slate-700">DDS DOMAIN ID: 42</span>
+        </div>
+
+        <table class="w-full text-left text-xs">
+          <thead>
+            <tr class="border-b border-slate-200 text-slate-400 uppercase font-mono font-bold">
+              <th class="pb-3">ROS2 Topic Name</th>
+              <th class="pb-3">Message Type</th>
+              <th class="pb-3">Frequency</th>
+              <th class="pb-3">Bandwidth</th>
+              <th class="pb-3 text-right">Node Health</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 font-mono">
+            <tr class="hover:bg-slate-50/80 transition">
+              <td class="py-3 font-bold text-blue-600">/scan</td>
+              <td class="py-3 text-slate-600">sensor_msgs/msg/LaserScan</td>
+              <td class="py-3 text-slate-900 font-bold">25.0 Hz</td>
+              <td class="py-3 text-slate-500">1.2 MB/s</td>
+              <td class="py-3 text-right">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">ACTIVE</span>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-slate-50/80 transition">
+              <td class="py-3 font-bold text-blue-600">/camera/image_raw/compressed</td>
+              <td class="py-3 text-slate-600">sensor_msgs/msg/CompressedImage</td>
+              <td class="py-3 text-slate-900 font-bold">30.0 Hz</td>
+              <td class="py-3 text-slate-500">2.4 MB/s</td>
+              <td class="py-3 text-right">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">ACTIVE</span>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-slate-50/80 transition">
+              <td class="py-3 font-bold text-blue-600">/cmd_vel</td>
+              <td class="py-3 text-slate-600">geometry_msgs/msg/Twist</td>
+              <td class="py-3 text-slate-900 font-bold">50.0 Hz</td>
+              <td class="py-3 text-slate-500">12 KB/s</td>
+              <td class="py-3 text-right">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">ACTIVE</span>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-slate-50/80 transition">
+              <td class="py-3 font-bold text-blue-600">/amcl_pose</td>
+              <td class="py-3 text-slate-600">geometry_msgs/msg/PoseWithCovarianceStamped</td>
+              <td class="py-3 text-slate-900 font-bold">20.0 Hz</td>
+              <td class="py-3 text-slate-500">8 KB/s</td>
+              <td class="py-3 text-right">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">ACTIVE</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+
+</body>
+</html>

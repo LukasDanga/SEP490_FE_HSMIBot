@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSMIBot Web OS - Camera & Live Stream Teleop (English)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: '#2563EB',
+            safety: '#16A34A',
+            warning: '#D97706',
+            critical: '#DC2626',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-w-[1440px] min-h-[900px] h-screen bg-slate-50 font-['Inter'] text-slate-800 antialiased flex overflow-hidden">
+
+  <!-- =========================================================================
+       1. LEFT SIDEBAR (Fixed 260px)
+       ========================================================================= -->
+  <aside class="w-[260px] min-w-[260px] max-w-[260px] h-screen bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 z-30 select-none">
+    <div class="h-16 px-5 border-b border-slate-200 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+          <i class="fa-solid fa-robot text-base"></i>
+        </div>
+        <div>
+          <span class="text-sm font-black text-slate-900 tracking-tight block leading-tight">HSMIBot Web OS</span>
+          <div class="flex items-center space-x-1.5 mt-0.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-[10px] font-mono font-bold text-emerald-600 leading-tight">ONLINE • 24ms</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+      <a href="01_dashboard.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-chart-pie w-4 text-center"></i><span>Dashboard</span></div>
+      </a>
+      <a href="08_teleop_voice.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold bg-blue-50 text-blue-600 transition shadow-2xs">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-video w-4 text-center"></i><span>Camera</span></div>
+        <div class="flex items-center space-x-1.5">
+          <span class="text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">4K AI</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+        </div>
+      </a>
+      <a href="03_navigation.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-map-location-dot w-4 text-center"></i><span>Map & Nav</span></div>
+      </a>
+      <a href="05_scheduler.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-calendar-days w-4 text-center"></i><span>Patrol Schedule</span></div>
+      </a>
+      <a href="06_face_id.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-user-shield w-4 text-center"></i><span>Face ID</span></div>
+        <span class="text-[10px] font-mono font-bold bg-red-500 text-white px-1.5 py-0.5 rounded">1 NEW</span>
+      </a>
+      <a href="07_fire_matrix.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-fire-flame-curved w-4 text-center"></i><span>Fire Safety</span></div>
+        <span class="text-[10px] font-mono font-bold bg-orange-100 text-orange-800 px-1.5 py-0.5 rounded">4 LVL</span>
+      </a>
+      <a href="09_incidents.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-shield-halved w-4 text-center"></i><span>Incident Logs</span></div>
+        <span class="text-[10px] font-mono font-bold bg-red-500 text-white px-1.5 py-0.5 rounded">3</span>
+      </a>
+      <a href="04_slam_studio.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-draw-polygon w-4 text-center"></i><span>SLAM Studio</span></div>
+      </a>
+      <a href="10_telemetry.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-microchip w-4 text-center"></i><span>Robot Health</span></div>
+      </a>
+      <a href="11_settings_profile.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-gear w-4 text-center"></i><span>Settings</span></div>
+      </a>
+    </div>
+
+    <!-- Bottom User Section -->
+    <div class="p-3 border-t border-slate-200 bg-slate-50/50">
+      <div class="flex items-center justify-between p-2 rounded-xl bg-white border border-slate-200 shadow-2xs hover:border-slate-300 transition">
+        <a href="11_settings_profile.html" class="flex items-center space-x-2.5 min-w-0 pr-2 flex-1">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80" alt="Alexander Tran" class="w-9 h-9 rounded-full object-cover border border-slate-200 shrink-0" />
+          <span class="text-xs font-bold text-slate-900 truncate">Alexander Tran</span>
+        </a>
+        <a href="00_auth_portal.html" class="p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0">
+          <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       2. MAIN CONTENT WRAPPER
+       ========================================================================= -->
+  <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+    
+    <!-- Top Header -->
+    <header class="h-16 min-h-[64px] max-h-[64px] bg-white border-b border-slate-200 px-6 flex items-center justify-between sticky top-0 z-20 select-none">
+      <div class="flex items-center space-x-3 text-xs">
+        <div class="flex items-center space-x-2">
+          <span class="text-slate-600 font-semibold flex items-center space-x-1">
+            <i class="fa-solid fa-house text-blue-600 text-xs mr-1"></i>
+            <span>Home</span>
+          </span>
+          <i class="fa-solid fa-chevron-right text-[10px] text-slate-300"></i>
+          <span class="font-bold text-slate-900 bg-slate-100 px-2.5 py-1 rounded-md">
+            Live Camera Stream & Teleoperation Cockpit
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <button class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-black tracking-wider uppercase transition shadow-sm flex items-center space-x-1.5 cursor-pointer">
+          <i class="fa-solid fa-octagon-exclamation"></i>
+          <span>EMERGENCY STOP (SPACEBAR)</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport Body (Split-Screen: Teleop & Voice Assistant) -->
+    <main class="flex-1 overflow-y-auto bg-slate-50 p-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full min-h-[680px]">
+        
+        <!-- LEFT: Teleoperation Driving Cockpit (7 Cols) -->
+        <div class="lg:col-span-7 bg-white rounded-3xl border border-slate-200 shadow-2xs p-6 space-y-6 flex flex-col justify-between">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <h2 class="text-sm font-black text-slate-900 flex items-center space-x-2">
+              <i class="fa-solid fa-gamepad text-blue-600"></i>
+              <span>Manual Drive Cockpit (Virtual Joystick & WASD)</span>
+            </h2>
+            <span class="text-xs font-mono font-bold text-emerald-600">WebRTC: 18ms Latency</span>
+          </div>
+
+          <!-- Low-Latency FPV Camera Canvas -->
+          <div class="relative w-full h-64 rounded-2xl overflow-hidden bg-slate-950 border border-slate-800">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80" alt="FPV" class="w-full h-full object-cover opacity-80" />
+            
+            <!-- Standoff Distance Indicator -->
+            <div class="absolute inset-x-0 bottom-4 flex justify-center">
+              <div class="bg-slate-900/90 backdrop-blur px-4 py-1.5 rounded-full text-xs font-mono text-emerald-400 font-bold border border-emerald-500/30">
+                Front Collision Clearance: 2.14 m (Safe)
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls: Joystick + Speed Slider -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
+            
+            <!-- Virtual D-Pad / Joystick -->
+            <div class="flex flex-col items-center space-y-2">
+              <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider font-mono">WASD Directional Pad</div>
+              <div class="grid grid-cols-3 gap-2 w-36">
+                <div></div>
+                <button class="w-10 h-10 bg-slate-100 hover:bg-blue-600 hover:text-white rounded-xl text-xs font-black transition flex items-center justify-center shadow-sm">W</button>
+                <div></div>
+                <button class="w-10 h-10 bg-slate-100 hover:bg-blue-600 hover:text-white rounded-xl text-xs font-black transition flex items-center justify-center shadow-sm">A</button>
+                <button class="w-10 h-10 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-xl text-xs font-black transition flex items-center justify-center shadow-sm">STOP</button>
+                <button class="w-10 h-10 bg-slate-100 hover:bg-blue-600 hover:text-white rounded-xl text-xs font-black transition flex items-center justify-center shadow-sm">D</button>
+                <div></div>
+                <button class="w-10 h-10 bg-slate-100 hover:bg-blue-600 hover:text-white rounded-xl text-xs font-black transition flex items-center justify-center shadow-sm">S</button>
+                <div></div>
+              </div>
+            </div>
+
+            <!-- Speed Limit Slider -->
+            <div class="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+              <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+                <span>Speed Cap (m/s)</span>
+                <span class="font-mono text-blue-600 font-black">0.60 m/s</span>
+              </div>
+              <input type="range" min="0.1" max="1.2" step="0.05" value="0.6" class="w-full accent-blue-600 cursor-pointer" />
+              <div class="flex items-center justify-between text-[10px] font-mono text-slate-400">
+                <span>0.1 (Precision)</span>
+                <span>1.2 (Max Sprint)</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="text-[11px] font-mono text-slate-400 text-center">
+            Linear: 0.00 m/s • Angular: 0.00 rad/s • Differential Drive Odometry OK
+          </div>
+        </div>
+
+        <!-- RIGHT: 2-Way Voice Intercom & Gemini NLU Assistant (5 Cols) -->
+        <div class="lg:col-span-5 bg-white rounded-3xl border border-slate-200 shadow-2xs p-6 space-y-6 flex flex-col justify-between">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <h2 class="text-sm font-black text-slate-900 flex items-center space-x-2">
+              <i class="fa-solid fa-microphone-lines text-blue-600"></i>
+              <span>AI Voice Assistant & Live Intercom</span>
+            </h2>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+          </div>
+
+          <!-- Gemini Audio Waveform Visualizer -->
+          <div class="bg-slate-900 rounded-2xl p-6 text-center space-y-4">
+            <div class="text-xs font-mono font-bold text-blue-400 uppercase tracking-wider">Audio Input Level: Normal</div>
+            
+            <!-- Animated Soundwave Bars (CSS) -->
+            <div class="flex items-center justify-center space-x-1.5 h-12">
+              <div class="w-1.5 h-6 bg-blue-500 rounded-full animate-pulse"></div>
+              <div class="w-1.5 h-10 bg-blue-400 rounded-full animate-pulse"></div>
+              <div class="w-1.5 h-12 bg-emerald-400 rounded-full animate-pulse"></div>
+              <div class="w-1.5 h-8 bg-blue-400 rounded-full animate-pulse"></div>
+              <div class="w-1.5 h-4 bg-blue-500 rounded-full"></div>
+            </div>
+
+            <!-- Hold-to-Talk Button -->
+            <button class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold tracking-wide uppercase transition shadow-lg shadow-blue-500/25 flex items-center justify-center space-x-2 cursor-pointer">
+              <i class="fa-solid fa-microphone text-sm"></i>
+              <span>Hold to Talk to Room</span>
+            </button>
+          </div>
+
+          <!-- Quick Text-to-Speech (TTS) Announcements -->
+          <div class="space-y-2">
+            <label class="text-xs font-bold text-slate-700 uppercase tracking-wider">Quick Robot Voice Broadcasts:</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button class="p-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 text-left truncate">
+                "Hello master, dinner is served."
+              </button>
+              <button class="p-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 text-left truncate">
+                "Attention: Securing perimeter."
+              </button>
+            </div>
+          </div>
+
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-500 font-medium">
+            Gemini Speech-to-Text latency: 120ms • Echo cancellation active.
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>

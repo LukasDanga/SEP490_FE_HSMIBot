@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSMIBot Web OS - Cài Đặt Robot & Cấu Hình An Ninh (Settings)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts Inter & JetBrains Mono -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: '#2563EB',
+            safety: '#16A34A',
+            warning: '#D97706',
+            critical: '#DC2626',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-w-[1440px] min-h-[900px] h-screen bg-slate-50 font-['Inter'] text-slate-800 antialiased flex overflow-hidden">
+
+  <!-- =========================================================================
+       1. LEFT SIDEBAR (Fixed 260px Width, All 10 Items, Settings is ACTIVE)
+       ========================================================================= -->
+  <aside class="w-[260px] min-w-[260px] max-w-[260px] h-screen bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 z-30 select-none">
+    
+    <!-- Logo & Status Header -->
+    <div class="h-16 px-5 border-b border-slate-200 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+          <i class="fa-solid fa-robot text-base"></i>
+        </div>
+        <div>
+          <span class="text-sm font-black text-slate-900 tracking-tight block leading-tight">HSMIBot Web OS</span>
+          <div class="flex items-center space-x-1.5 mt-0.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-[10px] font-mono font-bold text-emerald-600 leading-tight">ONLINE • 24ms</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+      
+      <!-- 1. Dashboard -->
+      <a href="01_dashboard.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-chart-pie w-4 text-center"></i>
+          <span>Dashboard</span>
+        </div>
+      </a>
+
+      <!-- 2. Camera -->
+      <a href="08_teleop_voice.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-video w-4 text-center"></i>
+          <span>Camera</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">4K AI</span>
+      </a>
+
+      <!-- 3. Map & Nav -->
+      <a href="03_navigation.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-map-location-dot w-4 text-center"></i>
+          <span>Map & Nav</span>
+        </div>
+      </a>
+
+      <!-- 4. Patrol Schedule -->
+      <a href="05_scheduler.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-calendar-days w-4 text-center"></i>
+          <span>Patrol Schedule</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded">6 Lượt</span>
+      </a>
+
+      <!-- 5. Face ID -->
+      <a href="06_face_id.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-user-shield w-4 text-center"></i>
+          <span>Face ID</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-red-500 text-white px-1.5 py-0.5 rounded">1 NEW</span>
+      </a>
+
+      <!-- 6. Fire Safety -->
+      <a href="07_fire_matrix.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-fire-flame-curved w-4 text-center"></i>
+          <span>Fire Safety</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-orange-100 text-orange-800 px-1.5 py-0.5 rounded">4 LVL</span>
+      </a>
+
+      <!-- 7. Incident Logs -->
+      <a href="09_incidents.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-shield-halved w-4 text-center"></i>
+          <span>Incident Logs</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-red-500 text-white px-1.5 py-0.5 rounded">3</span>
+      </a>
+
+      <!-- 8. SLAM Studio -->
+      <a href="04_slam_studio.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-draw-polygon w-4 text-center"></i>
+          <span>SLAM Studio</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-indigo-50 text-indigo-600 px-1.5 py-0.5 rounded">Studio</span>
+      </a>
+
+      <div class="pt-2 pb-1">
+        <div class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400">Hệ Thống</div>
+      </div>
+
+      <!-- 9. Telemetry -->
+      <a href="10_telemetry.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-microchip w-4 text-center"></i>
+          <span>Robot Health</span>
+        </div>
+        <span class="text-[10px] font-mono text-slate-400">24ms</span>
+      </a>
+
+      <!-- 10. Settings (ACTIVE) -->
+      <a href="11_settings_profile.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold bg-blue-50 text-blue-600 border border-blue-100 shadow-sm transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-gear w-4 text-center"></i>
+          <span>Settings</span>
+        </div>
+        <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+      </a>
+
+    </div>
+
+    <!-- Bottom User Section -->
+    <div class="p-3 border-t border-slate-200 bg-slate-50/50">
+      <div class="flex items-center justify-between p-2 rounded-xl bg-white border border-slate-200 shadow-2xs hover:border-slate-300 transition">
+        <a href="12_user_profile.html" class="flex items-center space-x-2.5 min-w-0 pr-2 flex-1">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80" alt="Luan H. Bao Khang" class="w-9 h-9 rounded-full object-cover border border-slate-200 shrink-0" />
+          <span class="text-xs font-bold text-slate-900 truncate">Luan H. Bao Khang</span>
+        </a>
+        <a href="00_auth_portal.html" class="p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0">
+          <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       2. MAIN CONTENT WRAPPER
+       ========================================================================= -->
+  <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+    
+    <!-- Top Header -->
+    <header class="h-16 min-h-[64px] max-h-[64px] bg-white border-b border-slate-200 px-6 flex items-center justify-between sticky top-0 z-20 select-none">
+      <div class="flex items-center space-x-3 text-xs">
+        <div class="flex items-center space-x-2">
+          <span class="text-slate-600 font-semibold flex items-center space-x-1">
+            <i class="fa-solid fa-house text-blue-600 text-xs mr-1"></i>
+            <span>Home</span>
+          </span>
+          <i class="fa-solid fa-chevron-right text-[10px] text-slate-300"></i>
+          <span class="font-bold text-slate-900 bg-slate-100 px-2.5 py-1 rounded-md">
+            Cài Đặt Robot & Cấu Hình An Ninh
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <button class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-md shadow-blue-500/20 flex items-center space-x-2 cursor-pointer">
+          <i class="fa-solid fa-floppy-disk text-xs"></i>
+          <span>Lưu Cài Đặt</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport Body -->
+    <main class="flex-1 overflow-y-auto bg-slate-50 p-6 space-y-6 max-w-7xl mx-auto w-full">
+      
+      <!-- Top Title Bar Box -->
+      <div class="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100">
+            <i class="fa-solid fa-gear text-base"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-extrabold text-slate-900">Cài Đặt Robot & Cấu Hình An Ninh</h2>
+            <p class="text-xs text-slate-500 font-medium">Fine-tune Edge NPU AI thresholds, speaker alert volumes, and networking</p>
+          </div>
+        </div>
+
+        <button class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition flex items-center space-x-2 shadow-md shadow-blue-500/20 cursor-pointer">
+          <i class="fa-solid fa-floppy-disk text-xs"></i>
+          <span>Lưu Cài Đặt</span>
+        </button>
+      </div>
+
+      <!-- Settings Cards Grid (2 Columns) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Card 1: AI Vision & Detection Sensitivity -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-2xs space-y-4">
+          <div class="flex items-center space-x-2 text-xs font-bold text-slate-900 uppercase tracking-wider">
+            <i class="fa-solid fa-eye text-blue-600 text-sm"></i>
+            <span>Độ Nhạy Nhận Diện AI (NPU)</span>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1.5">
+              <span>Ngưỡng Tin Cậy AI (Confidence)</span>
+              <span class="font-mono text-blue-600 font-bold">85%</span>
+            </div>
+            <input
+              type="range"
+              min="50"
+              max="99"
+              value="85"
+              class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+            />
+            <p class="text-[11px] text-slate-500 mt-1">
+              Ngưỡng cao giảm thiểu báo động giả đối với vật nuôi và đồ gia dụng.
+            </p>
+          </div>
+
+          <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+            <div>
+              <div class="text-xs font-bold text-slate-900">Tự Động Bật Hồng Ngoại Ban Đêm</div>
+              <div class="text-[11px] text-slate-500">Khi ánh sáng môi trường &lt; 5 Lux</div>
+            </div>
+            <input
+              type="checkbox"
+              checked
+              class="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+            />
+          </div>
+        </div>
+
+        <!-- Card 2: Audio & Alarm Volume -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-2xs space-y-4">
+          <div class="flex items-center space-x-2 text-xs font-bold text-slate-900 uppercase tracking-wider">
+            <i class="fa-solid fa-volume-high text-blue-600 text-sm"></i>
+            <span>Âm Thanh & Loa Cảnh Báo</span>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1.5">
+              <span>Âm Lượng Loa Robot</span>
+              <span class="font-mono text-blue-600 font-bold">75%</span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value="75"
+              class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+            />
+          </div>
+
+          <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+            <div>
+              <div class="text-xs font-bold text-slate-900">Hú Còi Báo Động Khi Phát Hiện Kẻ Đột Nhập</div>
+              <div class="text-[11px] text-slate-500">Cảnh báo 105dB xua đuổi đối tượng khả nghi</div>
+            </div>
+            <input
+              type="checkbox"
+              checked
+              class="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+            />
+          </div>
+        </div>
+
+        <!-- Card 3: Account & Profile Management Shortcut (Crisp Pure White Light Theme) -->
+        <div class="md:col-span-2 bg-white rounded-2xl p-5 border border-slate-200 shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <div class="flex items-center space-x-2 text-xs font-extrabold text-blue-600 uppercase tracking-wider">
+              <i class="fa-solid fa-shield-halved text-sm"></i>
+              <span>Hồ Sơ Quản Trị & Bảo Mật 2FA</span>
+            </div>
+            <p class="text-xs text-slate-600 font-medium">
+              Quản lý thông tin gia chủ, đổi mật khẩu, kích hoạt bảo vệ 2 lớp (Google Authenticator) và kiểm tra các phiên đăng nhập.
+            </p>
+          </div>
+
+          <a
+            href="12_user_profile.html"
+            class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-extrabold transition shrink-0 shadow-md shadow-blue-500/20 flex items-center space-x-1.5 cursor-pointer"
+          >
+            <span>Mở Hồ Sơ Người Dùng ➔</span>
+          </a>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+</body>
+</html>

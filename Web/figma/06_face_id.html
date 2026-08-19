@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSMIBot Web OS - Face ID & Stranger Detection (English)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: '#2563EB',
+            safety: '#16A34A',
+            warning: '#D97706',
+            critical: '#DC2626',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-w-[1440px] min-h-[900px] h-screen bg-slate-50 font-['Inter'] text-slate-800 antialiased flex overflow-hidden">
+
+  <!-- =========================================================================
+       1. LEFT SIDEBAR (Fixed 260px)
+       ========================================================================= -->
+  <aside class="w-[260px] min-w-[260px] max-w-[260px] h-screen bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 z-30 select-none">
+    <div class="h-16 px-5 border-b border-slate-200 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+          <i class="fa-solid fa-robot text-base"></i>
+        </div>
+        <div>
+          <span class="text-sm font-black text-slate-900 tracking-tight block leading-tight">HSMIBot Web OS</span>
+          <div class="flex items-center space-x-1.5 mt-0.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-[10px] font-mono font-bold text-emerald-600 leading-tight">ONLINE • 24ms</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+      <a href="01_dashboard.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-chart-pie w-4 text-center"></i><span>Dashboard</span></div>
+      </a>
+      <a href="08_teleop_voice.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-video w-4 text-center"></i><span>Camera</span></div>
+        <span class="text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">4K AI</span>
+      </a>
+      <a href="03_navigation.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-map-location-dot w-4 text-center"></i><span>Map & Nav</span></div>
+      </a>
+      <a href="05_scheduler.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-calendar-days w-4 text-center"></i><span>Patrol Schedule</span></div>
+      </a>
+      <a href="06_face_id.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold bg-blue-50 text-blue-600 transition shadow-2xs">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-user-shield w-4 text-center"></i><span>Face ID</span></div>
+        <div class="flex items-center space-x-1.5">
+          <span class="text-[10px] font-mono font-bold bg-red-500 text-white px-1.5 py-0.5 rounded">1 NEW</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+        </div>
+      </a>
+      <a href="07_fire_matrix.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-fire-flame-curved w-4 text-center"></i><span>Fire Safety</span></div>
+        <span class="text-[10px] font-mono font-bold bg-orange-100 text-orange-800 px-1.5 py-0.5 rounded">4 LVL</span>
+      </a>
+      <a href="09_incidents.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-shield-halved w-4 text-center"></i><span>Incident Logs</span></div>
+        <span class="text-[10px] font-mono font-bold bg-red-500 text-white px-1.5 py-0.5 rounded">3</span>
+      </a>
+      <a href="04_slam_studio.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-draw-polygon w-4 text-center"></i><span>SLAM Studio</span></div>
+      </a>
+      <a href="10_telemetry.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-microchip w-4 text-center"></i><span>Robot Health</span></div>
+      </a>
+      <a href="11_settings_profile.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3"><i class="fa-solid fa-gear w-4 text-center"></i><span>Settings</span></div>
+      </a>
+    </div>
+
+    <!-- Bottom User Section -->
+    <div class="p-3 border-t border-slate-200 bg-slate-50/50">
+      <div class="flex items-center justify-between p-2 rounded-xl bg-white border border-slate-200 shadow-2xs hover:border-slate-300 transition">
+        <a href="11_settings_profile.html" class="flex items-center space-x-2.5 min-w-0 pr-2 flex-1">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80" alt="Alexander Tran" class="w-9 h-9 rounded-full object-cover border border-slate-200 shrink-0" />
+          <span class="text-xs font-bold text-slate-900 truncate">Alexander Tran</span>
+        </a>
+        <a href="00_auth_portal.html" class="p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0">
+          <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       2. MAIN CONTENT WRAPPER
+       ========================================================================= -->
+  <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+    
+    <!-- Top Header -->
+    <header class="h-16 min-h-[64px] max-h-[64px] bg-white border-b border-slate-200 px-6 flex items-center justify-between sticky top-0 z-20 select-none">
+      <div class="flex items-center space-x-3 text-xs">
+        <div class="flex items-center space-x-2">
+          <span class="text-slate-600 font-semibold flex items-center space-x-1">
+            <i class="fa-solid fa-house text-blue-600 text-xs mr-1"></i>
+            <span>Home</span>
+          </span>
+          <i class="fa-solid fa-chevron-right text-[10px] text-slate-300"></i>
+          <span class="font-bold text-slate-900 bg-slate-100 px-2.5 py-1 rounded-md">
+            Face ID & Unregistered Intruder Management
+          </span>
+        </div>
+      </div>
+
+      <!-- Security Mode Toggle: [Home Mode] vs [AWAY MODE (High Alert)] -->
+      <div class="flex items-center space-x-3">
+        <div class="inline-flex p-1 bg-slate-100 rounded-xl border border-slate-200 text-xs font-bold">
+          <button class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900">Home Mode</button>
+          <button class="px-3 py-1.5 rounded-lg bg-red-600 text-white shadow-sm flex items-center space-x-1.5 animate-pulse">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span>AWAY MODE (HIGH ALERT)</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Viewport Body -->
+    <main class="flex-1 overflow-y-auto bg-slate-50 p-6 space-y-6">
+      
+      <!-- 1. FAMILY FACE WHITELIST GRID -->
+      <div class="bg-white rounded-3xl border border-slate-200 shadow-2xs p-6 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div>
+            <h2 class="text-sm font-black text-slate-900 flex items-center space-x-2">
+              <i class="fa-solid fa-users text-blue-600"></i>
+              <span>Family Member Whitelist (512D Vector Embeddings)</span>
+            </h2>
+            <p class="text-xs text-slate-500 mt-0.5">FaceNet embeddings stored locally on robot NPU for privacy.</p>
+          </div>
+          <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-sm flex items-center space-x-1.5 cursor-pointer">
+            <i class="fa-solid fa-user-plus"></i>
+            <span>Register New Face (+)</span>
+          </button>
+        </div>
+
+        <!-- Whitelist Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          
+          <!-- Member 1: Alexander Tran -->
+          <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center text-center space-y-2">
+            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80" alt="Alexander" class="w-16 h-16 rounded-full object-cover border-2 border-emerald-500 shadow" />
+            <div>
+              <div class="text-xs font-black text-slate-900">Alexander Tran</div>
+              <div class="text-[10px] font-mono text-emerald-600 font-bold">Master Homeowner</div>
+            </div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800">512-dim Synced</span>
+          </div>
+
+          <!-- Member 2: Elena Tran -->
+          <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center text-center space-y-2">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80" alt="Elena" class="w-16 h-16 rounded-full object-cover border-2 border-emerald-500 shadow" />
+            <div>
+              <div class="text-xs font-black text-slate-900">Elena Tran</div>
+              <div class="text-[10px] font-mono text-blue-600 font-bold">Family Member</div>
+            </div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800">512-dim Synced</span>
+          </div>
+
+          <!-- Member 3: Lucas Tran -->
+          <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center text-center space-y-2">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80" alt="Lucas" class="w-16 h-16 rounded-full object-cover border-2 border-emerald-500 shadow" />
+            <div>
+              <div class="text-xs font-black text-slate-900">Lucas Tran</div>
+              <div class="text-[10px] font-mono text-blue-600 font-bold">Son</div>
+            </div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800">512-dim Synced</span>
+          </div>
+
+          <!-- Member 4: Butler Staff -->
+          <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center text-center space-y-2">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80" alt="Maria" class="w-16 h-16 rounded-full object-cover border-2 border-purple-500 shadow" />
+            <div>
+              <div class="text-xs font-black text-slate-900">Maria Nguyen</div>
+              <div class="text-[10px] font-mono text-purple-600 font-bold">Housekeeper</div>
+            </div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-100 text-purple-800">Business Hours</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 2. UNREGISTERED STRANGER INCIDENT FEED (SPLIT-CARD) -->
+      <div class="bg-white rounded-3xl border border-red-200 shadow-sm p-6 space-y-4">
+        <div class="flex items-center justify-between border-b border-red-100 pb-3">
+          <div class="flex items-center space-x-2">
+            <div class="w-3 h-3 rounded-full bg-red-600 animate-ping"></div>
+            <h3 class="text-sm font-black text-red-900">Warning: Unregistered Stranger Detected</h3>
+          </div>
+          <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-red-100 text-red-700">SEVERITY: CRITICAL (AWAY MODE)</span>
+        </div>
+
+        <!-- Split-Card Comparison -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          
+          <!-- Cropped Face Snapshot (4 Cols) -->
+          <div class="lg:col-span-4 bg-slate-900 rounded-2xl p-4 text-center space-y-3">
+            <div class="text-[11px] font-mono font-bold text-red-400 uppercase tracking-wider">Cropped Face Snapshot</div>
+            <div class="relative w-36 h-36 mx-auto rounded-2xl overflow-hidden border-2 border-red-500 shadow-xl">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80" alt="Stranger Face" class="w-full h-full object-cover" />
+              <div class="absolute inset-0 border-2 border-dashed border-red-400"></div>
+            </div>
+            <div class="text-xs font-mono text-slate-300">
+              Cosine Similarity: <span class="text-red-400 font-bold">0.12 (No match)</span>
+            </div>
+          </div>
+
+          <!-- Full Camera Frame with Bounding Box (8 Cols) -->
+          <div class="lg:col-span-8 bg-slate-900 rounded-2xl p-4 space-y-3">
+            <div class="flex items-center justify-between text-xs text-slate-300 font-mono">
+              <span>Wide View: Villa Garden Zone</span>
+              <span>Timestamp: 03:14:22 AM</span>
+            </div>
+            <div class="relative w-full h-56 rounded-xl overflow-hidden bg-slate-950 border border-slate-800">
+              <img src="https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=800&auto=format&fit=crop&q=80" alt="Full Frame" class="w-full h-full object-cover opacity-85" />
+              <div class="absolute top-1/4 left-1/3 w-28 h-40 border-2 border-red-500 bg-red-500/20 rounded-lg">
+                <span class="absolute -top-6 left-0 bg-red-600 text-white text-[10px] font-mono font-bold px-2 py-0.5 rounded shadow">
+                  UNKNOWN STRANGER
+                </span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Action Response Bar -->
+        <div class="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-red-100">
+          <div class="text-xs text-slate-600 font-medium">
+            Robot is maintaining safe standoff distance (2.5m).
+          </div>
+          <div class="flex items-center space-x-3">
+            <button class="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-black tracking-wider uppercase transition shadow-md flex items-center space-x-2">
+              <i class="fa-solid fa-bullhorn"></i>
+              <span>SOUND SIREN (85dB BUZZER)</span>
+            </button>
+            <button class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition flex items-center space-x-2">
+              <i class="fa-solid fa-user-check text-blue-600"></i>
+              <span>Mark as Family Member</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+</body>
+</html>

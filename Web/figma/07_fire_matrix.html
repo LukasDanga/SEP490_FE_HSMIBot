@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSMIBot Web OS - Giám Sát Cảm Biến Môi Trường & Ma Trận Ngưỡng Cháy 4 Cấp Độ</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts Inter & JetBrains Mono -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: '#2563EB',
+            safety: '#16A34A',
+            warning: '#D97706',
+            critical: '#DC2626',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-w-[1440px] min-h-[900px] h-screen bg-slate-50 font-['Inter'] text-slate-800 antialiased flex overflow-hidden">
+
+  <!-- =========================================================================
+       1. LEFT SIDEBAR (Standard 260px Width, All 10 Items, Strict Light Theme)
+       ========================================================================= -->
+  <aside class="w-[260px] min-w-[260px] max-w-[260px] h-screen bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 z-30 select-none">
+    
+    <!-- Logo & Status Header -->
+    <div class="h-16 px-5 border-b border-slate-200 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+          <i class="fa-solid fa-robot text-base"></i>
+        </div>
+        <div>
+          <span class="text-sm font-black text-slate-900 tracking-tight block leading-tight">HSMIBot Web OS</span>
+          <div class="flex items-center space-x-1.5 mt-0.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-[10px] font-mono font-bold text-emerald-600 leading-tight">ONLINE • 24ms</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Links (All 10 Items - Fire Safety is Active) -->
+    <div class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+      
+      <!-- 1. Dashboard -->
+      <a href="01_dashboard.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-chart-pie w-4 text-center"></i>
+          <span>Dashboard</span>
+        </div>
+      </a>
+
+      <!-- 2. Camera -->
+      <a href="08_teleop_voice.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-video w-4 text-center"></i>
+          <span>Camera</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">4K AI</span>
+      </a>
+
+      <!-- 3. Map & Nav -->
+      <a href="03_navigation.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-map-location-dot w-4 text-center"></i>
+          <span>Map & Nav</span>
+        </div>
+      </a>
+
+      <!-- 4. Patrol Schedule -->
+      <a href="05_scheduler.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-calendar-days w-4 text-center"></i>
+          <span>Patrol Schedule</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded">6 Lượt</span>
+      </a>
+
+      <!-- 5. Face ID -->
+      <a href="06_face_id.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-user-shield w-4 text-center"></i>
+          <span>Face ID</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-red-500 text-white px-1.5 py-0.5 rounded">1 NEW</span>
+      </a>
+
+      <!-- 6. Fire Safety (ACTIVE) -->
+      <a href="07_fire_matrix.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold bg-blue-50 text-blue-600 border border-blue-100 shadow-sm transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-fire-flame-curved w-4 text-center"></i>
+          <span>Fire Safety</span>
+        </div>
+        <div class="flex items-center space-x-1.5">
+          <span class="text-[10px] font-mono font-bold bg-orange-100 text-orange-800 px-1.5 py-0.5 rounded">4 LVL</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+        </div>
+      </a>
+
+      <!-- 7. Incident Logs -->
+      <a href="09_incidents.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-shield-halved w-4 text-center"></i>
+          <span>Incident Logs</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-red-500 text-white px-1.5 py-0.5 rounded">3</span>
+      </a>
+
+      <!-- 8. SLAM Studio -->
+      <a href="04_slam_studio.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-draw-polygon w-4 text-center"></i>
+          <span>SLAM Studio</span>
+        </div>
+        <span class="text-[10px] font-mono font-bold bg-indigo-50 text-indigo-600 px-1.5 py-0.5 rounded">Studio</span>
+      </a>
+
+      <div class="pt-2 pb-1">
+        <div class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400">Hệ Thống</div>
+      </div>
+
+      <!-- 9. Telemetry -->
+      <a href="10_telemetry.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-microchip w-4 text-center"></i>
+          <span>Robot Health</span>
+        </div>
+        <span class="text-[10px] font-mono text-slate-400">24ms</span>
+      </a>
+
+      <!-- 10. Settings -->
+      <a href="11_settings_profile.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-gear w-4 text-center"></i>
+          <span>Settings</span>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Bottom User Section -->
+    <div class="p-3 border-t border-slate-200 bg-slate-50/50">
+      <div class="flex items-center justify-between p-2 rounded-xl bg-white border border-slate-200 shadow-2xs hover:border-slate-300 transition">
+        <a href="11_settings_profile.html" class="flex items-center space-x-2.5 min-w-0 pr-2 flex-1">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80" alt="Alexander Tran" class="w-9 h-9 rounded-full object-cover border border-slate-200 shrink-0" />
+          <span class="text-xs font-bold text-slate-900 truncate">Alexander Tran</span>
+        </a>
+        <a href="00_auth_portal.html" class="p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0">
+          <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       2. MAIN CONTENT WRAPPER
+       ========================================================================= -->
+  <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+    
+    <!-- Top Header Breadcrumb Bar -->
+    <header class="h-16 min-h-[64px] max-h-[64px] bg-white border-b border-slate-200 px-6 flex items-center justify-between sticky top-0 z-20 select-none">
+      <div class="flex items-center space-x-3 text-xs">
+        <div class="flex items-center space-x-2">
+          <span class="text-slate-600 font-semibold flex items-center space-x-1">
+            <i class="fa-solid fa-house text-blue-600 text-xs mr-1"></i>
+            <span>Home</span>
+          </span>
+          <i class="fa-solid fa-chevron-right text-[10px] text-slate-300"></i>
+          <span class="font-bold text-slate-900 bg-slate-100 px-2.5 py-1 rounded-md">
+            Giám Sát Cảm Biến Môi Trường & Ma Trận Ngưỡng Cháy 4 Cấp Độ
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-100 text-emerald-800 flex items-center space-x-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>4 CẢM BIẾN AN TOÀN (NORMAL)</span>
+        </span>
+      </div>
+    </header>
+
+    <!-- Main Viewport Scrollable Area -->
+    <main class="flex-1 overflow-y-auto bg-slate-50 p-6 space-y-6">
+      
+      <!-- =====================================================================
+           HEADER TITLE BAR (PCCC Title & ISO Defaults / ROS2 Sync Buttons)
+           ===================================================================== -->
+      <div class="flex flex-wrap items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
+        <div class="flex items-center space-x-3">
+          <div class="w-11 h-11 rounded-2xl bg-orange-50 text-orange-600 border border-orange-200 flex items-center justify-center shadow-xs">
+            <i class="fa-solid fa-fire text-xl"></i>
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <h1 class="text-lg font-black text-slate-900 tracking-tight">
+                Trung Tâm Cảnh Báo Cháy & Cảm Biến Khói
+              </h1>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-orange-100 text-orange-800 border border-orange-300">
+                4-STAGE MATRIX
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 font-medium">
+              Cấu hình ngưỡng kích hoạt, còi hú 85dB, đèn chớp & hành vi sơ tán tự hành Nav2
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+          <button
+            type="button"
+            class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl border border-slate-300 transition flex items-center space-x-1.5 cursor-pointer"
+          >
+            <i class="fa-solid fa-rotate-left text-xs"></i>
+            <span>Chuẩn ISO 7240</span>
+          </button>
+
+          <button
+            type="button"
+            class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-extrabold rounded-xl shadow-md shadow-blue-500/25 transition flex items-center space-x-2 cursor-pointer"
+          >
+            <i class="fa-solid fa-floppy-disk text-xs"></i>
+            <span>Lưu & Đồng Bộ ROS2</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- =====================================================================
+           1. REAL-TIME ENVIRONMENT SENSOR TELEMETRY (TOP 4 METRICS CARDS)
+           ===================================================================== -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- Card 1: Ambient Temperature -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md transition space-y-3 relative overflow-hidden group">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-100 shadow-2xs">
+                <i class="fa-solid fa-temperature-half text-lg"></i>
+              </div>
+              <div>
+                <h3 class="text-xs font-bold text-slate-700">Nhiệt Độ Môi Trường</h3>
+                <p class="text-[10px] text-slate-400 font-medium">Cảm biến nhiệt độ bề mặt & hồng ngoại</p>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              Bình thường
+            </span>
+          </div>
+
+          <div class="flex items-baseline justify-between pt-1">
+            <div class="text-3xl font-black text-slate-900 tracking-tight font-mono">
+              27.4
+              <span class="text-base font-bold text-slate-500 ml-1">°C</span>
+            </div>
+            <div class="text-right text-[11px] font-mono text-slate-500">
+              <div>Min: 21.8°C</div>
+              <div>Max: 28.5°C</div>
+            </div>
+          </div>
+
+          <!-- Sparkline Visual -->
+          <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+            <div class="flex items-center space-x-1 text-emerald-600 font-bold">
+              <i class="fa-solid fa-arrow-trend-up text-xs"></i>
+              <span>Stable (+0.2°C/hr)</span>
+            </div>
+            <span class="text-slate-400">IR Focal: 100%</span>
+          </div>
+        </div>
+
+        <!-- Card 2: Smoke Gas Concentration (MQ-2 Sensor) -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md transition space-y-3 relative overflow-hidden group">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center border border-sky-100 shadow-2xs">
+                <i class="fa-solid fa-wind text-lg"></i>
+              </div>
+              <div>
+                <h3 class="text-xs font-bold text-slate-700">Nồng Độ Khói & Khí Gas</h3>
+                <p class="text-[10px] text-slate-400 font-medium">Cảm biến khói MQ-2 / CO / Khí hóa lỏng</p>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              An toàn
+            </span>
+          </div>
+
+          <div class="flex items-baseline justify-between pt-1">
+            <div class="text-3xl font-black text-slate-900 tracking-tight font-mono">
+              110
+              <span class="text-base font-bold text-slate-500 ml-1">ppm</span>
+            </div>
+            <div class="text-right text-[11px] font-mono text-slate-500">
+              <div>CO: 4.2 ppm</div>
+              <div>LPG: 8.5 ppm</div>
+            </div>
+          </div>
+
+          <!-- Progress gauge -->
+          <div class="pt-2 border-t border-slate-100 space-y-1">
+            <div class="flex justify-between text-[10px] font-mono text-slate-400">
+              <span>Ngưỡng: 200 ppm</span>
+              <span>110 / 2000 ppm</span>
+            </div>
+            <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+              <div class="h-full bg-emerald-500 rounded-full" style="width: 12%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Optical Flame Sensor (IR Flame) -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md transition space-y-3 relative overflow-hidden group">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100 shadow-2xs">
+                <i class="fa-solid fa-eye text-lg"></i>
+              </div>
+              <div>
+                <h3 class="text-xs font-bold text-slate-700">Cảm Biến Ngọn Lửa Quang Học</h3>
+                <p class="text-[10px] text-slate-400 font-medium">Quét quang phổ hồng ngoại bước sóng 760-1100nm</p>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              Không có lửa
+            </span>
+          </div>
+
+          <div class="flex items-baseline justify-between pt-1">
+            <div class="text-2xl font-black text-emerald-700 tracking-tight flex items-center space-x-2 font-mono">
+              <i class="fa-solid fa-circle-check text-xl text-emerald-600"></i>
+              <span>0 (LOW)</span>
+            </div>
+            <div class="text-right text-[11px] font-mono text-slate-500">
+              <div>Latency: 15ms</div>
+              <div>Filter: Kalman</div>
+            </div>
+          </div>
+
+          <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+            <span>Spectrum: 760-1100nm</span>
+            <span class="text-emerald-600 font-bold">100% Blind-Spot Free</span>
+          </div>
+        </div>
+
+        <!-- Card 4: Relative Humidity -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md transition space-y-3 relative overflow-hidden group">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center border border-indigo-100 shadow-2xs">
+                <i class="fa-solid fa-droplet text-lg"></i>
+              </div>
+              <div>
+                <h3 class="text-xs font-bold text-slate-700">Độ Ẩm Không Khí</h3>
+                <p class="text-[10px] text-slate-400 font-medium">Đo độ ẩm tương đối và điểm sương</p>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              Tối ưu
+            </span>
+          </div>
+
+          <div class="flex items-baseline justify-between pt-1">
+            <div class="text-3xl font-black text-slate-900 tracking-tight font-mono">
+              55
+              <span class="text-base font-bold text-slate-500 ml-1">% RH</span>
+            </div>
+            <div class="text-right text-[11px] font-mono text-slate-500">
+              <div>Điểm sương: 17.8°C</div>
+              <div>VPD: 1.1 kPa</div>
+            </div>
+          </div>
+
+          <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+            <span>Nguy cơ bắt cháy:</span>
+            <span class="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded">RẤT THẤP</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- =====================================================================
+           2. CORE FEATURE: DETAILED 4-LEVEL FIRE SEVERITY CONFIGURATION MATRIX
+           ===================================================================== -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-2xs p-6 space-y-6">
+        
+        <!-- Section Header -->
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-red-50 text-red-600 border border-red-100 flex items-center justify-center shadow-xs">
+              <i class="fa-solid fa-sliders text-base"></i>
+            </div>
+            <div>
+              <h2 class="text-sm font-extrabold text-slate-900">
+                Ma Trận Cấu Hình Ngưỡng Cảnh Báo Cháy (4 Cấp Độ)
+              </h2>
+              <p class="text-xs text-slate-500 font-medium">
+                Tùy chỉnh thông số cảm biến, còi hú 85dB, đèn chớp & hành vi sơ tán tự hành Nav2
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-2 text-xs font-mono">
+            <span class="text-slate-400">ROS2 Behavior Node:</span>
+            <span class="text-blue-700 font-bold bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-200">
+              /fire_decision_engine: ACTIVE
+            </span>
+          </div>
+        </div>
+
+        <!-- 4 Levels Selector Tabs -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+          
+          <!-- Tab 1: Level 1 (Selected Active) -->
+          <div class="p-4 rounded-2xl border text-left transition-all relative cursor-pointer bg-amber-50 border-amber-300 ring-2 ring-blue-500 shadow-md">
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-black font-mono uppercase tracking-wider bg-amber-100 text-amber-800 border border-amber-300">
+                LEVEL 1
+              </span>
+              <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+            </div>
+            <h4 class="text-xs font-extrabold text-slate-900 truncate">
+              CẤP ĐỘ 1: CẢNH BÁO NHIỆT ĐỘ CAO (HEAT SPIKE)
+            </h4>
+            <p class="text-[11px] text-slate-500 mt-1 truncate">
+              Nhiệt độ tăng bất thường / Tiền nguy cơ
+            </p>
+            <div class="mt-3 pt-2 border-t border-slate-200/60 flex items-center justify-between text-[10px] font-mono text-slate-600">
+              <span>Temp: 40°C - 55°C</span>
+              <span class="font-bold text-slate-800">Smoke: &gt;50ppm</span>
+            </div>
+          </div>
+
+          <!-- Tab 2: Level 2 -->
+          <div class="p-4 rounded-2xl border text-left transition-all relative cursor-pointer bg-white hover:bg-slate-50 border-slate-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-black font-mono uppercase tracking-wider bg-orange-100 text-orange-800 border border-orange-300">
+                LEVEL 2
+              </span>
+            </div>
+            <h4 class="text-xs font-extrabold text-slate-900 truncate">
+              CẤP ĐỘ 2: BÁO ĐỘNG KHÓI ÂM ĐỘNG (SMOLDERING)
+            </h4>
+            <p class="text-[11px] text-slate-500 mt-1 truncate">
+              Khói âm ỉ / Tiền bốc cháy (Pre-Combustion)
+            </p>
+            <div class="mt-3 pt-2 border-t border-slate-200/60 flex items-center justify-between text-[10px] font-mono text-slate-600">
+              <span>Temp: 55°C - 70°C</span>
+              <span class="font-bold text-slate-800">Smoke: &gt;200ppm</span>
+            </div>
+          </div>
+
+          <!-- Tab 3: Level 3 -->
+          <div class="p-4 rounded-2xl border text-left transition-all relative cursor-pointer bg-white hover:bg-slate-50 border-slate-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-black font-mono uppercase tracking-wider bg-red-100 text-red-800 border border-red-400 font-bold">
+                LEVEL 3
+              </span>
+            </div>
+            <h4 class="text-xs font-extrabold text-slate-900 truncate">
+              CẤP ĐỘ 3: NGUY CẤP - NGỌN LỬA (ACTIVE FLAME)
+            </h4>
+            <p class="text-[11px] text-slate-500 mt-1 truncate">
+              Cháy thực tế / Ngọn lửa quang học
+            </p>
+            <div class="mt-3 pt-2 border-t border-slate-200/60 flex items-center justify-between text-[10px] font-mono text-slate-600">
+              <span>Temp: 70°C - 95°C</span>
+              <span class="font-bold text-slate-800">Smoke: &gt;500ppm</span>
+            </div>
+          </div>
+
+          <!-- Tab 4: Level 4 -->
+          <div class="p-4 rounded-2xl border text-left transition-all relative cursor-pointer bg-white hover:bg-slate-50 border-slate-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-black font-mono uppercase tracking-wider bg-purple-100 text-purple-900 border border-purple-400 font-extrabold">
+                LEVEL 4
+              </span>
+            </div>
+            <h4 class="text-xs font-extrabold text-slate-900 truncate">
+              CẤP ĐỘ 4: KHẨN CẤP SƠ TÁN (EVACUATION)
+            </h4>
+            <p class="text-[11px] text-slate-500 mt-1 truncate">
+              Cháy lan rộng / Nguy cơ sập đổ cấu trúc
+            </p>
+            <div class="mt-3 pt-2 border-t border-slate-200/60 flex items-center justify-between text-[10px] font-mono text-slate-600">
+              <span>Temp: 95°C - 150°C</span>
+              <span class="font-bold text-slate-800">Smoke: &gt;1000ppm</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Detailed Level Configuration Card (Active Level 1 Box) -->
+        <div class="p-6 rounded-3xl border-2 border-amber-300 bg-amber-50/50 space-y-6 shadow-sm">
+          
+          <!-- Level Header & Simulation Action -->
+          <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/80 pb-4">
+            <div>
+              <div class="flex items-center space-x-2.5">
+                <span class="px-3 py-1 rounded-xl text-xs font-black font-mono uppercase bg-amber-100 text-amber-800 border border-amber-300">
+                  CẤU HÌNH CẤP ĐỘ 1
+                </span>
+                <h3 class="text-base font-black text-slate-900">
+                  CẤP ĐỘ 1: CẢNH BÁO NHIỆT ĐỘ CAO (HEAT SPIKE)
+                </h3>
+              </div>
+              <p class="text-xs text-slate-600 font-medium mt-1">
+                Nhiệt độ tăng bất thường / Tiền nguy cơ
+              </p>
+            </div>
+
+            <div class="flex items-center space-x-2">
+              <button
+                type="button"
+                class="px-4 py-2 rounded-xl text-xs font-extrabold transition flex items-center space-x-1.5 shadow-md cursor-pointer bg-slate-900 text-white hover:bg-slate-800"
+              >
+                <i class="fa-solid fa-play text-xs text-amber-400"></i>
+                <span>Thử Nghiệm Mô Phỏng Cấp 1</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Trigger Condition Matrix & Sliders -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <!-- Left: Trigger Thresholds & Sliders -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-5">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                <div class="flex items-center space-x-2 text-xs font-extrabold text-slate-900">
+                  <i class="fa-solid fa-temperature-half text-orange-600"></i>
+                  <span>1. Điều Kiện Kích Hoạt (Trigger Thresholds)</span>
+                </div>
+                <span class="text-[10px] font-mono font-bold text-slate-400">ROS2 Parameters</span>
+              </div>
+
+              <!-- Slider 1: Temperature (°C) -->
+              <div class="space-y-2">
+                <div class="flex justify-between text-xs font-bold text-slate-700">
+                  <label>Ngưỡng Nhiệt Độ Báo Động (°C):</label>
+                  <span class="font-mono text-orange-600 font-extrabold">40°C - 55°C</span>
+                </div>
+                <input
+                  type="range"
+                  min="30"
+                  max="120"
+                  step="1"
+                  value="40"
+                  class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-orange-600"
+                />
+                <div class="flex justify-between text-[10px] font-mono text-slate-400">
+                  <span>30°C (Môi trường)</span>
+                  <span>55°C (Ấm)</span>
+                  <span>70°C (Cháy)</span>
+                  <span>120°C (Cực hạn)</span>
+                </div>
+              </div>
+
+              <!-- Slider 2: Smoke PPM -->
+              <div class="space-y-2">
+                <div class="flex justify-between text-xs font-bold text-slate-700">
+                  <label>Nồng Độ Khói MQ-2 Kích Hoạt (ppm):</label>
+                  <span class="font-mono text-sky-600 font-extrabold">50 ppm</span>
+                </div>
+                <input
+                  type="range"
+                  min="50"
+                  max="1500"
+                  step="25"
+                  value="50"
+                  class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-sky-600"
+                />
+                <div class="flex justify-between text-[10px] font-mono text-slate-400">
+                  <span>50 ppm</span>
+                  <span>200 ppm (Âm ỉ)</span>
+                  <span>500 ppm (Bốc khói)</span>
+                  <span>1500 ppm (Đặc quánh)</span>
+                </div>
+              </div>
+
+              <!-- Slider 3: Polling Interval -->
+              <div class="space-y-2">
+                <div class="flex justify-between text-xs font-bold text-slate-700">
+                  <label>Tần Suất Quét Cảm Biến (ms):</label>
+                  <span class="font-mono text-indigo-600 font-extrabold">500 ms</span>
+                </div>
+                <input
+                  type="range"
+                  min="100"
+                  max="2000"
+                  step="50"
+                  value="500"
+                  class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                />
+                <div class="flex justify-between text-[10px] font-mono text-slate-400">
+                  <span>100 ms (Quét nhanh)</span>
+                  <span>500 ms (Cân bằng)</span>
+                  <span>2000 ms (Tiết kiệm pin)</span>
+                </div>
+              </div>
+
+              <!-- Toggle: Flame Sensor Required -->
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+                <div class="flex items-center space-x-2.5">
+                  <i class="fa-solid fa-eye text-emerald-600 text-sm"></i>
+                  <div>
+                    <div class="text-xs font-bold text-slate-800">Yêu Cầu Cảm Biến Lửa Quang Học</div>
+                    <div class="text-[10px] text-slate-500">Quét xác thực quang phổ IR 760-1100nm chống báo giả</div>
+                  </div>
+                </div>
+                <input
+                  type="checkbox"
+                  class="w-5 h-5 text-blue-600 rounded cursor-pointer accent-blue-600"
+                />
+              </div>
+
+            </div>
+
+            <!-- Right: Autonomous Robot Reactions & Action Toggles -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-4">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                <div class="flex items-center space-x-2 text-xs font-extrabold text-slate-900">
+                  <i class="fa-solid fa-robot text-blue-600"></i>
+                  <span>2. Hành Vi & Phản Ứng Tự Động Của Robot</span>
+                </div>
+                <span class="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
+                  Nav2 / ROS2
+                </span>
+              </div>
+
+              <!-- Action 1: AI TTS Voice Broadcast -->
+              <div class="p-3 rounded-xl border border-slate-200 space-y-2 bg-slate-50/50">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-volume-high text-blue-600 text-xs"></i>
+                    <span class="text-xs font-bold text-slate-800">Phát Giọng Nói Cảnh Báo AI TTS</span>
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked
+                    class="w-4 h-4 text-blue-600 rounded cursor-pointer accent-blue-600"
+                  />
+                </div>
+                <input
+                  type="text"
+                  value="Cảnh báo: Phát hiện nhiệt độ cao bất thường tại khu vực Bếp."
+                  class="w-full px-3 py-1.5 bg-white rounded-lg border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
+              </div>
+
+              <!-- Action 2: Warning LED Beacons / Strobe -->
+              <div class="p-3 rounded-xl border border-slate-200 flex items-center justify-between bg-slate-50/50">
+                <div class="flex items-center space-x-2">
+                  <i class="fa-solid fa-lightbulb text-amber-600 text-xs"></i>
+                  <div>
+                    <div class="text-xs font-bold text-slate-800">Đèn Chớp Cảnh Báo Vàng / Đỏ</div>
+                    <div class="text-[10px] text-slate-500 font-mono">Chế độ: off (Tắt ở Cấp 1)</div>
+                  </div>
+                </div>
+                <input
+                  type="checkbox"
+                  class="w-4 h-4 text-blue-600 rounded cursor-pointer accent-blue-600"
+                />
+              </div>
+
+              <!-- Action 3: WebRTC Live Video & Record -->
+              <div class="p-3 rounded-xl border border-slate-200 flex items-center justify-between bg-slate-50/50">
+                <div class="flex items-center space-x-2">
+                  <i class="fa-solid fa-video text-indigo-600 text-xs"></i>
+                  <div>
+                    <div class="text-xs font-bold text-slate-800">Ghi Video & Truyền WebRTC Trực Tiếp</div>
+                    <div class="text-[10px] text-slate-500">Thời lượng: 15s ghi hình đám mây</div>
+                  </div>
+                </div>
+                <input
+                  type="checkbox"
+                  class="w-4 h-4 text-blue-600 rounded cursor-pointer accent-blue-600"
+                />
+              </div>
+
+              <!-- Action 4: Loud Onboard Buzzer (85dB) -->
+              <div class="p-3 rounded-xl border border-slate-200 flex items-center justify-between bg-slate-50/50">
+                <div class="flex items-center space-x-2">
+                  <i class="fa-solid fa-bullhorn text-red-600 text-xs"></i>
+                  <div>
+                    <div class="text-xs font-bold text-slate-800">Kích Hoạt Còi Báo Động 85dB Trên Robot</div>
+                    <div class="text-[10px] text-slate-500 font-mono">Âm lượng: 60 dB SPL</div>
+                  </div>
+                </div>
+                <input
+                  type="checkbox"
+                  class="w-4 h-4 text-red-600 rounded cursor-pointer accent-red-600"
+                />
+              </div>
+
+              <!-- Action 5: Emergency SMS & Phone Call API -->
+              <div class="p-3 rounded-xl border border-slate-200 flex items-center justify-between bg-slate-50/50">
+                <div class="flex items-center space-x-2">
+                  <i class="fa-solid fa-phone text-emerald-600 text-xs"></i>
+                  <div>
+                    <div class="text-xs font-bold text-slate-800">Gửi Tin Nhắn Khẩn & Gọi Điện SOS</div>
+                    <div class="text-[10px] text-slate-500">Twilio / Webhook gateway dispatch</div>
+                  </div>
+                </div>
+                <input
+                  type="checkbox"
+                  class="w-4 h-4 text-blue-600 rounded cursor-pointer accent-blue-600"
+                />
+              </div>
+
+              <!-- Action 6: Autonomous Evacuation Pathfinding -->
+              <div class="p-3 rounded-xl border border-slate-200 flex items-center justify-between bg-slate-50/50">
+                <div class="flex items-center space-x-2">
+                  <i class="fa-solid fa-person-walking-dashed-line-arrow-right text-purple-600 text-xs"></i>
+                  <div>
+                    <div class="text-xs font-bold text-slate-800">Dẫn Đường Sơ Tán Tự Hành (Nav2)</div>
+                    <div class="text-[10px] text-slate-500">Mục tiêu SLAM: stay_and_monitor</div>
+                  </div>
+                </div>
+                <input
+                  type="checkbox"
+                  class="w-4 h-4 text-blue-600 rounded cursor-pointer accent-blue-600"
+                />
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- =====================================================================
+           3. FIRE INCIDENT HISTORY & 24H SENSOR TELEMETRY CHART
+           ===================================================================== -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Left 2 Cols: 24h Sensor Telemetry & Threshold Chart -->
+        <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-2xs p-6 space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+            <div>
+              <h3 class="text-sm font-extrabold text-slate-900">
+                Biểu Đồ Telemetry Cảm Biến Môi Trường 24 Giờ
+              </h3>
+              <p class="text-xs text-slate-500 font-medium">
+                Theo dõi diễn biến nhiệt độ (°C) và nồng độ khói (ppm) đối chiếu với các ngưỡng cảnh báo
+              </p>
+            </div>
+            <div class="flex items-center space-x-3 text-xs font-mono">
+              <div class="flex items-center space-x-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                <span class="text-slate-600 font-bold">Nhiệt độ (°C)</span>
+              </div>
+              <div class="flex items-center space-x-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
+                <span class="text-slate-600 font-bold">Khói (ppm/10)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- SVG 24H Line Chart with Highlighted Threshold Lines -->
+          <div class="relative w-full h-64 bg-slate-950 rounded-2xl p-4 overflow-hidden border border-slate-800 shadow-inner select-none">
+            <!-- Grid & Threshold Guidelines -->
+            <div class="absolute inset-x-4 top-8 border-b border-red-500/40 flex justify-between text-[9px] font-mono text-red-400">
+              <span>NGƯỠNG CẤP 3 / 4 (70°C / 500ppm)</span>
+              <span>NGUY CẤP</span>
+            </div>
+            <div class="absolute inset-x-4 top-24 border-b border-orange-500/30 flex justify-between text-[9px] font-mono text-orange-400">
+              <span>NGƯỠNG CẤP 2 KHÓI ÂM Ỉ (55°C / 200ppm)</span>
+              <span>BÁO ĐỘNG</span>
+            </div>
+            <div class="absolute inset-x-4 top-36 border-b border-amber-500/25 flex justify-between text-[9px] font-mono text-amber-400">
+              <span>NGƯỠNG CẤP 1 TĂNG NHIỆT (40°C)</span>
+              <span>CẢNH BÁO</span>
+            </div>
+
+            <!-- SVG Wave -->
+            <svg class="w-full h-full" viewBox="0 0 500 200" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="tempGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.4" />
+                  <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.0" />
+                </linearGradient>
+              </defs>
+
+              <!-- Temp Area Fill -->
+              <polygon
+                fill="url(#tempGradient)"
+                points="20,160 60,162 100,164 140,158 180,148 220,140 260,132 300,55 340,135 380,138 420,144 460,152 490,140 490,190 20,190"
+              />
+
+              <!-- Temp Polyline (Orange) -->
+              <polyline
+                fill="none"
+                stroke="#f59e0b"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                points="20,160 60,162 100,164 140,158 180,148 220,140 260,132 300,55 340,135 380,138 420,144 460,152 490,140"
+              />
+
+              <!-- Smoke Polyline (Sky Blue Dashed) -->
+              <polyline
+                fill="none"
+                stroke="#38bdf8"
+                stroke-width="2.5"
+                stroke-dasharray="4 4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                points="20,170 60,172 100,171 140,168 180,162 220,160 260,155 300,115 340,158 380,160 420,165 460,168 490,162"
+              />
+
+              <!-- Spike event marker dot -->
+              <circle cx="300" cy="55" r="5" fill="#ef4444" stroke="#ffffff" stroke-width="2" />
+              <text x="260" y="42" fill="#ef4444" font-size="10" font-family="'JetBrains Mono', monospace" font-weight="bold">
+                14:18 Heat Spike 48.5°C
+              </text>
+            </svg>
+
+            <!-- Time labels on X-axis -->
+            <div class="absolute inset-x-4 bottom-2 flex justify-between text-[9px] font-mono text-slate-500">
+              <span>00:00</span>
+              <span>04:00</span>
+              <span>08:00</span>
+              <span>12:00</span>
+              <span>16:00</span>
+              <span>20:00</span>
+              <span>Bây giờ</span>
+            </div>
+          </div>
+
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between text-xs font-mono text-slate-600">
+            <div class="flex items-center space-x-2">
+              <i class="fa-solid fa-chart-line text-emerald-600"></i>
+              <span>Nhiệt độ hiện tại: 27.4°C • Khói: 110 ppm • Đang ghi nhận 100 mẫu/giây</span>
+            </div>
+            <span class="text-emerald-700 font-bold">ALL SENSORS NORMAL</span>
+          </div>
+        </div>
+
+        <!-- Right 1 Col: Recent Incident Event Logs -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-2xs p-6 space-y-4 flex flex-col justify-between">
+          <div class="space-y-1 border-b border-slate-100 pb-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-extrabold text-slate-900">
+                Nhật Ký Sự Cố Cháy Gần Nhất
+              </h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-100 text-slate-700">
+                3 sự cố
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 font-medium">Lưu trữ tự động khi kích hoạt ngưỡng ROS2</p>
+          </div>
+
+          <!-- Event Cards List -->
+          <div class="space-y-3 flex-1 overflow-y-auto max-h-[290px] pr-1">
+            
+            <!-- Log Item 1 -->
+            <div class="p-3.5 rounded-xl border border-slate-200 hover:border-blue-300 bg-slate-50/50 space-y-2 transition">
+              <div class="flex items-start justify-between">
+                <div class="flex items-center space-x-1.5">
+                  <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                  <span class="text-xs font-extrabold text-slate-900">
+                    Cấp 1 - Nhiệt độ cao (48.5°C)
+                  </span>
+                </div>
+                <span class="text-[10px] font-mono text-slate-400">14:18:22 Hôm nay</span>
+              </div>
+
+              <div class="text-[11px] text-slate-600 flex items-center space-x-1">
+                <i class="fa-solid fa-location-dot text-slate-400 text-xs shrink-0"></i>
+                <span class="truncate">Khu vực Bếp & Đảo nấu (Zone B)</span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2 text-[10px] font-mono bg-white p-1.5 rounded-lg border border-slate-200/60">
+                <div>Temp: <strong class="text-orange-600">48.5°C</strong></div>
+                <div>Smoke: <strong class="text-sky-600">145 ppm</strong></div>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-1 pt-1">
+                <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold bg-blue-50 text-blue-700 border border-blue-100">
+                  Di chuyển đến bếp
+                </span>
+                <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold bg-blue-50 text-blue-700 border border-blue-100">
+                  Chụp ảnh nhiệt snapshot
+                </span>
+                <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold bg-blue-50 text-blue-700 border border-blue-100">
+                  Phát TTS cảnh báo
+                </span>
+              </div>
+            </div>
+
+            <!-- Log Item 2 -->
+            <div class="p-3.5 rounded-xl border border-slate-200 hover:border-blue-300 bg-slate-50/50 space-y-2 transition">
+              <div class="flex items-start justify-between">
+                <div class="flex items-center space-x-1.5">
+                  <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+                  <span class="text-xs font-extrabold text-slate-900">
+                    Cấp 2 - Khói âm ỉ (280 ppm)
+                  </span>
+                </div>
+                <span class="text-[10px] font-mono text-slate-400">Hôm qua 19:45:10</span>
+              </div>
+
+              <div class="text-[11px] text-slate-600 flex items-center space-x-1">
+                <i class="fa-solid fa-location-dot text-slate-400 text-xs shrink-0"></i>
+                <span class="truncate">Khu vực Ban công & Nướng BBQ</span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2 text-[10px] font-mono bg-white p-1.5 rounded-lg border border-slate-200/60">
+                <div>Temp: <strong class="text-orange-600">58.2°C</strong></div>
+                <div>Smoke: <strong class="text-sky-600">280 ppm</strong></div>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-1 pt-1">
+                <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold bg-blue-50 text-blue-700 border border-blue-100">
+                  Bật LED vàng chớp
+                </span>
+                <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold bg-blue-50 text-blue-700 border border-blue-100">
+                  Ghi video 30s
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="pt-2 border-t border-slate-100 text-center">
+            <button
+              class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition cursor-pointer"
+            >
+              Xuất Báo Cáo PCCC (CSV / JSON)
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+</body>
+</html>

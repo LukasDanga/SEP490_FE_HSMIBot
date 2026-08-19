@@ -1,0 +1,8 @@
+{
+  "name": "HSMIBot OS - Smart Butler Robot Portal",
+  "description": "Enterprise-grade web portal for HSMIBot autonomous smart butler robots, featuring LiDAR teleoperation, ROS2 telemetry, patrol scheduling, incident response, and bilingual auth flow.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
