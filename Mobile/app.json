@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "HSMIBot OS",
+    "slug": "hsmibot-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "backgroundColor": "#090D16"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "Cho phép ứng dụng sử dụng Face ID để xác thực đăng nhập nhanh và an toàn."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#090D16",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Cho phép ứng dụng sử dụng Face ID để đăng nhập HSMIBot OS."
+        }
+      ]
+    ]
+  }
+}
