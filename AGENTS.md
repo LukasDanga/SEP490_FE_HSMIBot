@@ -19,3 +19,7 @@
 ### 3. Mobile Development: React Native + Expo
 - Mobile app lives in `Mobile/` and must remain 100% compatible with Expo Go.
 - Use safe area insets (`react-native-safe-area-context`), dark status bar text (`<StatusBar style="dark" />`), and light backgrounds.
+
+### 4. Git Commit & Push Policy
+- NEVER run `git commit` or `git push` automatically.
+- ONLY execute `git commit` and `git push` when the USER explicitly requests it in their prompt.

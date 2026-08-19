@@ -11,3 +11,7 @@
 - Both `vi` (Vietnamese - default) and `en` (English) must be fully translated with matching keys.
 - Never hardcode raw text in JSX/TSX components.
 - Top Header must include a bilingual language switcher (`🇻🇳 VI` / `🇺🇸 EN`).
+
+## 3. Git Commit & Push Policy
+- NEVER execute `git commit` or `git push` automatically.
+- ONLY execute `git commit` and `git push` when the USER explicitly requests it in their prompt.
